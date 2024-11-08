@@ -4,18 +4,17 @@ import java.sql.*;
 import static org.example.moneytrackerapp.database.Const.*;
 import static org.example.moneytrackerapp.database.DBConst.*;
 
-//TODO test DB class
 public class Database {
     /*
      * This class is using a singleton pattern.
      */
     private static Database instance;
     private Connection connection;
-    private Database() {
+    private Database(String username, String password, String dbName) {
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
-                connection = DriverManager.getConnection("jdbc:mysql://localhost/" + DB_NAME + "?serverTimeZone=UTC",
-                DB_USER, DB_PASS);
+                connection = DriverManager.getConnection("jdbc:mysql://localhost/" + dbName + "?serverTimeZone=UTC",
+                username, password);
                 System.out.println("Connection Successfully Created");
                 createTable(TABLE_TRANSACTION_TYPES, CREATE_TABLE_TRANSACTION_TYPES, connection);
                 createTable(TABLE_CATEGORIES, CREATE_TABLE_CATEGORIES, connection);
@@ -33,9 +32,10 @@ public class Database {
     /**
      * @return DB Instance
      */
-    public static Database getInstance(){
+    public static Database getInstance(String username, String password, String dbName){
         if(instance == null){
-            instance = new Database();
+            //TODO Replace constructor values with values read from file
+            instance = new Database(username,password,dbName);
         }
         return instance;
     }
