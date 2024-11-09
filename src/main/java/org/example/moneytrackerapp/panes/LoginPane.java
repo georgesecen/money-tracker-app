@@ -1,5 +1,8 @@
 package org.example.moneytrackerapp.panes;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -11,16 +14,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 /**
  * Contains sign in/sign up and load/save user credentials functionality.
  */
 public class LoginPane extends BorderPane {
 
-    public LoginPane(){
+    public LoginPane() throws FileNotFoundException {
 
         File credentialsFile = new File("src/main/java/org/example/moneytrackerapp/credentials.json");
 
@@ -38,6 +39,8 @@ public class LoginPane extends BorderPane {
 
         // Container will hold sign in and sign up components
         HBox loginContainer = new HBox();
+
+        // TODO: Add input validation and error messages if user logs in with invalid credentials
 
         // Sign up component
         VBox signUpContainer = new VBox();
@@ -58,7 +61,7 @@ public class LoginPane extends BorderPane {
 
         Button signUpButton = new Button("Sign Up");
 
-        signUpContainer.getChildren().addAll(signUpTitle, signUpInstructions, signUpNameField, signUpUserField, signUpPassField, signUpButton);
+        signUpContainer.getChildren().addAll(signUpTitle, signUpInstructions, signUpUserField, signUpNameField, signUpPassField, signUpButton);
         signUpContainer.setAlignment(Pos.CENTER);
 
         // Setting the sign up nodes focus to false so none of them are focused by default when the scene loads
@@ -87,6 +90,32 @@ public class LoginPane extends BorderPane {
 
         loginContainer.getChildren().addAll(signUpContainer, signInContainer);
         loginContainer.setAlignment(Pos.CENTER);
+
+        // Get json object from credentials file
+        // {username: {dbname: name, password: pass}}
+        JsonElement jsonElement = JsonParser.parseReader(new FileReader(credentialsFile));
+        JsonObject jsonObject = jsonElement.getAsJsonObject();
+
+        // Save user credentials on sign up
+        signUpButton.setOnAction(e->{
+            // TODO: Check if user successfully connected to a database before adding info
+            // Add username, dbname, and pass to the json object
+            JsonObject credentials = new JsonObject();
+            credentials.addProperty("dbname", signUpNameField.getText());
+            credentials.addProperty("password", signUpPassField.getText());
+            jsonObject.add(signUpUserField.getText(), credentials);
+
+            // Update the credentials file with the new json object
+            try {
+                FileWriter writer = new FileWriter(credentialsFile.getPath());
+                writer.write(jsonObject.toString());
+                writer.close();
+            } catch (IOException err) {
+                System.out.println("Error writing user details to credentials in LoginPane.java");
+                err.printStackTrace();
+            }
+        });
+
 
         this.setCenter(loginContainer);
     }
