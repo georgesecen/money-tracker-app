@@ -116,6 +116,19 @@ public class LoginPane extends BorderPane {
             }
         });
 
+        // Automatically log the user into the app on sign in
+        signInButton.setOnAction(e->{
+            // If username is saved in credentials log user in
+            if (jsonObject.has(signInUserField.getText())){
+                // TODO: Connect to database and log user into app (change scene)
+                System.out.println("Credentials exist");
+            }
+            else{
+                // TODO: Give error message to user
+                System.out.println("Username does not exist");
+            }
+        });
+
 
         this.setCenter(loginContainer);
     }
