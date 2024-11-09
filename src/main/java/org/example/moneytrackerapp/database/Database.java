@@ -10,11 +10,11 @@ public class Database {
      */
     private static Database instance;
     private Connection connection;
-    private Database(String username, String password, String dbName) {
+    private Database() {
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
-                connection = DriverManager.getConnection("jdbc:mysql://localhost/" + dbName + "?serverTimeZone=UTC",
-                username, password);
+                connection = DriverManager.getConnection("jdbc:mysql://localhost/" + DB_NAME + "?serverTimeZone=UTC",
+                DB_USER, DB_PASS);
                 System.out.println("Connection Successfully Created");
                 createTable(TABLE_TRANSACTION_TYPES, CREATE_TABLE_TRANSACTION_TYPES, connection);
                 createTable(TABLE_CATEGORIES, CREATE_TABLE_CATEGORIES, connection);
@@ -32,10 +32,10 @@ public class Database {
     /**
      * @return DB Instance
      */
-    public static Database getInstance(String username, String password, String dbName){
+    public static Database getInstance(){
         if(instance == null){
             //TODO Replace constructor values with values read from file
-            instance = new Database(username,password,dbName);
+            instance = new Database();
         }
         return instance;
     }
