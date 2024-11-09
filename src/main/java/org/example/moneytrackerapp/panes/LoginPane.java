@@ -61,11 +61,33 @@ public class LoginPane extends BorderPane {
         signUpContainer.getChildren().addAll(signUpTitle, signUpInstructions, signUpNameField, signUpUserField, signUpPassField, signUpButton);
         signUpContainer.setAlignment(Pos.CENTER);
 
-        // Setting the nodes focus to false so none of them are focused by default when the scene loads
+        // Setting the sign up nodes focus to false so none of them are focused by default when the scene loads
         for (Node node : signUpContainer.getChildren()){
             node.setFocusTraversable(false);
         }
 
-        this.setCenter(signUpContainer);
+        // Sign in component
+        VBox signInContainer = new VBox();
+        Text signInTitle = new Text("Sign In");
+        Text signInInstructions = new Text("Enter your username");
+
+        TextField signInUserField = new TextField();
+        signInUserField.setPromptText("Username");
+        signInUserField.setMaxWidth(100);
+
+        Button signInButton = new Button("Sign In");
+
+        signInContainer.getChildren().addAll(signInTitle, signInInstructions, signInUserField, signInButton);
+        signInContainer.setAlignment(Pos.CENTER);
+
+        // Setting the sign in nodes focus to false so none of them are focused by default when the scene loads
+        for (Node node : signInContainer.getChildren()){
+            node.setFocusTraversable(false);
+        }
+
+        loginContainer.getChildren().addAll(signUpContainer, signInContainer);
+        loginContainer.setAlignment(Pos.CENTER);
+
+        this.setCenter(loginContainer);
     }
 }
