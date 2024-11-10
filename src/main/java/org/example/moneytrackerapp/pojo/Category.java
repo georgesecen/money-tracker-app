@@ -11,6 +11,11 @@ public class Category {
     private int trans_type;
 
     /**
+     * No args constructor
+     */
+    public Category() {}
+
+    /**
      * Constructor for Category
      * @param id unique id
      * @param name Category name

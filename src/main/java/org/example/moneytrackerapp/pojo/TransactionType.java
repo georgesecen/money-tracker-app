@@ -8,6 +8,11 @@ public class TransactionType {
     private String type;
 
     /**
+     * No args constructor
+     */
+    public TransactionType() {}
+
+    /**
      * Constructor for TransactionType
      * @param id integer id
      * @param type string type

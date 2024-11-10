@@ -14,6 +14,11 @@ public class Transaction {
     private int cat_id;
 
     /**
+     * No args constructor
+     */
+    public Transaction() {}
+
+    /**
      * Constructor for a Transaction
      * @param id unique integer id
      * @param amt double amt
