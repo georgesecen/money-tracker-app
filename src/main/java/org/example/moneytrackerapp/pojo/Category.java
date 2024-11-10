@@ -73,5 +73,5 @@ public class Category {
     public void setTrans_type(int trans_type) {
         this.trans_type = trans_type;
     }
-    
+
 }
