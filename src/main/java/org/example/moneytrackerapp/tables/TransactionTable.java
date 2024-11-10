@@ -36,24 +36,58 @@ public class TransactionTable implements TransactionDAO {
         }
         return transactions;
     }
-// TODO add logic for method
     @Override
     public Transaction getTransaction(int transID) {
+        String query = "SELECT * FROM " + TABLE_TRANSACTIONS + " WHERE " + TRANS_COLUMN_ID + " = " + transID;
+        try {
+            Statement statement = db.getConnection().createStatement();
+            ResultSet data = statement.executeQuery(query);
+            if(data.next()) {
+                Transaction transaction = new Transaction(
+                    data.getInt(TRANS_COLUMN_ID),
+                    data.getDouble(TRANS_COLUMN_AMOUNT),
+                    data.getString(TRANS_COLUMN_DESC),
+                    data.getString(TRANS_COLUMN_DATE),
+                    data.getInt(TRANS_COLUMN_CAT)
+                );
+                return transaction;
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
         return null;
     }
-// TODO add logic for method
     @Override
     public void updateTransaction(Transaction transaction) {
-
+        String query = "UPDATE " + TABLE_TRANSACTIONS + " SET " + TRANS_COLUMN_ID + " = " + transaction.getId()
+                + ", " + TRANS_COLUMN_AMOUNT + " = " + transaction.getAmt()
+                + ", " + TRANS_COLUMN_DESC + " = " + transaction.getDesc()
+                + ", " + TRANS_COLUMN_DATE + " = " + transaction.getDate()
+                + ", " + TRANS_COLUMN_CAT + " = " + transaction.getCat_id()
+                + " WHERE " + TRANS_COLUMN_ID + " = " + transaction.getId();
+        try {
+            Statement statement = db.getConnection().createStatement();
+            statement.executeQuery(query);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-// TODO add logic for method
     @Override
     public void deleteTransaction(int transID) {
-
+        String query = "DELETE FROM " + TABLE_TRANSACTIONS + " WHERE " + TRANS_COLUMN_ID + " = " + transID;
+        try {
+            Statement statement = db.getConnection().createStatement();
+            statement.executeQuery(query);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
-// TODO add logic for method
+// TODO are brackets necessary around VALUES???
     @Override
     public void createTransaction(Transaction transaction) {
-
+        String query = "INSERT INTO " + TABLE_TRANSACTIONS + " VALUES ("
+                + transaction.getId() + ", " + transaction.getAmt()
+                + ", " + transaction.getDesc() + ", " + transaction.getDate()
+                + ", " + transaction.getCat_id() + ")";
     }
 }

@@ -36,15 +36,43 @@ public class CategoryTable implements CategoryDAO {
         }
         return categories;
     }
-//TODO discuss implementation of method
+//TODO discuss implementation of method/change logic
     @Override
     public ArrayList<Category> getAllIncomeCategories() {
-        return null;
+        String query = "SELECT * FROM " + TABLE_CATEGORIES + " WHERE " + CAT_COLUMN_NAME + " = income";
+        categories = new ArrayList<>();
+        try {
+            Statement statement = db.getConnection().createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            while(resultSet.next()) {
+                categories.add(new Category(
+                        resultSet.getString(CAT_COLUMN_NAME),
+                        resultSet.getInt(CAT_COLUMN_ID)
+                ));
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return categories;
     }
-//TODO discuss implementation of method
+//TODO discuss implementation of method/change logic
     @Override
     public ArrayList<Category> getAllExpenseCategories() {
-        return null;
+        String query = "SELECT * FROM " + TABLE_CATEGORIES + " WHERE " + CAT_COLUMN_NAME + " = expenses";
+        categories = new ArrayList<>();
+        try {
+            Statement statement = db.getConnection().createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            while(resultSet.next()) {
+                categories.add(new Category(
+                        resultSet.getString(CAT_COLUMN_NAME),
+                        resultSet.getInt(CAT_COLUMN_ID)
+                ));
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return categories;
     }
     /**
      * GetCategory
