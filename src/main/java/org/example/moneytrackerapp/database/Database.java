@@ -20,6 +20,7 @@ public class Database {
                 createTable(TABLE_CATEGORIES, CREATE_TABLE_CATEGORIES, connection);
                 createTable(TABLE_TRANSACTIONS, CREATE_TABLE_TRANSACTIONS, connection);
             } catch(Exception e) {
+                System.out.println("Error connecting or creating database in Database.java");
                 e.printStackTrace();
             }
     }
@@ -48,7 +49,7 @@ public class Database {
     public void createTable(String tableName, String tableQuery, Connection connection) throws SQLException {
         Statement createTable;
         DatabaseMetaData md = connection.getMetaData();
-        ResultSet resultSet = md.getTables("cmcraemd", null, tableName, null);
+        ResultSet resultSet = md.getTables(DB_NAME, null, tableName, null);
         if(resultSet.next()){
             System.out.println(tableName + " table already exists");
         }
