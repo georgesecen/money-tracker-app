@@ -7,5 +7,5 @@ public class Const {
     */
     public static final String DB_NAME = "cmcraemd";
     public static final String DB_USER = "cmcrae";
-    public static final String DB_PASS = "********";
+    public static final String DB_PASS = "5gz3h5gz3h";
 }
