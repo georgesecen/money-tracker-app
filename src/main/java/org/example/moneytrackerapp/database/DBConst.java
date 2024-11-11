@@ -7,7 +7,7 @@ public class DBConst {
         public static final String TABLE_TRANSACTIONS = "Transactions";
         public static final String TRANS_COLUMN_ID = "id";
         public static final String TRANS_COLUMN_AMOUNT = "amount";
-        public static final String TRANS_COLUMN_DESC = "desc";
+        public static final String TRANS_COLUMN_DESC = "description";
         public static final String TRANS_COLUMN_DATE = "date";
         public static final String TRANS_COLUMN_CAT = "cat_id";
     /**
@@ -33,22 +33,19 @@ public class DBConst {
                     "PRIMARY KEY(" + TYPE_COLUMN_ID + "));";
 
     public static final String CREATE_TABLE_CATEGORIES =
-            " CREATE TABLE " + TABLE_CATEGORIES + " (" +
-                    CAT_COLUMN_ID + " int NOT NULL AUTO_INCREMENT, " +
-                    CAT_COLUMN_NAME + " VARCHAR(30) NOT NULL, " +
-                    CAT_COLUMN_TRANS_ID + " int NOT NULL, " +
-                    "PRIMARY KEY(" + CAT_COLUMN_ID + ")" +
-                    "FOREIGN KEY(" + CAT_COLUMN_TRANS_ID + ")" +
-                    " REFERENCES " + TABLE_TRANSACTION_TYPES + "(" + TRANS_COLUMN_ID + "));";
-
+        "CREATE TABLE " + TABLE_CATEGORIES + "(" +
+                CAT_COLUMN_ID + " int NOT NULL AUTO_INCREMENT, " +
+                CAT_COLUMN_NAME + " VARCHAR(30) NOT NULL, " +
+                CAT_COLUMN_TRANS_ID + " int NOT NULL, " +
+                "PRIMARY KEY(" + CAT_COLUMN_ID + "), " +
+                "FOREIGN KEY(" + CAT_COLUMN_TRANS_ID + ") REFERENCES " + TABLE_TRANSACTION_TYPES + "(" + TRANS_COLUMN_ID + "))";
     public static final String CREATE_TABLE_TRANSACTIONS =
-            " CREATE TABLE " + TABLE_TRANSACTIONS + " (" +
+            "CREATE TABLE " + TABLE_TRANSACTIONS + "(" +
                     TRANS_COLUMN_ID + " int NOT NULL AUTO_INCREMENT, " +
                     TRANS_COLUMN_AMOUNT + " decimal(10,2) NOT NULL, " +
                     TRANS_COLUMN_DESC + " VARCHAR(60), " +
                     TRANS_COLUMN_DATE + " DATE NOT NULL, " +
                     TRANS_COLUMN_CAT + " int NOT NULL, " +
-                    "PRIMARY KEY(" + TRANS_COLUMN_ID + ")" +
-                    "FOREIGN KEY(" + TRANS_COLUMN_CAT + ")" +
-                    " REFERENCES " + TABLE_CATEGORIES + "(" + CAT_COLUMN_ID + "));";
+                    "PRIMARY KEY(" + TRANS_COLUMN_ID + "), " +
+                    "FOREIGN KEY(" + TRANS_COLUMN_CAT + ") REFERENCES " + TABLE_CATEGORIES + "(" + CAT_COLUMN_ID + "))";
 }
