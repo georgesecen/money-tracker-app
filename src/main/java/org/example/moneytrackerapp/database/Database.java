@@ -4,7 +4,6 @@ import java.sql.*;
 import static org.example.moneytrackerapp.database.Const.*;
 import static org.example.moneytrackerapp.database.DBConst.*;
 
-//TODO test DB class
 public class Database {
     /*
      * This class is using a singleton pattern.
@@ -35,6 +34,7 @@ public class Database {
      */
     public static Database getInstance(){
         if(instance == null){
+            //TODO Replace constructor values with values read from file
             instance = new Database();
         }
         return instance;
