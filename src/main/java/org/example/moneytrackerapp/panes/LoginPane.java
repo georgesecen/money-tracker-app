@@ -13,6 +13,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import org.example.moneytrackerapp.database.Database;
 
 import java.io.*;
 
@@ -98,21 +99,29 @@ public class LoginPane extends BorderPane {
 
         // Save user credentials on sign up
         signUpButton.setOnAction(e->{
-            // TODO: Check if user successfully connected to a database before adding info
-            // Add username, dbname, and pass to the json object
-            JsonObject credentials = new JsonObject();
-            credentials.addProperty("dbname", signUpNameField.getText());
-            credentials.addProperty("password", signUpPassField.getText());
-            jsonObject.add(signUpUserField.getText(), credentials);
 
-            // Update the credentials file with the new json object
-            try {
-                FileWriter writer = new FileWriter(credentialsFile.getPath());
-                writer.write(jsonObject.toString());
-                writer.close();
-            } catch (IOException err) {
-                System.out.println("Error writing user details to credentials in LoginPane.java");
-                err.printStackTrace();
+            // Attempt to connect user to database
+            Database.setDbCredentials(signUpNameField.getText(), signUpUserField.getText(), signUpPassField.getText());
+            Database db = Database.getInstance();
+            System.out.println(db.getConnection());
+
+            // Is user successfully connected to database
+            if (db.getConnection() != null){
+                // Add username, dbname, and pass to the json object
+                JsonObject credentials = new JsonObject();
+                credentials.addProperty("dbname", signUpNameField.getText());
+                credentials.addProperty("password", signUpPassField.getText());
+                jsonObject.add(signUpUserField.getText(), credentials);
+
+                // Update the credentials file with the new json object
+                try {
+                    FileWriter writer = new FileWriter(credentialsFile.getPath());
+                    writer.write(jsonObject.toString());
+                    writer.close();
+                } catch (IOException err) {
+                    System.out.println("Error writing user details to credentials in LoginPane.java");
+                    err.printStackTrace();
+                }
             }
         });
 
