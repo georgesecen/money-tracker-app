@@ -76,4 +76,12 @@ public class Database {
         dbUser = username;
         dbPass = password;
     }
+
+    /**
+     * Sets instance to null. Used in case instance does not have a valid
+     * connection to a database.
+     */
+    public static void resetInstance(){
+        instance = null;
+    }
 }
