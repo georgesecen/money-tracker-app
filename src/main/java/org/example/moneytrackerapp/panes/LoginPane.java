@@ -103,9 +103,8 @@ public class LoginPane extends BorderPane {
             // Attempt to connect user to database
             Database.setDbCredentials(signUpNameField.getText(), signUpUserField.getText(), signUpPassField.getText());
             Database db = Database.getInstance();
-            System.out.println(db.getConnection());
 
-            // Is user successfully connected to database
+            // If user successfully connected to database
             if (db.getConnection() != null){
                 // Add username, dbname, and pass to the json object
                 JsonObject credentials = new JsonObject();
@@ -122,15 +121,32 @@ public class LoginPane extends BorderPane {
                     System.out.println("Error writing user details to credentials in LoginPane.java");
                     err.printStackTrace();
                 }
+
+                // TODO: Change scene to main app scene
             }
         });
 
         // Automatically log the user into the app on sign in
         signInButton.setOnAction(e->{
-            // If username is saved in credentials log user in
+            // If username is saved in credentials
             if (jsonObject.has(signInUserField.getText())){
-                // TODO: Connect to database and log user into app (change scene)
-                System.out.println("Credentials exist");
+
+                // Load saved user credentials
+                JsonObject userCredentials = (JsonObject) jsonObject.get(signInUserField.getText());
+
+                // Attempt to connect user to database
+                Database.setDbCredentials(userCredentials.get("dbname").getAsString(), signInUserField.getText(), userCredentials.get("password").getAsString());
+                Database db = Database.getInstance();
+
+                // If user successfully connected to database log them in
+                if (db.getConnection() != null){
+                    // TODO: Change scene to main app scene
+                    System.out.println("logged in");
+                }
+                else{
+                    System.out.println("Error connecting to db");
+                    // TODO: Give error message to user
+                }
             }
             else{
                 // TODO: Give error message to user
