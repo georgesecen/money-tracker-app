@@ -13,7 +13,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import org.example.moneytrackerapp.HelloApplication;
 import org.example.moneytrackerapp.database.Database;
+import org.example.moneytrackerapp.scenes.MainScene;
 
 import java.io.*;
 
@@ -22,6 +24,10 @@ import java.io.*;
  */
 public class LoginPane extends BorderPane {
 
+    /**
+     * Forms for user sign in/sign up and logs user into main app.
+     * @throws FileNotFoundException
+     */
     public LoginPane() throws FileNotFoundException {
 
         File credentialsFile = new File("src/main/java/org/example/moneytrackerapp/credentials.json");
@@ -122,7 +128,12 @@ public class LoginPane extends BorderPane {
                     err.printStackTrace();
                 }
 
-                // TODO: Change scene to main app scene
+                // Log user into app
+                HelloApplication.mainStage.setScene(new MainScene());
+            }
+            else{
+                // Reset database instance so user can try again
+                Database.resetInstance();
             }
         });
 
@@ -138,12 +149,15 @@ public class LoginPane extends BorderPane {
                 Database.setDbCredentials(userCredentials.get("dbname").getAsString(), signInUserField.getText(), userCredentials.get("password").getAsString());
                 Database db = Database.getInstance();
 
-                // If user successfully connected to database log them in
+                // If user successfully connected to database
                 if (db.getConnection() != null){
-                    // TODO: Change scene to main app scene
-                    System.out.println("logged in");
+                    // Log user into app
+                    HelloApplication.mainStage.setScene(new MainScene());
                 }
                 else{
+                    // Reset database instance so user can try again
+                    Database.resetInstance();
+
                     System.out.println("Error connecting to db");
                     // TODO: Give error message to user
                 }
