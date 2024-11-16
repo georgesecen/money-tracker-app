@@ -11,6 +11,11 @@ import java.util.ArrayList;
 import static org.example.moneytrackerapp.database.DBConst.*;
 
 public class CategoryTable implements CategoryDAO {
+    private static CategoryTable instance;
+    private CategoryTable(){
+        db = Database.getInstance();
+    }
+
     Database db = Database.getInstance();
     ArrayList<Category> categories;
     /**
@@ -95,5 +100,12 @@ public class CategoryTable implements CategoryDAO {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static CategoryTable getInstance(){
+        if(instance == null){
+            instance = new CategoryTable();
+        }
+        return instance;
     }
 }
