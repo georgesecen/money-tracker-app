@@ -11,7 +11,13 @@ public class MainPane extends BorderPane {
     public MainPane(){
         HelloApplication.mainStage.setTitle("Money Tracker App");
 
+        // TabPane navigation bar
+        TabPane tabPane = new TabPane();
+        AddTransactionTab addTransactionTab = AddTransactionTab.getInstance();
+        tabPane.getTabs().add(addTransactionTab);
+        tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
-
+        //Database db = Database.getInstance();
+        this.setTop(tabPane);
     }
 }
