@@ -4,7 +4,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Tab;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.PopupWindow;
+import javafx.util.Duration;
 import org.example.moneytrackerapp.pojo.Category;
 import org.example.moneytrackerapp.pojo.Transaction;
 import org.example.moneytrackerapp.tables.CategoryTable;
@@ -52,7 +55,17 @@ public class StatisticsTab extends Tab {
             data.add(new PieChart.Data(category.getName(), totalIncomes.get(catId)));
         }
 
+        ObservableList<PieChart.Data> chartData = FXCollections.observableArrayList(data);
+        chart.setData(chartData);
 
+        // Add tooltips to every slice in the pie chart
+        for (PieChart.Data slice : chartData){
+            Tooltip tooltip = new Tooltip();
+            // Tooltip displays the pie value which is total amount in category
+            tooltip.setText(String.format("$%.2f", slice.getPieValue()));
+            tooltip.setShowDelay(Duration.millis(150));
+            Tooltip.install(slice.getNode(), tooltip);
+        }
 
     }
 
