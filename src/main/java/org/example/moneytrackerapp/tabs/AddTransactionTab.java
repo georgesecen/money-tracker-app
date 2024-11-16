@@ -6,6 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
@@ -14,6 +15,8 @@ import org.example.moneytrackerapp.pojo.Category;
 import org.example.moneytrackerapp.tables.CategoryTable;
 import org.example.moneytrackerapp.tables.TransactionTable;
 import org.example.moneytrackerapp.tables.TransactionTypeTable;
+
+import java.time.LocalDate;
 
 public class AddTransactionTab extends Tab {
     private static AddTransactionTab instance;
@@ -37,6 +40,10 @@ public class AddTransactionTab extends Tab {
         RadioButton type2 = new RadioButton("Expense");
         type2.setToggleGroup(typeToggleGroup);
 
+        HBox typeBox = new HBox(type1, type2);
+        typeBox.alignmentProperty().set(Pos.CENTER);
+        typeBox.setSpacing(20);
+
 
         type2.setSelected(true);
 
@@ -58,14 +65,14 @@ public class AddTransactionTab extends Tab {
         // Date
         Text dateLabel = new Text("Date");
         DatePicker date = new DatePicker();
+        date.setValue(LocalDate.now());
 
 
         // Vbox to hold form
-        VBox form = new VBox(typeLabel, type1, type2, amount, descLabel, desc,
+        VBox form = new VBox(typeLabel, typeBox, amountLabel, amount, descLabel, desc,
                                         catLabel, cat, dateLabel, date);
         form.setSpacing(10);
 
-        form.setBorder(Border.stroke(Paint.valueOf("#000000")));
 
         // Display elements
         root.setTop(title);
