@@ -12,8 +12,13 @@ import java.util.ArrayList;
 import static org.example.moneytrackerapp.database.DBConst.*;
 
 public class TransactionTable implements TransactionDAO {
+    private static TransactionTable instance;
+    private TransactionTable(){
+        db = Database.getInstance();
+    }
     Database db = Database.getInstance();
     ArrayList<Transaction> transactions;
+
     @Override
     public ArrayList<Transaction> getAllTransactions() {
         String query = "SELECT * FROM " + TABLE_TRANSACTIONS;
@@ -90,5 +95,12 @@ public class TransactionTable implements TransactionDAO {
                 + transaction.getId() + ", " + transaction.getAmt()
                 + ", " + transaction.getDesc() + ", " + transaction.getDate()
                 + ", " + transaction.getCat_id() + ")";
+    }
+
+    public static TransactionTable getInstance(){
+        if(instance == null){
+            instance = new TransactionTable();
+        }
+        return instance;
     }
 }
