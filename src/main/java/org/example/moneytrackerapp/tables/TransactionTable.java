@@ -27,7 +27,7 @@ public class TransactionTable implements TransactionDAO {
                         resultSet.getInt(TRANS_COLUMN_ID),
                         resultSet.getDouble(TRANS_COLUMN_AMOUNT),
                         resultSet.getString(TRANS_COLUMN_DESC),
-                        resultSet.getString(TRANS_COLUMN_DATE),
+                        resultSet.getDate(TRANS_COLUMN_DATE),
                         resultSet.getInt(TRANS_COLUMN_CAT)
                     ));
                 }
@@ -48,7 +48,7 @@ public class TransactionTable implements TransactionDAO {
                     data.getInt(TRANS_COLUMN_ID),
                     data.getDouble(TRANS_COLUMN_AMOUNT),
                     data.getString(TRANS_COLUMN_DESC),
-                    data.getString(TRANS_COLUMN_DATE),
+                    data.getDate(TRANS_COLUMN_DATE),
                     data.getInt(TRANS_COLUMN_CAT)
                 );
                 return transaction;
