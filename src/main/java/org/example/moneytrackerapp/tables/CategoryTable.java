@@ -24,7 +24,7 @@ public class CategoryTable implements CategoryDAO {
      */
     @Override
     public ArrayList<Category> getAllCategories() {
-        String query = "SELECT * FROM" + TABLE_CATEGORIES;
+        String query = "SELECT * FROM " + TABLE_CATEGORIES;
         categories = new ArrayList<>();
         try{
             Statement statement = db.getConnection().createStatement();
@@ -34,7 +34,6 @@ public class CategoryTable implements CategoryDAO {
                     resultSet.getString(CAT_COLUMN_NAME),
                     resultSet.getInt(CAT_COLUMN_ID)
                 ));
-
             }
         } catch(Exception e) {
             e.printStackTrace();

@@ -25,9 +25,9 @@ public class AddTransactionTab extends Tab {
         BorderPane root = new BorderPane();
 
         // Get tables
-//        TransactionTable transactionTable = TransactionTable.getInstance();
-//        CategoryTable categoryTable = CategoryTable.getInstance();
-//        TransactionTypeTable transactionTypeTable = new TransactionTypeTable();
+        TransactionTable transactionTable = TransactionTable.getInstance();
+        CategoryTable categoryTable = CategoryTable.getInstance();
+        TransactionTypeTable transactionTypeTable = new TransactionTypeTable();
 
         // Title
         Text title = new Text("Add Transaction");
@@ -58,8 +58,8 @@ public class AddTransactionTab extends Tab {
         // Category
         Text catLabel = new Text("Category");
         ComboBox<Category> cat = new ComboBox<>();
-//        cat.setItems(FXCollections.observableArrayList(categoryTable.getAllExpenseCategories()));
-//        cat.getSelectionModel().select(0);
+        cat.setItems(FXCollections.observableArrayList(categoryTable.getAllCategories()));
+        cat.getSelectionModel().select(0);
 
 
         // Date

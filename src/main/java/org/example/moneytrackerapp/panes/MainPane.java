@@ -17,7 +17,7 @@ public class MainPane extends BorderPane {
         tabPane.getTabs().add(addTransactionTab);
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
-        //Database db = Database.getInstance();
+        Database db = Database.getInstance();
         this.setTop(tabPane);
     }
 }

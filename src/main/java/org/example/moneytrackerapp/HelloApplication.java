@@ -15,7 +15,7 @@ public class HelloApplication extends Application {
 
         mainStage = stage;
         mainStage.setTitle("Login");
-        mainStage.setScene(new MainScene());
+        mainStage.setScene(new LoginScene());
         mainStage.show();
 
     }
