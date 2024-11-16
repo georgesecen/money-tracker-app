@@ -1,15 +1,16 @@
 package org.example.moneytrackerapp.tabs;
 
+import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import org.example.moneytrackerapp.pojo.Category;
 import org.example.moneytrackerapp.tables.CategoryTable;
 import org.example.moneytrackerapp.tables.TransactionTable;
 import org.example.moneytrackerapp.tables.TransactionTypeTable;
@@ -25,25 +26,53 @@ public class AddTransactionTab extends Tab {
 //        CategoryTable categoryTable = CategoryTable.getInstance();
 //        TransactionTypeTable transactionTypeTable = new TransactionTypeTable();
 
+        // Title
         Text title = new Text("Add Transaction");
-        title.setTextAlignment(TextAlignment.CENTER);
+
+        // Transaction type
+        Text typeLabel = new Text("Transaction Type");
+        ToggleGroup typeToggleGroup = new ToggleGroup();
+        RadioButton type1 = new RadioButton("Income");
+        type1.setToggleGroup(typeToggleGroup);
+        RadioButton type2 = new RadioButton("Expense");
+        type2.setToggleGroup(typeToggleGroup);
+
+
+        type2.setSelected(true);
 
         // Transaction amount
         Text amountLabel = new Text("Amount");
         TextField amount = new TextField();
 
+        // Description
+        Text descLabel = new Text("Description");
+        TextField desc = new TextField();
+
+        // Category
+        Text catLabel = new Text("Category");
+        ComboBox<Category> cat = new ComboBox<>();
+//        cat.setItems(FXCollections.observableArrayList(categoryTable.getAllExpenseCategories()));
+//        cat.getSelectionModel().select(0);
+
+
+        // Date
+        Text dateLabel = new Text("Date");
+        DatePicker date = new DatePicker();
+
+
         // Vbox to hold form
-        VBox form = new VBox(amountLabel, amount);
-        form.maxHeight(200);
-        form.maxWidth(200);
+        VBox form = new VBox(typeLabel, type1, type2, amount, descLabel, desc,
+                                        catLabel, cat, dateLabel, date);
+        form.setSpacing(10);
 
         form.setBorder(Border.stroke(Paint.valueOf("#000000")));
 
         // Display elements
         root.setTop(title);
+        root.setAlignment(title, Pos.BOTTOM_CENTER);
         root.setCenter(form);
         root.setMargin(title, new Insets(100, 30, 30, 30));
-        root.setMargin(form, new Insets(30, 100, 30, 100));
+        root.setMargin(form, new Insets(30, 200, 30, 200));
 
         form.setAlignment(Pos.CENTER);
         this.setContent(root);
