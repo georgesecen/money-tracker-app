@@ -1,5 +1,7 @@
 package org.example.moneytrackerapp.pojo;
 
+import java.sql.Date;
+
 /**
  * Class represents a transaction which has a unique id, amount transacted,
  * optional description, date of transaction, and category id
@@ -10,7 +12,7 @@ public class Transaction {
     private int id;
     private double amt;
     private String desc = "";
-    private String date;
+    private Date date;
     private int cat_id;
 
     /**
@@ -23,11 +25,11 @@ public class Transaction {
      * @param id unique integer id
      * @param amt double amt
      * @param desc (optional) string description
-     * @param date string date
+     * @param date SqlDate date
      * @param cat_id int represents category
      */
     //TODO make desc optional
-    public Transaction(int id, double amt, String desc, String date, int cat_id){
+    public Transaction(int id, double amt, String desc, Date date, int cat_id){
         this.id = id;
         this.amt = amt;
         this.desc = desc;
@@ -39,10 +41,10 @@ public class Transaction {
      * Constructor for Transaction excluding id
      * @param amt unique integer id
      * @param desc (optional) string description
-     * @param date string date
+     * @param date SqlDate date
      * @param cat_id int represents category
      */
-    public Transaction(double amt, String desc, String date, int cat_id){
+    public Transaction(double amt, String desc, Date date, int cat_id){
         this.amt = amt;
         this.desc = desc;
         this.date = date;
@@ -92,16 +94,18 @@ public class Transaction {
     }
 
     /**
-     * @return date
+     * Gets the transaction date.
+     * @return SqlDate
      */
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
     /**
-     * @param date set date
+     * Sets the transaction date.
+     * @param date SqlDate to set.
      */
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
