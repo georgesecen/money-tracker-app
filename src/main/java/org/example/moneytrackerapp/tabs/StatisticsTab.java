@@ -29,6 +29,20 @@ public class StatisticsTab extends Tab {
         TransactionTable transactionTable = TransactionTable.getInstance();
         ArrayList<Transaction> transactions = transactionTable.getAllTransactions();
 
+        // Separate incomes and expenses
+        ArrayList<Transaction> incomes = new ArrayList<>();
+        ArrayList<Transaction> expenses = new ArrayList<>();
+        for (Transaction transaction : transactions){
+
+            // If transaction has a positive amount it's an income, otherwise it's an expense
+            if (transaction.getAmt() > 0){
+                incomes.add(transaction);
+            }
+            else{
+                expenses.add(transaction);
+            }
+        }
+
         chart.setTitle("Working!");
         generatePieChart(chart, transactions);
 
