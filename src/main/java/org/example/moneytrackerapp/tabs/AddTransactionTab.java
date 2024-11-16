@@ -11,4 +11,11 @@ public class AddTransactionTab extends Tab {
         BorderPane root = new BorderPane();
 
     }
+
+    public static AddTransactionTab getInstance(){
+        if(instance == null){
+            instance = new AddTransactionTab();
+        }
+        return instance;
+    }
 }
