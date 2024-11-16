@@ -12,9 +12,11 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import org.example.moneytrackerapp.pojo.Category;
+import org.example.moneytrackerapp.pojo.Transaction;
 import org.example.moneytrackerapp.tables.CategoryTable;
 import org.example.moneytrackerapp.tables.TransactionTable;
 import org.example.moneytrackerapp.tables.TransactionTypeTable;
+import java.sql.Date;
 
 import java.time.LocalDate;
 
@@ -67,10 +69,33 @@ public class AddTransactionTab extends Tab {
         DatePicker date = new DatePicker();
         date.setValue(LocalDate.now());
 
+        // Submit
+        Button submit = new Button("Add Transaction");
+        submit.setOnAction(e -> {
+//            Transaction transaction = new Transaction(
+//                    0,
+//                    Double.parseDouble(amount.getText()),
+//                    desc.getText(),
+//                    Date.valueOf(date.getValue()),
+//                    cat.getSelectionModel().getSelectedItem().getId()
+//            );
+            System.out.println(Date.valueOf(date.getValue()));
+            Transaction transaction = new Transaction(
+                    0,
+                    21.00,
+                    "description",
+                    Date.valueOf(date.getValue()),
+                    cat.getSelectionModel().getSelectedItem().getId()
+            );
+            //Transaction transaction = new Transaction();
+            transactionTable.createTransaction(transaction);
+        });
+
+
 
         // Vbox to hold form
         VBox form = new VBox(typeLabel, typeBox, amountLabel, amount, descLabel, desc,
-                                        catLabel, cat, dateLabel, date);
+                                        catLabel, cat, dateLabel, date, submit);
         form.setSpacing(10);
 
 
