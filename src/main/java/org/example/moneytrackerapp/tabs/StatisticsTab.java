@@ -19,6 +19,9 @@ import java.util.Objects;
 
 public class StatisticsTab extends Tab {
 
+    private PieChart incomesPieChart = new PieChart();
+    private PieChart expensesPieChart = new PieChart();
+
     public StatisticsTab(){
         this.setText("Statistics");
         BorderPane root = new BorderPane();
@@ -30,25 +33,28 @@ public class StatisticsTab extends Tab {
         ArrayList<Transaction> transactions = transactionTable.getAllTransactions();
 
         // Separate incomes and expenses
-        ArrayList<Transaction> incomes = new ArrayList<>();
-        ArrayList<Transaction> expenses = new ArrayList<>();
+        ArrayList<Transaction> incomeTransactions = new ArrayList<>();
+        ArrayList<Transaction> expenseTransactions = new ArrayList<>();
         for (Transaction transaction : transactions){
 
             // If transaction has a positive amount it's an income, otherwise it's an expense
             if (transaction.getAmt() > 0){
-                incomes.add(transaction);
+                incomeTransactions.add(transaction);
             }
             else{
-                expenses.add(transaction);
+                expenseTransactions.add(transaction);
             }
         }
 
-        chart.setTitle("Working!");
-        generatePieChart(chart, transactions);
+        // Generate expenses and incomes pie charts
+        incomesPieChart.setTitle("Incomes By Category");
+        generatePieChart(incomesPieChart, incomeTransactions);
+        expensesPieChart.setTitle("Expenses By Category");
+        generatePieChart(expensesPieChart, expenseTransactions);
 
 
-
-        root.setCenter(chart);
+        root.setLeft(incomesPieChart);
+        root.setRight(expensesPieChart);
         this.setContent(root);
 
     }
