@@ -5,7 +5,9 @@ import javafx.collections.ObservableList;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.BorderPane;
+import org.example.moneytrackerapp.pojo.Category;
 import org.example.moneytrackerapp.pojo.Transaction;
+import org.example.moneytrackerapp.tables.CategoryTable;
 import org.example.moneytrackerapp.tables.TransactionTable;
 
 import java.util.ArrayList;
@@ -39,6 +41,18 @@ public class StatisticsTab extends Tab {
                 totalIncomes.put(catId, totalIncomes.get(catId) + amount);
             }
         }
+
+        // Add the total incomes for each category to the pie chart
+        ArrayList<PieChart.Data> data = new ArrayList<>();
+        CategoryTable categoryTable = CategoryTable.getInstance();
+        for (int catId : totalIncomes.keySet()) {
+            Category category = categoryTable.getCategory(catId);
+
+            // Add the actual category name to the pie chart with its total income amount
+            data.add(new PieChart.Data(category.getName(), totalIncomes.get(catId)));
+        }
+
+
 
     }
 
