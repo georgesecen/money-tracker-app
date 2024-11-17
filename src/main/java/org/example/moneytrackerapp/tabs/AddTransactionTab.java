@@ -19,6 +19,7 @@ import org.example.moneytrackerapp.tables.TransactionTypeTable;
 import java.sql.Date;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class AddTransactionTab extends Tab {
     private static AddTransactionTab instance;
@@ -66,13 +67,10 @@ public class AddTransactionTab extends Tab {
         type1.setOnAction(e -> {
             cat.setItems(FXCollections.observableArrayList(categoryTable.getAllIncomeCategories()));
             cat.getSelectionModel().select(0);
-
-
         });
         type2.setOnAction(e -> {
             cat.setItems(FXCollections.observableArrayList(categoryTable.getAllExpenseCategories()));
             cat.getSelectionModel().select(0);
-
         });
 
         // Date
@@ -83,23 +81,13 @@ public class AddTransactionTab extends Tab {
         // Submit
         Button submit = new Button("Add Transaction");
         submit.setOnAction(e -> {
-//            Transaction transaction = new Transaction(
-//                    0,
-//                    Double.parseDouble(amount.getText()),
-//                    desc.getText(),
-//                    Date.valueOf(date.getValue()),
-//                    cat.getSelectionModel().getSelectedItem().getId()
-//            );
-            //System.out.println(Date.valueOf(date.getValue()));
-            System.out.println(cat.getSelectionModel().getSelectedItem().getId());
             Transaction transaction = new Transaction(
                     0,
-                    21.00,
-                    "description",
+                    Double.parseDouble(amount.getText()),
+                    desc.getText(),
                     Date.valueOf(date.getValue()),
                     cat.getSelectionModel().getSelectedItem().getId()
             );
-            //Transaction transaction = new Transaction();
             transactionTable.createTransaction(transaction);
         });
 

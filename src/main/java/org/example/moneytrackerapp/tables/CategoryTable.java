@@ -50,6 +50,7 @@ public class CategoryTable implements CategoryDAO {
             ResultSet resultSet = statement.executeQuery(query);
             while(resultSet.next()) {
                 categories.add(new Category(
+                        resultSet.getInt(CAT_COLUMN_ID),
                         resultSet.getString(CAT_COLUMN_NAME),
                         resultSet.getInt(CAT_COLUMN_ID)
                 ));
@@ -69,6 +70,7 @@ public class CategoryTable implements CategoryDAO {
             ResultSet resultSet = statement.executeQuery(query);
             while(resultSet.next()) {
                 categories.add(new Category(
+                        resultSet.getInt(CAT_COLUMN_ID),
                         resultSet.getString(CAT_COLUMN_NAME),
                         resultSet.getInt(CAT_COLUMN_ID)
                 ));
