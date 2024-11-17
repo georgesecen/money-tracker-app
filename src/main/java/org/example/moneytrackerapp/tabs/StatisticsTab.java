@@ -16,6 +16,7 @@ import org.example.moneytrackerapp.pojo.Transaction;
 import org.example.moneytrackerapp.tables.CategoryTable;
 import org.example.moneytrackerapp.tables.TransactionTable;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -37,25 +38,43 @@ public class StatisticsTab extends Tab {
         // Sort all transactions by date in ascending order
         transactions.sort(Collections.reverseOrder(this::compareTransactionDates));
 
-        // Separate incomes and expenses
-        ArrayList<Transaction> incomeTransactions = new ArrayList<>();
-        ArrayList<Transaction> expenseTransactions = new ArrayList<>();
+        // Get the total incomes/expenses for each category {categoryId:total}
+        HashMap<Integer, Double> incomeCategoryTotals = new HashMap<>();
+        HashMap<Integer, Double> expenseCategoryTotals = new HashMap<>();
+
+
         for (Transaction transaction : transactions){
+
+            // Get transaction category id and absolute value of transaction amount in case its negative
+            int catId = transaction.getCat_id();
+            double amount = Math.abs(transaction.getAmt());
 
             // If transaction has a positive amount it's an income, otherwise it's an expense
             if (transaction.getAmt() > 0){
-                incomeTransactions.add(transaction);
+                // If category does not exist in totalIncomes add it
+                if (!incomeCategoryTotals.containsKey(catId)){
+                    incomeCategoryTotals.put(catId, 0.0);
+                }
+                // Add transaction amount to its corresponding category
+                incomeCategoryTotals.put(catId, incomeCategoryTotals.get(catId) + amount);
+
             }
             else{
-                expenseTransactions.add(transaction);
+                // If category does not exist in totalExpenses add it
+                if (!expenseCategoryTotals.containsKey(catId)){
+                    expenseCategoryTotals.put(catId, 0.0);
+                }
+                // Add transaction amount to its corresponding category
+                expenseCategoryTotals.put(catId, expenseCategoryTotals.get(catId) + amount);
             }
         }
 
         // Generate expenses and incomes pie charts
         incomesPieChart.setTitle("Incomes By Category");
-        generatePieChart(incomesPieChart, incomeTransactions);
+        generatePieChart(incomesPieChart, incomeCategoryTotals);
         expensesPieChart.setTitle("Expenses By Category");
-        generatePieChart(expensesPieChart, expenseTransactions);
+        generatePieChart(expensesPieChart, expenseCategoryTotals);
+
 
 
         root.setLeft(incomesPieChart);
@@ -66,38 +85,20 @@ public class StatisticsTab extends Tab {
 
 
     /**
-     * Generates a pie chart from transaction data.
+     * Generates a pie chart from transaction category data.
      * @param chart PieChart you want to generate data for.
-     * @param transactions All income or expense transactions you want to generate pie chart for.
+     * @param categoryTotals HashMap of {categoryId:total} which you want to add to the pie chart.
      */
-    public void generatePieChart(PieChart chart, ArrayList<Transaction> transactions){
-
-        // Get the total incomes/expenses for each category {categoryId:total}
-        HashMap<Integer, Double> totalIncomes = new HashMap<>();
-        for (Transaction transaction : transactions){
-            int catId = transaction.getCat_id();
-
-            // Get absolute value of transaction amount in case its negative
-            double amount = Math.abs(transaction.getAmt());
-
-            // If the category does not exist in map add it
-            if (!totalIncomes.containsKey(catId)){
-                totalIncomes.put(catId, 0.0);
-            }
-
-            // Add transaction amount to its corresponding category
-            totalIncomes.put(catId, totalIncomes.get(catId) + amount);
-
-        }
+    public void generatePieChart(PieChart chart, HashMap<Integer, Double> categoryTotals){
 
         // Add the total incomes/expenses for each category to the pie chart
         ArrayList<PieChart.Data> data = new ArrayList<>();
         CategoryTable categoryTable = CategoryTable.getInstance();
-        for (int catId : totalIncomes.keySet()) {
+        for (int catId : categoryTotals.keySet()) {
             Category category = categoryTable.getCategory(catId);
 
             // Add the actual category name to the pie chart with its total amount
-            data.add(new PieChart.Data(category.getName(), totalIncomes.get(catId)));
+            data.add(new PieChart.Data(category.getName(), categoryTotals.get(catId)));
         }
 
         // Add the data to the pie chart
