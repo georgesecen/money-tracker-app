@@ -19,7 +19,6 @@ import org.example.moneytrackerapp.tables.TransactionTypeTable;
 import java.sql.Date;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 public class AddTransactionTab extends Tab {
     private static AddTransactionTab instance;
@@ -42,13 +41,12 @@ public class AddTransactionTab extends Tab {
         type1.setToggleGroup(typeToggleGroup);
         RadioButton type2 = new RadioButton("Expense");
         type2.setToggleGroup(typeToggleGroup);
+        type2.setSelected(true);
 
         HBox typeBox = new HBox(type1, type2);
         typeBox.alignmentProperty().set(Pos.CENTER);
         typeBox.setSpacing(20);
 
-
-        type2.setSelected(true);
 
         // Transaction amount
         Text amountLabel = new Text("Amount");
@@ -81,9 +79,26 @@ public class AddTransactionTab extends Tab {
         // Submit
         Button submit = new Button("Add Transaction");
         submit.setOnAction(e -> {
+
+            // First sanitize the amount input
+            // If income is selected, change a negative input to positive
+            // If expense is selected, change a positive input to negative
+            double amtEntered = Double.parseDouble(amount.getText());
+            if(type1.isSelected()) {
+                if (amtEntered < 0) {
+                    amtEntered *= -1;
+                }
+            }
+            else{
+                if(amtEntered > 0) {
+                    amtEntered *= -1;
+                }
+            }
+
+            // Create and add the new transaction
             Transaction transaction = new Transaction(
                     0,
-                    Double.parseDouble(amount.getText()),
+                    amtEntered,
                     desc.getText(),
                     Date.valueOf(date.getValue()),
                     cat.getSelectionModel().getSelectedItem().getId()
