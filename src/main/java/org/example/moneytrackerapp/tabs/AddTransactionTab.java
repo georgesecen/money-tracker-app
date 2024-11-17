@@ -60,9 +60,20 @@ public class AddTransactionTab extends Tab {
         // Category
         Text catLabel = new Text("Category");
         ComboBox<Category> cat = new ComboBox<>();
-        cat.setItems(FXCollections.observableArrayList(categoryTable.getAllCategories()));
+        cat.setItems(FXCollections.observableArrayList(categoryTable.getAllExpenseCategories()));
         cat.getSelectionModel().select(0);
 
+        type1.setOnAction(e -> {
+            cat.setItems(FXCollections.observableArrayList(categoryTable.getAllIncomeCategories()));
+            cat.getSelectionModel().select(0);
+
+
+        });
+        type2.setOnAction(e -> {
+            cat.setItems(FXCollections.observableArrayList(categoryTable.getAllExpenseCategories()));
+            cat.getSelectionModel().select(0);
+
+        });
 
         // Date
         Text dateLabel = new Text("Date");
