@@ -2,7 +2,10 @@ package org.example.moneytrackerapp.tabs;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Tab;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.BorderPane;
@@ -14,6 +17,7 @@ import org.example.moneytrackerapp.tables.CategoryTable;
 import org.example.moneytrackerapp.tables.TransactionTable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -26,11 +30,12 @@ public class StatisticsTab extends Tab {
         this.setText("Statistics");
         BorderPane root = new BorderPane();
 
-        PieChart chart = new PieChart();
-
         // Get all the transactions from the transactions table
         TransactionTable transactionTable = TransactionTable.getInstance();
         ArrayList<Transaction> transactions = transactionTable.getAllTransactions();
+
+        // Sort all transactions by date in ascending order
+        transactions.sort(Collections.reverseOrder(this::compareTransactionDates));
 
         // Separate incomes and expenses
         ArrayList<Transaction> incomeTransactions = new ArrayList<>();
@@ -106,6 +111,30 @@ public class StatisticsTab extends Tab {
             tooltip.setText(String.format("$%.2f", slice.getPieValue()));
             tooltip.setShowDelay(Duration.millis(150));
             Tooltip.install(slice.getNode(), tooltip);
+        }
+    }
+
+
+    /**
+     * Compares transactions by date to check which transaction occurred first.
+     * @param transaction1 First transaction to compare.
+     * @param transaction2 Second transaction to compare.
+     * @return 1, -1, or 0 if the date of the first transaction is before, after, or
+     * equal to the date of the second transaction.
+     */
+    public int compareTransactionDates(Transaction transaction1, Transaction transaction2){
+
+        // If transaction 1 is before transaction 2
+        if (transaction1.getDate().before(transaction2.getDate())){
+            return 1;
+        }
+        // If transaction 1 is after transaction 2
+        else if (transaction1.getDate().after(transaction2.getDate())) {
+            return -1;
+        }
+        // If both transactions occurred on the same date
+        else{
+            return 0;
         }
     }
 
