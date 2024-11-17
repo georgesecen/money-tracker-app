@@ -90,7 +90,8 @@ public class AddTransactionTab extends Tab {
 //                    Date.valueOf(date.getValue()),
 //                    cat.getSelectionModel().getSelectedItem().getId()
 //            );
-            System.out.println(Date.valueOf(date.getValue()));
+            //System.out.println(Date.valueOf(date.getValue()));
+            System.out.println(cat.getSelectionModel().getSelectedItem().getId());
             Transaction transaction = new Transaction(
                     0,
                     21.00,

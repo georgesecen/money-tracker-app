@@ -6,6 +6,7 @@ import org.example.moneytrackerapp.pojo.Transaction;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import java.sql.Date;
@@ -110,8 +111,10 @@ public class TransactionTable implements TransactionDAO {
 //                transaction.getDesc() + ", " +
 //                transaction.getDate() + ", " +
 //                transaction.getCat_id() + ");";
-        Date date = new Date(2024,10,23);
-        System.out.println(date);
+//        LocalDate localDate = LocalDate.now();
+//        long day = localDate.getLong()
+        Date date = new Date(System.currentTimeMillis());
+        System.out.println("a: " + date);
 //
 //        String query = "INSERT INTO " + TABLE_TRANSACTIONS +
 //                "(" + TRANS_COLUMN_ID + ", " +
@@ -132,7 +135,8 @@ public class TransactionTable implements TransactionDAO {
                 + TRANS_COLUMN_CAT + ") VALUES ("
                 + transaction.getId() + ", "
                 + transaction.getAmt() + ", '"
-                + transaction.getDesc() + "', " + transaction.getDate() + ", 1);";
+                + transaction.getDesc() + "', '"
+                + transaction.getDate() + "', " + transaction.getCat_id() + ");";
 
         try {
             db.getConnection().createStatement().execute(query);
