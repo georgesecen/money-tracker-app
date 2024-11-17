@@ -2,10 +2,7 @@ package org.example.moneytrackerapp.tabs;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.PieChart;
-import javafx.scene.chart.XYChart;
+import javafx.scene.chart.*;
 import javafx.scene.control.Tab;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.BorderPane;
@@ -38,10 +35,15 @@ public class StatisticsTab extends Tab {
         // Sort all transactions by date in ascending order
         transactions.sort(Collections.reverseOrder(this::compareTransactionDates));
 
-        // Get the total incomes/expenses for each category {categoryId:total}
+        // Get the total incomes/expenses for each category {categoryId:total} (for pie charts)
         HashMap<Integer, Double> incomeCategoryTotals = new HashMap<>();
         HashMap<Integer, Double> expenseCategoryTotals = new HashMap<>();
 
+        // Keep track of data series for rolling income/expense totals (for line chart)
+        XYChart.Series<String, Number> incomeSeries = new XYChart.Series<>();
+        XYChart.Series<String, Number> expenseSeries = new XYChart.Series<>();
+        double rollingIncomes = 0;
+        double rollingExpenses = 0;
 
         for (Transaction transaction : transactions){
 
@@ -51,31 +53,39 @@ public class StatisticsTab extends Tab {
 
             // If transaction has a positive amount it's an income, otherwise it's an expense
             if (transaction.getAmt() > 0){
+                rollingIncomes += amount;
+
                 // If category does not exist in totalIncomes add it
                 if (!incomeCategoryTotals.containsKey(catId)){
                     incomeCategoryTotals.put(catId, 0.0);
                 }
+
                 // Add transaction amount to its corresponding category
                 incomeCategoryTotals.put(catId, incomeCategoryTotals.get(catId) + amount);
-
             }
             else{
+                rollingExpenses += amount;
+
                 // If category does not exist in totalExpenses add it
                 if (!expenseCategoryTotals.containsKey(catId)){
                     expenseCategoryTotals.put(catId, 0.0);
                 }
+
                 // Add transaction amount to its corresponding category
                 expenseCategoryTotals.put(catId, expenseCategoryTotals.get(catId) + amount);
             }
+
+            // Add new rolling income/expense to line chart data series
+            incomeSeries.getData().add(new XYChart.Data<>(transaction.getDate().toString(), rollingIncomes));
+            expenseSeries.getData().add(new XYChart.Data<>(transaction.getDate().toString(), rollingExpenses));
         }
+
 
         // Generate expenses and incomes pie charts
         incomesPieChart.setTitle("Incomes By Category");
         generatePieChart(incomesPieChart, incomeCategoryTotals);
         expensesPieChart.setTitle("Expenses By Category");
         generatePieChart(expensesPieChart, expenseCategoryTotals);
-
-
 
         root.setLeft(incomesPieChart);
         root.setRight(expensesPieChart);
