@@ -6,6 +6,7 @@ import javafx.scene.chart.*;
 import javafx.scene.control.Tab;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.shape.Line;
 import javafx.stage.PopupWindow;
 import javafx.util.Duration;
 import org.example.moneytrackerapp.pojo.Category;
@@ -41,7 +42,9 @@ public class StatisticsTab extends Tab {
 
         // Keep track of data series for rolling income/expense totals (for line chart)
         XYChart.Series<String, Number> incomeSeries = new XYChart.Series<>();
+        incomeSeries.setName("Incomes");
         XYChart.Series<String, Number> expenseSeries = new XYChart.Series<>();
+        expenseSeries.setName("Expenses");
         double rollingIncomes = 0;
         double rollingExpenses = 0;
 
@@ -80,6 +83,11 @@ public class StatisticsTab extends Tab {
             expenseSeries.getData().add(new XYChart.Data<>(transaction.getDate().toString(), rollingExpenses));
         }
 
+        // Generate line chart with axis
+        CategoryAxis xAxis = new CategoryAxis();
+        NumberAxis yAxis = new NumberAxis();
+        LineChart<String, Number> lineChart = new LineChart<>(xAxis, yAxis);
+        generateLineChart(lineChart, incomeSeries, expenseSeries);
 
         // Generate expenses and incomes pie charts
         incomesPieChart.setTitle("Incomes By Category");
@@ -89,10 +97,17 @@ public class StatisticsTab extends Tab {
 
         root.setLeft(incomesPieChart);
         root.setRight(expensesPieChart);
+        root.setCenter(lineChart);
         this.setContent(root);
 
     }
 
+
+    public void generateLineChart(LineChart chart, XYChart.Series incomeSeries, XYChart.Series expenseSeries){
+
+        // Add series data to chart
+        chart.getData().addAll(incomeSeries, expenseSeries);
+    }
 
     /**
      * Generates a pie chart from transaction category data.
