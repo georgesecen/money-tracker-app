@@ -14,11 +14,8 @@ import org.example.moneytrackerapp.pojo.Transaction;
 import org.example.moneytrackerapp.tables.CategoryTable;
 import org.example.moneytrackerapp.tables.TransactionTable;
 
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Objects;
+import java.time.LocalDate;
+import java.util.*;
 
 public class StatisticsTab extends Tab {
 
@@ -28,6 +25,7 @@ public class StatisticsTab extends Tab {
     public StatisticsTab(){
         this.setText("Statistics");
         BorderPane root = new BorderPane();
+
 
         // Get all the transactions from the transactions table
         TransactionTable transactionTable = TransactionTable.getInstance();
@@ -102,6 +100,37 @@ public class StatisticsTab extends Tab {
 
     }
 
+
+    /**
+     * Gets index in transactions of where target date should be.
+     * @param transactions Transactions array to search. (must be sorted by date)
+     * @param target LocalDate which you want to find index of in transactions.
+     * @return int index in transactions where target date should be.
+     */
+    public int getIndexByTransactionDate(ArrayList<Transaction> transactions, LocalDate target){
+
+        int left = 0;
+        int right = transactions.size() - 1;
+
+        while (left <= right){
+            // Calculate mid point
+            int mid = (right + left) / 2;
+
+            // Get the date of transaction at mid
+            LocalDate date = transactions.get(mid).getDate().toLocalDate();
+
+            // If date is after or the same as our target shift right pointer
+            if (date.isAfter(target) || date.isEqual(target)){
+                right = mid - 1;
+            }
+            // If date is smaller than target
+            else{
+                left = mid + 1;
+            }
+        }
+
+        return right;
+    }
 
     public void generateLineChart(LineChart chart, XYChart.Series incomeSeries, XYChart.Series expenseSeries){
 
