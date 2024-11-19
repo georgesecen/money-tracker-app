@@ -12,8 +12,13 @@ import java.util.ArrayList;
 import static org.example.moneytrackerapp.database.DBConst.*;
 
 public class TransactionTable implements TransactionDAO {
+    private static TransactionTable instance;
+    private TransactionTable(){
+        db = Database.getInstance();
+    }
     Database db = Database.getInstance();
     ArrayList<Transaction> transactions;
+
     @Override
     public ArrayList<Transaction> getAllTransactions() {
         String query = "SELECT * FROM " + TABLE_TRANSACTIONS;
@@ -83,12 +88,30 @@ public class TransactionTable implements TransactionDAO {
             e.printStackTrace();
         }
     }
-// TODO are brackets necessary around VALUES???
     @Override
     public void createTransaction(Transaction transaction) {
-        String query = "INSERT INTO " + TABLE_TRANSACTIONS + " VALUES ("
-                + transaction.getId() + ", " + transaction.getAmt()
-                + ", " + transaction.getDesc() + ", " + transaction.getDate()
-                + ", " + transaction.getCat_id() + ")";
+        String query = "INSERT INTO " + TABLE_TRANSACTIONS +
+                "(" + TRANS_COLUMN_ID + ", "
+                + TRANS_COLUMN_AMOUNT + ", "
+                + TRANS_COLUMN_DESC + ", "
+                + TRANS_COLUMN_DATE + ", "
+                + TRANS_COLUMN_CAT + ") VALUES ("
+                + transaction.getId() + ", "
+                + transaction.getAmt() + ", '"
+                + transaction.getDesc() + "', '"
+                + transaction.getDate() + "', " + transaction.getCat_id() + ");";
+
+        try {
+            db.getConnection().createStatement().execute(query);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static TransactionTable getInstance(){
+        if(instance == null){
+            instance = new TransactionTable();
+        }
+        return instance;
     }
 }
