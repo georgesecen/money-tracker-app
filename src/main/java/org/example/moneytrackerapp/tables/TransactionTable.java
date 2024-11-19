@@ -6,10 +6,7 @@ import org.example.moneytrackerapp.pojo.Transaction;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.time.LocalDate;
 import java.util.ArrayList;
-
-import java.sql.Date;
 
 
 import static org.example.moneytrackerapp.database.DBConst.*;
@@ -91,42 +88,8 @@ public class TransactionTable implements TransactionDAO {
             e.printStackTrace();
         }
     }
-// TODO are brackets necessary around VALUES???
     @Override
     public void createTransaction(Transaction transaction) {
-//        String query = "INSERT INTO " + TABLE_TRANSACTIONS +
-//                 "(" + TRANS_COLUMN_ID + ", " +
-//                TRANS_COLUMN_AMOUNT + "," +
-//                TRANS_COLUMN_DESC + "," +
-//                TRANS_COLUMN_DATE + "," +
-//                TRANS_COLUMN_CAT + ") VALUES ('" +
-//                transaction.getId() + "','" +
-//                transaction.getAmt() + "','" +
-//                transaction.getDesc() + "','" +
-//                transaction.getDate() + "','" +
-//                transaction.getCat_id() + "')";
-//        String query = "INSERT INTO " + TABLE_TRANSACTIONS +
-//                " VALUES (" + transaction.getId() + ", " +
-//                transaction.getAmt() + ", " +
-//                transaction.getDesc() + ", " +
-//                transaction.getDate() + ", " +
-//                transaction.getCat_id() + ");";
-//        LocalDate localDate = LocalDate.now();
-//        long day = localDate.getLong()
-        Date date = new Date(System.currentTimeMillis());
-        System.out.println("a: " + date);
-//
-//        String query = "INSERT INTO " + TABLE_TRANSACTIONS +
-//                "(" + TRANS_COLUMN_ID + ", " +
-//                TRANS_COLUMN_AMOUNT + ", " +
-//                TRANS_COLUMN_DESC + ", " +
-//                TRANS_COLUMN_DATE + ", " +
-//                TRANS_COLUMN_CAT +
-//                ") VALUES (" + 0 + ", " +
-//                20.00 + ", " +
-//                "abc" + ", " +
-//                date + ", " +
-//                1 + ");";
         String query = "INSERT INTO " + TABLE_TRANSACTIONS +
                 "(" + TRANS_COLUMN_ID + ", "
                 + TRANS_COLUMN_AMOUNT + ", "
@@ -140,7 +103,6 @@ public class TransactionTable implements TransactionDAO {
 
         try {
             db.getConnection().createStatement().execute(query);
-            //statement.executeQuery(query);
         } catch(Exception e) {
             e.printStackTrace();
         }
