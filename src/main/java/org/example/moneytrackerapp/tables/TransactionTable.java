@@ -2,9 +2,11 @@ package org.example.moneytrackerapp.tables;
 
 import org.example.moneytrackerapp.dao.TransactionDAO;
 import org.example.moneytrackerapp.database.Database;
+import org.example.moneytrackerapp.pojo.DisplayItem;
 import org.example.moneytrackerapp.pojo.Transaction;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
@@ -104,6 +106,32 @@ public class TransactionTable implements TransactionDAO {
         } catch(Exception e) {
             e.printStackTrace();
         }
+    }
+    public ArrayList<DisplayItem> getFancyItems(){
+        ArrayList<DisplayItem> items = new ArrayList<DisplayItem>();
+//        String query = "SELECT item.id, coin.name AS coin_name, " +
+//                " item.year, coin_condition.name as coin_condition," +
+//                " location.name as location_name " +
+//                " from item " +
+//                "JOIN coin on item.name = coin.id " +
+//                "JOIN coin_condition on item.coin_condition = coin_condition.id " +
+//                "JOIN location ON item.location = location.id " +
+//                "ORDER BY item.id ASC";
+        String query = "SELECT * FROM " + TABLE_TRANSACTIONS;
+        try {
+            Statement getItems = db.getConnection().createStatement();
+            ResultSet data = getItems.executeQuery(query);
+            while(data.next()) {
+                items.add(new DisplayItem(data.getInt("id"),
+                        data.getString("coin_name"),
+                        data.getString("year"),
+                        data.getString("coin_condition"),
+                        data.getString("location_name")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return items;
     }
 
     public static TransactionTable getInstance(){
