@@ -7,6 +7,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.Line;
+import javafx.scene.text.Text;
 import javafx.stage.PopupWindow;
 import javafx.util.Duration;
 import org.example.moneytrackerapp.pojo.Category;
@@ -117,6 +118,11 @@ public class StatisticsTab extends Tab {
             }
         }
 
+        // TODO: Compare previous timeframes data with current timeframe and give the user a grade on performance compared to last timeframe
+        // Add text to display previous timeframes data
+        Text displayPreviousTimeframe = new Text(String.format("You spent a total of %.2f expenses and %.2f incomes " +
+                "the last %d days before %s", previousExpenses, previousIncomes, timeframe, date.toString()));
+
         // Generate line chart with axis
         CategoryAxis xAxis = new CategoryAxis();
         NumberAxis yAxis = new NumberAxis();
@@ -132,6 +138,7 @@ public class StatisticsTab extends Tab {
         root.setLeft(incomesPieChart);
         root.setRight(expensesPieChart);
         root.setCenter(lineChart);
+        root.setBottom(displayPreviousTimeframe);
         this.setContent(root);
 
     }
