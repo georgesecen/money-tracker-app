@@ -47,7 +47,7 @@ public class StatisticsTab extends Tab {
         double rollingExpenses = 0;
 
         // Get date x days before current date
-        int timeframe = 100;
+        int timeframe = 365;
         LocalDate date = LocalDate.now().minusDays(timeframe);
 
         // Get the starting index of where date should be in the transactions array
@@ -95,6 +95,26 @@ public class StatisticsTab extends Tab {
             // Add new rolling income/expense to line chart data series
             incomeSeries.getData().add(new XYChart.Data<>(transaction.getDate().toString(), rollingIncomes));
             expenseSeries.getData().add(new XYChart.Data<>(transaction.getDate().toString(), rollingExpenses));
+        }
+
+        // Get the starting index of where the last timeframe before this timeframe started
+        int previousTimeframeStart = getIndexByTransactionDate(transactions, date.minusDays(timeframe * 2));
+
+        // Get data for previous timeframe up until the start of the current already calculated timeframe
+        double previousIncomes = 0;
+        double previousExpenses = 0;
+        for (int i = previousTimeframeStart + 1; i < start; i++) {
+            // Get transaction at index and absolute value of amount in case its negative
+            Transaction transaction = transactions.get(i);
+            double amount = Math.abs(transaction.getAmt());
+
+            // If transaction has a positive amount it's an income, otherwise it's an expense
+            if (transaction.getAmt() > 0){
+                previousIncomes += amount;
+            }
+            else{
+                previousExpenses += amount;
+            }
         }
 
         // Generate line chart with axis
