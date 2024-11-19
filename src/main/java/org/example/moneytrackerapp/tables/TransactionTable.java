@@ -27,7 +27,6 @@ public class TransactionTable implements TransactionDAO {
             Statement statement = db.getConnection().createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
-                if(resultSet.next()) {
                     transactions.add(new Transaction(
                         resultSet.getInt(TRANS_COLUMN_ID),
                         resultSet.getDouble(TRANS_COLUMN_AMOUNT),
@@ -35,7 +34,6 @@ public class TransactionTable implements TransactionDAO {
                         resultSet.getDate(TRANS_COLUMN_DATE),
                         resultSet.getInt(TRANS_COLUMN_CAT)
                     ));
-                }
             }
         } catch (Exception e) {
             e.printStackTrace();
