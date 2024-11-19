@@ -46,29 +46,23 @@ public class StatisticsTab extends Tab {
         double rollingIncomes = 0;
         double rollingExpenses = 0;
 
-        // Get date 30 days before current date
-        LocalDate date = LocalDate.now().minusDays(30);
+        // Get date x days before current date
+        int timeframe = 100;
+        LocalDate date = LocalDate.now().minusDays(timeframe);
 
         // Get the starting index of where date should be in the transactions array
         int start = getIndexByTransactionDate(transactions, date);
 
-        // If the next index after start is exactly 30 days before current date, we will start
-        // then as 30 days ago will be included in our range
-        if (start + 1 < transactions.size() & transactions.get(start + 1).getDate().toLocalDate().equals(date)){
-            start ++;
-        }
-        // We need to add the date exactly 30 days ago to our line chart so the line chart timeframe is correct
-        // (if it starts 5 days ago in our 30 days timeframe it will look wrong)
-        else{
+        // If next index after start is not equal to the exact date which are timeframe begins then add the date
+        // at the exact start of the timeframe so our line chart period is correct
+        // (if first transaction starts 5 days ago in our 30 days timeframe it will look wrong)
+        if (start + 1 < transactions.size() && !transactions.get(start + 1).getDate().toLocalDate().equals(date)){
             incomeSeries.getData().add(new XYChart.Data<>(date.toString(), 0));
             expenseSeries.getData().add(new XYChart.Data<>(date.toString(), 0));
         }
 
-
-
-
-
-        for (Transaction transaction : transactions){
+        for (int i = start + 1; i < transactions.size(); i++) {
+            Transaction transaction = transactions.get(i);
 
             // Get transaction category id and absolute value of transaction amount in case its negative
             int catId = transaction.getCat_id();
