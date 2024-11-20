@@ -27,17 +27,17 @@ public class DisplayTransactionsTab extends Tab {
         TableColumn<DisplayItem, String> column2 =
                 new TableColumn<>("Description");
         column2.setCellValueFactory(
-                e-> new SimpleStringProperty(e.getValue().getAmount()));
+                e-> new SimpleStringProperty(e.getValue().getDescription()));
         // Date
         TableColumn<DisplayItem, String> column3 =
                 new TableColumn<>("Date");
         column3.setCellValueFactory(
-                e-> new SimpleStringProperty(e.getValue().getAmount()));
+                e-> new SimpleStringProperty(e.getValue().getDate()));
         // Category
         TableColumn<DisplayItem, String> column4 =
                 new TableColumn<>("Category");
         column4.setCellValueFactory(
-                e-> new SimpleStringProperty(e.getValue().getAmount()));
+                e-> new SimpleStringProperty(e.getValue().getCategory()));
         // Set Tab Title
         this.setText("Display Transactions");
         BorderPane root  = new BorderPane();

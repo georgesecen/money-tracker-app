@@ -122,11 +122,13 @@ public class TransactionTable implements TransactionDAO {
             Statement getItems = db.getConnection().createStatement();
             ResultSet data = getItems.executeQuery(query);
             while(data.next()) {
-                items.add(new DisplayItem(data.getInt("id"),
-                        data.getString("coin_name"),
-                        data.getString("year"),
-                        data.getString("coin_condition"),
-                        data.getString("location_name")));
+                items.add(new DisplayItem(
+                        data.getInt(TRANS_COLUMN_ID),
+                        data.getString(TRANS_COLUMN_AMOUNT),
+                        data.getString(TRANS_COLUMN_DESC),
+                        data.getString(TRANS_COLUMN_DATE),
+                        data.getString(TRANS_COLUMN_CAT)
+                ));
             }
         } catch (SQLException e) {
             e.printStackTrace();
