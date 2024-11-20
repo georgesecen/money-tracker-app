@@ -109,15 +109,15 @@ public class TransactionTable implements TransactionDAO {
     }
     public ArrayList<DisplayItem> getFancyItems(){
         ArrayList<DisplayItem> items = new ArrayList<DisplayItem>();
-//        String query = "SELECT item.id, coin.name AS coin_name, " +
-//                " item.year, coin_condition.name as coin_condition," +
-//                " location.name as location_name " +
-//                " from item " +
-//                "JOIN coin on item.name = coin.id " +
-//                "JOIN coin_condition on item.coin_condition = coin_condition.id " +
-//                "JOIN location ON item.location = location.id " +
-//                "ORDER BY item.id ASC";
-        String query = "SELECT * FROM " + TABLE_TRANSACTIONS;
+        String query = "SELECT Transactions.id," +
+                " Transactions.amount, " +
+                " Transactions.description, " +
+                " Transactions.date, " +
+                " Categories.cat_name " +
+                " FROM Transactions " +
+                "JOIN Categories on Transactions.cat_id = Categories.id " +
+                "ORDER BY Transactions.id ASC";
+//        String query = "SELECT * FROM " + TABLE_TRANSACTIONS;
         try {
             Statement getItems = db.getConnection().createStatement();
             ResultSet data = getItems.executeQuery(query);
