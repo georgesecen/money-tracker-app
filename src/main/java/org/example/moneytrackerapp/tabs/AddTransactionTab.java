@@ -79,34 +79,37 @@ public class AddTransactionTab extends Tab {
         // Submit
         Button submit = new Button("Add Transaction");
         submit.setOnAction(e -> {
-
-            // First sanitize the amount input
-            // If income is selected, change a negative input to positive
-            // If expense is selected, change a positive input to negative
-            double amtEntered = Double.parseDouble(amount.getText());
-            if(type1.isSelected()) {
-                if (amtEntered < 0) {
-                    amtEntered *= -1;
+            // Ensure all field entries are valid before proceeding
+            try{
+                // First sanitize the amount input
+                // If income is selected, change a negative input to positive
+                // If expense is selected, change a positive input to negative
+                double amtEntered = Double.parseDouble(amount.getText());
+                if(type1.isSelected()) {
+                    if (amtEntered < 0) {
+                        amtEntered *= -1;
+                    }
                 }
-            }
-            else{
-                if(amtEntered > 0) {
-                    amtEntered *= -1;
+                else{
+                    if(amtEntered > 0) {
+                        amtEntered *= -1;
+                    }
                 }
-            }
 
-            // Create and add the new transaction
-            Transaction transaction = new Transaction(
-                    0,
-                    amtEntered,
-                    desc.getText(),
-                    Date.valueOf(date.getValue()),
-                    cat.getSelectionModel().getSelectedItem().getId()
-            );
-            transactionTable.createTransaction(transaction);
+                // Create and add the new transaction
+                Transaction transaction = new Transaction(
+                        0,
+                        amtEntered,
+                        desc.getText(),
+                        Date.valueOf(date.getValue()),
+                        cat.getSelectionModel().getSelectedItem().getId()
+                );
+                transactionTable.createTransaction(transaction);
+            } catch (Exception exception){
+                System.out.println("Invalid input");
+                // Add error message
+            }
         });
-
-
 
         // Vbox to hold form
         VBox form = new VBox(typeLabel, typeBox, amountLabel, amount, descLabel, desc,
@@ -119,7 +122,7 @@ public class AddTransactionTab extends Tab {
         root.setAlignment(title, Pos.BOTTOM_CENTER);
         root.setCenter(form);
         root.setMargin(title, new Insets(100, 30, 30, 30));
-        root.setMargin(form, new Insets(30, 200, 30, 200));
+        root.setMargin(form, new Insets(30, 300, 30, 300));
 
         form.setAlignment(Pos.CENTER);
         this.setContent(root);
