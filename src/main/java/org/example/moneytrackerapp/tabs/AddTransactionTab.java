@@ -76,6 +76,9 @@ public class AddTransactionTab extends Tab {
         DatePicker date = new DatePicker();
         date.setValue(LocalDate.now());
 
+        // Text to display error message
+        Text errorMessage = new Text("");
+
         // Submit
         Button submit = new Button("Add Transaction");
         submit.setOnAction(e -> {
@@ -108,12 +111,13 @@ public class AddTransactionTab extends Tab {
             } catch (Exception exception){
                 System.out.println("Invalid input");
                 // Add error message
+                errorMessage.setText("Invalid input, please try again");
             }
         });
 
         // Vbox to hold form
         VBox form = new VBox(typeLabel, typeBox, amountLabel, amount, descLabel, desc,
-                                        catLabel, cat, dateLabel, date, submit);
+                                        catLabel, cat, dateLabel, date, errorMessage, submit);
         form.setSpacing(10);
 
 
