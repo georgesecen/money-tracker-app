@@ -1,11 +1,16 @@
 package org.example.moneytrackerapp.tabs;
 
+import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import org.example.moneytrackerapp.pojo.Category;
 import org.example.moneytrackerapp.tables.CategoryTable;
 
 /**
@@ -28,12 +33,32 @@ public class SettingsTab extends Tab {
 
         Text title = new Text("Settings");
 
-        Text addCategoryLabel = new Text("Add Category");
+        // Headers
+        //Text appearanceLabel = new Text("Appearance");
 
-        Text appearance = new Text("Appearance");
+        Text manageCatsLabel = new Text("Manage Categories");
 
-        VBox body = new VBox(addCategoryLabel, appearance);
-        body.setSpacing(30);
+        VBox headers = new VBox(/*appearanceLabel,*/manageCatsLabel);
+        headers.setSpacing(200);
+        headers.setMinWidth(100);
+
+        // Content
+        ComboBox<Category> catComboBox = new ComboBox<>();
+        catComboBox.setItems(FXCollections.observableArrayList(categoryTable.getAllCategories()));
+        catComboBox.getSelectionModel().select(0);
+
+        Button deleteCat = new Button("Delete Category");
+        Button addCat = new Button("Add Category");
+        HBox manageCats = new HBox(catComboBox, deleteCat, addCat);
+        manageCats.setAlignment(Pos.TOP_RIGHT);
+
+        VBox content = new VBox(manageCats);
+        content.setSpacing(20);
+        content.setAlignment(Pos.TOP_RIGHT);
+        content.setMinWidth(500);
+
+
+        HBox body = new HBox(headers, content);
 
         root.setTop(title);
         root.setAlignment(title, Pos.BOTTOM_CENTER);
