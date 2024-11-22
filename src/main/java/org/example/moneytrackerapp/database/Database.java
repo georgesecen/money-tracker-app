@@ -1,26 +1,31 @@
 package org.example.moneytrackerapp.database;
 import java.sql.*;
 
-import static org.example.moneytrackerapp.database.Const.*;
 import static org.example.moneytrackerapp.database.DBConst.*;
 
-//TODO test DB class
 public class Database {
     /*
      * This class is using a singleton pattern.
      */
     private static Database instance;
     private Connection connection;
+
+    // Database credentials
+    private static String dbName;
+    private static String dbUser;
+    private static String dbPass;
+
     private Database() {
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
-                connection = DriverManager.getConnection("jdbc:mysql://localhost/" + DB_NAME + "?serverTimeZone=UTC",
-                DB_USER, DB_PASS);
+                connection = DriverManager.getConnection("jdbc:mysql://localhost/" + dbName + "?serverTimeZone=UTC",
+                dbUser, dbPass);
                 System.out.println("Connection Successfully Created");
                 createTable(TABLE_TRANSACTION_TYPES, CREATE_TABLE_TRANSACTION_TYPES, connection);
                 createTable(TABLE_CATEGORIES, CREATE_TABLE_CATEGORIES, connection);
                 createTable(TABLE_TRANSACTIONS, CREATE_TABLE_TRANSACTIONS, connection);
             } catch(Exception e) {
+                System.out.println("Error connecting or creating database in Database.java");
                 e.printStackTrace();
             }
     }
@@ -35,6 +40,7 @@ public class Database {
      */
     public static Database getInstance(){
         if(instance == null){
+            //TODO Replace constructor values with values read from file
             instance = new Database();
         }
         return instance;
@@ -48,7 +54,7 @@ public class Database {
     public void createTable(String tableName, String tableQuery, Connection connection) throws SQLException {
         Statement createTable;
         DatabaseMetaData md = connection.getMetaData();
-        ResultSet resultSet = md.getTables("cmcraemd", null, tableName, null);
+        ResultSet resultSet = md.getTables(dbName, null, tableName, null);
         if(resultSet.next()){
             System.out.println(tableName + " table already exists");
         }
@@ -57,5 +63,25 @@ public class Database {
             createTable.execute(tableQuery);
             System.out.println("The " + tableName + " table has been created");
         }
+    }
+
+    /**
+     * Sets the dbName, dbUser, and dbPass for Database class.
+     * @param name Database name.
+     * @param username Database username.
+     * @param password Database password.
+     */
+    public static void setDbCredentials(String name, String username, String password){
+        dbName = name;
+        dbUser = username;
+        dbPass = password;
+    }
+
+    /**
+     * Sets instance to null. Used in case instance does not have a valid
+     * connection to a database.
+     */
+    public static void resetInstance(){
+        instance = null;
     }
 }
