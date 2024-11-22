@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-
 import static org.example.moneytrackerapp.database.DBConst.*;
 
 public class TransactionTable implements TransactionDAO {
@@ -82,8 +81,8 @@ public class TransactionTable implements TransactionDAO {
     public void deleteTransaction(int transID) {
         String query = "DELETE FROM " + TABLE_TRANSACTIONS + " WHERE " + TRANS_COLUMN_ID + " = " + transID;
         try {
-            Statement statement = db.getConnection().createStatement();
-            statement.executeQuery(query);
+            db.getConnection().createStatement().execute(query);
+            System.out.println("item deleted");
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -108,26 +107,25 @@ public class TransactionTable implements TransactionDAO {
         }
     }
     public ArrayList<DisplayItem> getFancyItems(){
-        ArrayList<DisplayItem> items = new ArrayList<DisplayItem>();
-        String query = "SELECT Transactions.id," +
-                " Transactions.amount, " +
-                " Transactions.description, " +
-                " Transactions.date, " +
-                " Categories.cat_name " +
-                " FROM Transactions " +
-                "JOIN Categories on Transactions.cat_id = Categories.id " +
-                "ORDER BY Transactions.id ASC";
-//        String query = "SELECT * FROM " + TABLE_TRANSACTIONS;
+        ArrayList<DisplayItem> items = new ArrayList<>();
+        String query = "SELECT t.*, " +
+//                " t.amount, " +
+//                " t.description, " +
+//                " t.date, " +
+                " c.cat_name " +
+                " FROM Transactions as t " +
+                "JOIN Categories as c on t.cat_id = c.id " +
+                "ORDER BY t.id ASC";
         try {
             Statement getItems = db.getConnection().createStatement();
             ResultSet data = getItems.executeQuery(query);
             while(data.next()) {
                 items.add(new DisplayItem(
-                        data.getInt(TRANS_COLUMN_ID),
-                        data.getString(TRANS_COLUMN_AMOUNT),
-                        data.getString(TRANS_COLUMN_DESC),
-                        data.getString(TRANS_COLUMN_DATE),
-                        data.getString(TRANS_COLUMN_CAT)
+                        data.getInt("id"),
+                        data.getString("amount"),
+                        data.getString("description"),
+                        data.getString("date"),
+                        data.getString("cat_id")
                 ));
             }
         } catch (SQLException e) {
