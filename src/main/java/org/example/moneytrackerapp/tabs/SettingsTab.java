@@ -14,6 +14,7 @@ public class SettingsTab extends Tab {
     private static SettingsTab instance;
 
     public SettingsTab() {
+        this.setText("Settings");
 
     }
 
