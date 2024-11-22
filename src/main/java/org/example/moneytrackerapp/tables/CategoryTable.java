@@ -43,6 +43,7 @@ public class CategoryTable implements CategoryDAO {
 //TODO discuss implementation of method/change logic
     @Override
     public ArrayList<Category> getAllIncomeCategories() {
+        //TODO no static ID's
         String query = "SELECT * FROM " + TABLE_CATEGORIES + " WHERE " + CAT_COLUMN_TRANS_ID + " = 1";
         categories = new ArrayList<>();
         try {
@@ -63,7 +64,8 @@ public class CategoryTable implements CategoryDAO {
 //TODO discuss implementation of method/change logic
     @Override
     public ArrayList<Category> getAllExpenseCategories() {
-        String query = "SELECT * FROM " + TABLE_CATEGORIES + " WHERE " + CAT_COLUMN_TRANS_ID + " = 2";
+        String query = "SELECT * FROM " + TABLE_CATEGORIES;
+//        String query = "SELECT * FROM " + TABLE_CATEGORIES + " WHERE " + CAT_COLUMN_TRANS_ID + " = 2";
         categories = new ArrayList<>();
         try {
             Statement statement = db.getConnection().createStatement();

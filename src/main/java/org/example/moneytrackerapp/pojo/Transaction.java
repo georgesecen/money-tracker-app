@@ -122,4 +122,5 @@ public class Transaction {
     public void setCat_id(int cat_id) {
         this.cat_id = cat_id;
     }
+    public String toString(){ return getCat_id() + " "; }
 }

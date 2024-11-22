@@ -57,6 +57,7 @@ public class AddTransactionTab extends Tab {
         TextField desc = new TextField();
 
         // Category
+        System.out.println(categoryTable.getAllCategories());
         Text catLabel = new Text("Category");
         ComboBox<Category> cat = new ComboBox<>();
         cat.setItems(FXCollections.observableArrayList(categoryTable.getAllExpenseCategories()));
@@ -104,6 +105,7 @@ public class AddTransactionTab extends Tab {
                     cat.getSelectionModel().getSelectedItem().getId()
             );
             transactionTable.createTransaction(transaction);
+            DisplayTransactionsTab.getInstance().refreshTable();
         });
 
 
