@@ -125,7 +125,7 @@ public class TransactionTable implements TransactionDAO {
                         data.getString("amount"),
                         data.getString("description"),
                         data.getString("date"),
-                        data.getString("cat_id")
+                        data.getString("cat_name")
                 ));
             }
         } catch (SQLException e) {

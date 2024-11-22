@@ -17,5 +17,8 @@ public class LoginScene extends Scene {
      */
     public LoginScene() throws IOException {
         super(new LoginPane(), Const.SCREEN_WIDTH, Const.SCREEN_HEIGHT);
+        this.getStylesheets().add("/Users/cameronmcrae/IdeaProjects/MoneyTrackerApp/main.css");
+
     }
+
 }

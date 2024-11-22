@@ -1,9 +1,5 @@
 package org.example.moneytrackerapp.tabs;
 
-import javafx.beans.binding.IntegerExpression;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -48,7 +44,7 @@ public class DisplayTransactionsTab extends Tab {
         // Set Tab Title
         this.setText("Display Transactions");
         BorderPane root  = new BorderPane();
-        // Title
+        // Set Text Title
         Text title = new Text("Transactions");
 
         tableView.getColumns().addAll(column1, column2, column3, column4);
@@ -56,7 +52,6 @@ public class DisplayTransactionsTab extends Tab {
         root.setCenter(tableView);
         // VBox for transaction content
         VBox content = new VBox(title);
-//        transaction.getAllTransactions();
         content.setAlignment(Pos.CENTER);
         root.setTop(content);
         this.setContent(root);
@@ -68,6 +63,7 @@ public class DisplayTransactionsTab extends Tab {
             refreshTable();
             tableView.getItems().clear();;
             tableView.getItems().addAll(transaction.getFancyItems());
+            //TODO implement after charts are merged
 //            StatisticsTab.getInstance().generateChart();
         });
         root.setBottom(removeItem);

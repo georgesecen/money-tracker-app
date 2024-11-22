@@ -19,6 +19,8 @@ import org.example.moneytrackerapp.scenes.MainScene;
 
 import java.io.*;
 
+import static org.example.moneytrackerapp.HelloApplication.mainScene;
+
 /**
  * Contains sign in/sign up and load/save user credentials functionality.
  */
@@ -129,7 +131,13 @@ public class LoginPane extends BorderPane {
                 }
 
                 // Log user into app
-                HelloApplication.mainStage.setScene(new MainScene());
+//                mainScene.getStylesheets().add(this.getClass().getResource("main.css").toExternalForm());
+//                HelloApplication.mainStage.setScene(new MainScene());
+                mainScene = new MainScene();
+                mainScene.getStylesheets().add(getClass().getResource("main.css").toExternalForm());
+
+                HelloApplication.sceneSwap(new MainScene());
+
             }
             else{
                 // Reset database instance so user can try again
