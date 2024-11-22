@@ -22,9 +22,7 @@ public class HelloApplication extends Application {
         loginScene.getStylesheets().add(getClass().getResource("main.css").toExternalForm());
         mainStage.setScene(loginScene);
         mainStage.show();
-
     }
-
     public static void sceneSwap(Scene scene){
         mainStage.setScene(scene);
     }

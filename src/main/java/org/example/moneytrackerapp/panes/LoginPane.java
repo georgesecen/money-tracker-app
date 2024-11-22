@@ -129,15 +129,10 @@ public class LoginPane extends BorderPane {
                     System.out.println("Error writing user details to credentials in LoginPane.java");
                     err.printStackTrace();
                 }
-
                 // Log user into app
-//                mainScene.getStylesheets().add(this.getClass().getResource("main.css").toExternalForm());
-//                HelloApplication.mainStage.setScene(new MainScene());
                 mainScene = new MainScene();
                 mainScene.getStylesheets().add(getClass().getResource("main.css").toExternalForm());
-
                 HelloApplication.sceneSwap(new MainScene());
-
             }
             else{
                 // Reset database instance so user can try again
@@ -175,8 +170,6 @@ public class LoginPane extends BorderPane {
                 System.out.println("Username does not exist");
             }
         });
-
-
         this.setCenter(loginContainer);
     }
 }

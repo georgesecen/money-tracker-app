@@ -108,10 +108,10 @@ public class TransactionTable implements TransactionDAO {
     }
     public ArrayList<DisplayItem> getFancyItems(){
         ArrayList<DisplayItem> items = new ArrayList<>();
-        String query = "SELECT t.*, " +
-//                " t.amount, " +
-//                " t.description, " +
-//                " t.date, " +
+        String query = "SELECT t.id, " +
+                " t.amount, " +
+                " t.description, " +
+                " t.date, " +
                 " c.cat_name " +
                 " FROM Transactions as t " +
                 "JOIN Categories as c on t.cat_id = c.id " +
