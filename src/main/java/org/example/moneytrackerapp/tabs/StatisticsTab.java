@@ -6,9 +6,7 @@ import javafx.scene.chart.*;
 import javafx.scene.control.Tab;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
-import javafx.stage.PopupWindow;
 import javafx.util.Duration;
 import org.example.moneytrackerapp.pojo.Category;
 import org.example.moneytrackerapp.pojo.Transaction;
@@ -20,13 +18,45 @@ import java.util.*;
 
 public class StatisticsTab extends Tab {
 
-    private PieChart incomesPieChart = new PieChart();
-    private PieChart expensesPieChart = new PieChart();
+    private PieChart incomesPieChart;
+    private PieChart expensesPieChart;
+    private LineChart<String, Number> lineChart;
+
+    // TODO: Change text to grading system
+    private Text previousTimeframeText;
 
     public StatisticsTab(){
         this.setText("Statistics");
         BorderPane root = new BorderPane();
 
+        incomesPieChart = new PieChart();
+        incomesPieChart.setTitle("Incomes by Category");
+        expensesPieChart = new PieChart();
+        expensesPieChart.setTitle("Expenses by Category");
+
+        CategoryAxis xAxis = new CategoryAxis(); // CategoryAxis is used to show date labels on x-axis
+        NumberAxis yAxis = new NumberAxis();
+        lineChart = new LineChart<>(xAxis, yAxis);
+
+        previousTimeframeText = new Text();
+
+
+        generateCharts(200);
+
+        // Add all charts and data to border pane
+        root.setLeft(incomesPieChart);
+        root.setRight(expensesPieChart);
+        root.setCenter(lineChart);
+        root.setBottom(previousTimeframeText);
+        this.setContent(root);
+
+    }
+
+    /**
+     * Generates the income/expense pie charts and line chart.
+     * @param days Number of previous days you want to generate chart data for.
+     */
+    public void generateCharts(int days){
 
         // Get all the transactions from the transactions table
         TransactionTable transactionTable = TransactionTable.getInstance();
@@ -47,14 +77,13 @@ public class StatisticsTab extends Tab {
         double rollingIncomes = 0;
         double rollingExpenses = 0;
 
-        // Get date x days before current date
-        int timeframe = 365;
-        LocalDate date = LocalDate.now().minusDays(timeframe);
+        // Get days before current date
+        LocalDate date = LocalDate.now().minusDays(days);
 
         // Get the starting index of where date should be in the transactions array
         int start = getIndexByTransactionDate(transactions, date);
 
-        // If next index after start is not equal to the exact date which are timeframe begins then add the date
+        // If next index after start is not equal to the exact date which our timeframe begins then add the date
         // at the exact start of the timeframe so our line chart period is correct
         // (if first transaction starts 5 days ago in our 30 days timeframe it will look wrong)
         if (start + 1 < transactions.size() && !transactions.get(start + 1).getDate().toLocalDate().equals(date)){
@@ -94,7 +123,7 @@ public class StatisticsTab extends Tab {
             }
 
             // If we have calculated total income/expense sum for date (could be multiple transactions on same date)
-            // add new rolling income/expense to line chart data series for date
+            // add new rolling income/expense to line chart data series for that date
             if (i + 1 >= transactions.size() || !transaction.getDate().equals(transactions.get(i + 1).getDate())){
                 incomeSeries.getData().add(new XYChart.Data<>(transaction.getDate().toString(), rollingIncomes));
                 expenseSeries.getData().add(new XYChart.Data<>(transaction.getDate().toString(), rollingExpenses));
@@ -102,7 +131,7 @@ public class StatisticsTab extends Tab {
         }
 
         // Get the starting index of where the last timeframe before this timeframe started
-        int previousTimeframeStart = getIndexByTransactionDate(transactions, date.minusDays(timeframe * 2));
+        int previousTimeframeStart = getIndexByTransactionDate(transactions, date.minusDays(days * 2));
 
         // Get data for previous timeframe up until the start of the current already calculated timeframe
         double previousIncomes = 0;
@@ -123,29 +152,16 @@ public class StatisticsTab extends Tab {
 
         // TODO: Compare previous timeframes data with current timeframe and give the user a grade on performance compared to last timeframe
         // Add text to display previous timeframes data
-        Text displayPreviousTimeframe = new Text(String.format("You spent a total of %.2f expenses and %.2f incomes " +
-                "the last %d days before %s", previousExpenses, previousIncomes, timeframe, date.toString()));
+        previousTimeframeText.setText(String.format("You spent a total of %.2f expenses and %.2f incomes " +
+                "the last %d days before %s", previousExpenses, previousIncomes, days, date));
 
-        // Generate line chart with axis
-        CategoryAxis xAxis = new CategoryAxis();
-        NumberAxis yAxis = new NumberAxis();
-        LineChart<String, Number> lineChart = new LineChart<>(xAxis, yAxis);
-        generateLineChart(lineChart, incomeSeries, expenseSeries);
+        // Add series to line chart
+        lineChart.getData().setAll(incomeSeries, expenseSeries);
 
-        // Generate expenses and incomes pie charts
-        incomesPieChart.setTitle("Incomes By Category");
+        // Add the data from income/expense category totals to pie charts
         generatePieChart(incomesPieChart, incomeCategoryTotals);
-        expensesPieChart.setTitle("Expenses By Category");
         generatePieChart(expensesPieChart, expenseCategoryTotals);
-
-        root.setLeft(incomesPieChart);
-        root.setRight(expensesPieChart);
-        root.setCenter(lineChart);
-        root.setBottom(displayPreviousTimeframe);
-        this.setContent(root);
-
     }
-
 
     /**
      * Gets index in transactions of where target date should be.
@@ -153,7 +169,7 @@ public class StatisticsTab extends Tab {
      * @param target LocalDate which you want to find index of in transactions.
      * @return int index in transactions where target date should be.
      */
-    public int getIndexByTransactionDate(ArrayList<Transaction> transactions, LocalDate target){
+    private int getIndexByTransactionDate(ArrayList<Transaction> transactions, LocalDate target){
 
         int left = 0;
         int right = transactions.size() - 1;
@@ -178,18 +194,12 @@ public class StatisticsTab extends Tab {
         return right;
     }
 
-    public void generateLineChart(LineChart chart, XYChart.Series incomeSeries, XYChart.Series expenseSeries){
-
-        // Add series data to chart
-        chart.getData().addAll(incomeSeries, expenseSeries);
-    }
-
     /**
      * Generates a pie chart from transaction category data.
      * @param chart PieChart you want to generate data for.
      * @param categoryTotals HashMap of {categoryId:total} which you want to add to the pie chart.
      */
-    public void generatePieChart(PieChart chart, HashMap<Integer, Double> categoryTotals){
+    private void generatePieChart(PieChart chart, HashMap<Integer, Double> categoryTotals){
 
         // Add the total incomes/expenses for each category to the pie chart
         ArrayList<PieChart.Data> data = new ArrayList<>();
@@ -215,7 +225,6 @@ public class StatisticsTab extends Tab {
         }
     }
 
-
     /**
      * Compares transactions by date to check which transaction occurred first.
      * @param transaction1 First transaction to compare.
@@ -223,7 +232,7 @@ public class StatisticsTab extends Tab {
      * @return 1, -1, or 0 if the date of the first transaction is before, after, or
      * equal to the date of the second transaction.
      */
-    public int compareTransactionDates(Transaction transaction1, Transaction transaction2){
+    private int compareTransactionDates(Transaction transaction1, Transaction transaction2){
 
         // If transaction 1 is before transaction 2
         if (transaction1.getDate().before(transaction2.getDate())){
@@ -238,5 +247,4 @@ public class StatisticsTab extends Tab {
             return 0;
         }
     }
-
 }
