@@ -16,7 +16,12 @@ import org.example.moneytrackerapp.tables.TransactionTable;
 import java.time.LocalDate;
 import java.util.*;
 
+/**
+ * Contains functionality to display transaction data and history to the user.
+ */
 public class StatisticsTab extends Tab {
+
+    private static StatisticsTab instance;
 
     private PieChart incomesPieChart;
     private PieChart expensesPieChart;
@@ -25,6 +30,9 @@ public class StatisticsTab extends Tab {
     // TODO: Change text to grading system
     private Text previousTimeframeText;
 
+    /**
+     * Displays income/expense pie charts and line chart.
+     */
     public StatisticsTab(){
         this.setText("Statistics");
         BorderPane root = new BorderPane();
@@ -50,6 +58,17 @@ public class StatisticsTab extends Tab {
         root.setBottom(previousTimeframeText);
         this.setContent(root);
 
+    }
+
+    /**
+     * Gets the singleton instance of the StatisticsTab class.
+     * @return StatisticsTab class instance.
+     */
+    public static StatisticsTab getInstance(){
+        if(instance == null){
+            instance = new StatisticsTab();
+        }
+        return instance;
     }
 
     /**
