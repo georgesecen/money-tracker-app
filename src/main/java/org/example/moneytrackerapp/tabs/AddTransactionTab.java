@@ -47,7 +47,6 @@ public class AddTransactionTab extends Tab {
         typeBox.alignmentProperty().set(Pos.CENTER);
         typeBox.setSpacing(20);
 
-
         // Transaction amount
         Text amountLabel = new Text("Amount");
         TextField amount = new TextField();

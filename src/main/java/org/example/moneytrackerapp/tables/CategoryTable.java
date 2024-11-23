@@ -1,5 +1,6 @@
 package org.example.moneytrackerapp.tables;
 
+import javafx.scene.chart.PieChart;
 import org.example.moneytrackerapp.dao.CategoryDAO;
 import org.example.moneytrackerapp.database.Database;
 import org.example.moneytrackerapp.pojo.Category;
@@ -12,12 +13,11 @@ import static org.example.moneytrackerapp.database.DBConst.*;
 
 public class CategoryTable implements CategoryDAO {
     private static CategoryTable instance;
+    Database db = Database.getInstance();
+    ArrayList<Category> categories;
     private CategoryTable(){
         db = Database.getInstance();
     }
-
-    Database db = Database.getInstance();
-    ArrayList<Category> categories;
     /**
      * GetAllCategories
      * returns all categories

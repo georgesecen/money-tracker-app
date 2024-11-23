@@ -1,6 +1,8 @@
 package org.example.moneytrackerapp.tabs;
 
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
@@ -10,6 +12,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import org.example.moneytrackerapp.pojo.DisplayItem;
+import org.example.moneytrackerapp.pojo.Transaction;
 import org.example.moneytrackerapp.tables.TransactionTable;
 
 public class DisplayTransactionsTab extends Tab {
@@ -65,6 +68,17 @@ public class DisplayTransactionsTab extends Tab {
             tableView.getItems().addAll(transaction.getFancyItems());
             //TODO implement after charts are merged
 //            StatisticsTab.getInstance().generateChart();
+        });
+        tableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                if(newValue != null){
+                    Transaction selectedItem = transaction.getTransaction(((DisplayItem) newValue).getId());
+                    //Item object version of DisplayItem (Selected in table)
+                    EditTransactionPane pane = new EditTransactionPane(selectedItem);
+                    root.setRight(pane);
+                }
+            }
         });
         root.setBottom(removeItem);
 
