@@ -3,9 +3,11 @@ package org.example.moneytrackerapp.tabs;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.*;
+import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import org.example.moneytrackerapp.pojo.Category;
@@ -37,21 +39,39 @@ public class StatisticsTab extends Tab {
         this.setText("Statistics");
         BorderPane root = new BorderPane();
 
+        // TODO: Change from text to grading system
+        previousTimeframeText = new Text();
+
+        // Create the income/expense pie charts
         incomesPieChart = new PieChart();
         incomesPieChart.setTitle("Incomes by Category");
         expensesPieChart = new PieChart();
         expensesPieChart.setTitle("Expenses by Category");
 
+        // Create the line chart
         CategoryAxis xAxis = new CategoryAxis(); // CategoryAxis is used to show date labels on x-axis
         NumberAxis yAxis = new NumberAxis();
         lineChart = new LineChart<>(xAxis, yAxis);
 
-        previousTimeframeText = new Text();
+        // Add buttons which control what timeframe data is shown for
+        HBox timeframesContainer = new HBox();
+        Button month = new Button("30 Days");
+        Button quarter = new Button("90 Days");
+        Button year = new Button("365 Days");
+        Button allTime = new Button("All Time");
+        timeframesContainer.getChildren().addAll(month, quarter, year, allTime);
 
+        // Generate charts for different timeframes according to what buttons were clicked
+        month.setOnAction(e-> generateCharts(30));
+        quarter.setOnAction(e-> generateCharts(90));
+        year.setOnAction(e->generateCharts(365));
+        allTime.setOnAction(e->generateCharts(9999));
 
-        generateCharts(200);
+        // Default timeframe shown to user is 30 days
+        generateCharts(30);
 
         // Add all charts and data to border pane
+        root.setTop(timeframesContainer);
         root.setLeft(incomesPieChart);
         root.setRight(expensesPieChart);
         root.setCenter(lineChart);
