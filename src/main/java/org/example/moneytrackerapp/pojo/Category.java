@@ -79,4 +79,8 @@ public class Category {
         this.trans_type = trans_type;
     }
 
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }

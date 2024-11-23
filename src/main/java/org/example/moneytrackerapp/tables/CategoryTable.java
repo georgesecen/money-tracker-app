@@ -15,6 +15,7 @@ public class CategoryTable implements CategoryDAO {
     private CategoryTable(){
         db = Database.getInstance();
     }
+
     Database db = Database.getInstance();
     ArrayList<Category> categories;
     /**
@@ -23,7 +24,7 @@ public class CategoryTable implements CategoryDAO {
      */
     @Override
     public ArrayList<Category> getAllCategories() {
-        String query = "SELECT * FROM" + TABLE_CATEGORIES;
+        String query = "SELECT * FROM " + TABLE_CATEGORIES;
         categories = new ArrayList<>();
         try{
             Statement statement = db.getConnection().createStatement();
@@ -33,7 +34,6 @@ public class CategoryTable implements CategoryDAO {
                     resultSet.getString(CAT_COLUMN_NAME),
                     resultSet.getInt(CAT_COLUMN_ID)
                 ));
-
             }
         } catch(Exception e) {
             e.printStackTrace();
@@ -43,13 +43,15 @@ public class CategoryTable implements CategoryDAO {
 //TODO discuss implementation of method/change logic
     @Override
     public ArrayList<Category> getAllIncomeCategories() {
-        String query = "SELECT * FROM " + TABLE_CATEGORIES + " WHERE " + CAT_COLUMN_NAME + " = income";
+        //TODO no static ID's
+        String query = "SELECT * FROM " + TABLE_CATEGORIES + " WHERE " + CAT_COLUMN_TRANS_ID + " = 1";
         categories = new ArrayList<>();
         try {
             Statement statement = db.getConnection().createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             while(resultSet.next()) {
                 categories.add(new Category(
+                        resultSet.getInt(CAT_COLUMN_ID),
                         resultSet.getString(CAT_COLUMN_NAME),
                         resultSet.getInt(CAT_COLUMN_ID)
                 ));
@@ -62,13 +64,15 @@ public class CategoryTable implements CategoryDAO {
 //TODO discuss implementation of method/change logic
     @Override
     public ArrayList<Category> getAllExpenseCategories() {
-        String query = "SELECT * FROM " + TABLE_CATEGORIES + " WHERE " + CAT_COLUMN_NAME + " = expenses";
+        String query = "SELECT * FROM " + TABLE_CATEGORIES;
+//        String query = "SELECT * FROM " + TABLE_CATEGORIES + " WHERE " + CAT_COLUMN_TRANS_ID + " = 2";
         categories = new ArrayList<>();
         try {
             Statement statement = db.getConnection().createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             while(resultSet.next()) {
                 categories.add(new Category(
+                        resultSet.getInt(CAT_COLUMN_ID),
                         resultSet.getString(CAT_COLUMN_NAME),
                         resultSet.getInt(CAT_COLUMN_ID)
                 ));

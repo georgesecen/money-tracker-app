@@ -2,23 +2,24 @@ package org.example.moneytrackerapp.tables;
 
 import org.example.moneytrackerapp.dao.TransactionDAO;
 import org.example.moneytrackerapp.database.Database;
+import org.example.moneytrackerapp.pojo.DisplayItem;
 import org.example.moneytrackerapp.pojo.Transaction;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
 
 import static org.example.moneytrackerapp.database.DBConst.*;
 
 public class TransactionTable implements TransactionDAO {
-
     private static TransactionTable instance;
     private TransactionTable(){
         db = Database.getInstance();
     }
     Database db = Database.getInstance();
     ArrayList<Transaction> transactions;
+
     @Override
     public ArrayList<Transaction> getAllTransactions() {
         String query = "SELECT * FROM " + TABLE_TRANSACTIONS;
@@ -27,7 +28,6 @@ public class TransactionTable implements TransactionDAO {
             Statement statement = db.getConnection().createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
-                if(resultSet.next()) {
                     transactions.add(new Transaction(
                         resultSet.getInt(TRANS_COLUMN_ID),
                         resultSet.getDouble(TRANS_COLUMN_AMOUNT),
@@ -35,7 +35,6 @@ public class TransactionTable implements TransactionDAO {
                         resultSet.getDate(TRANS_COLUMN_DATE),
                         resultSet.getInt(TRANS_COLUMN_CAT)
                     ));
-                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -82,19 +81,57 @@ public class TransactionTable implements TransactionDAO {
     public void deleteTransaction(int transID) {
         String query = "DELETE FROM " + TABLE_TRANSACTIONS + " WHERE " + TRANS_COLUMN_ID + " = " + transID;
         try {
-            Statement statement = db.getConnection().createStatement();
-            statement.executeQuery(query);
+            db.getConnection().createStatement().execute(query);
+            System.out.println("item deleted");
         } catch(Exception e) {
             e.printStackTrace();
         }
     }
-// TODO are brackets necessary around VALUES???
     @Override
     public void createTransaction(Transaction transaction) {
-        String query = "INSERT INTO " + TABLE_TRANSACTIONS + " VALUES ("
-                + transaction.getId() + ", " + transaction.getAmt()
-                + ", " + transaction.getDesc() + ", " + transaction.getDate()
-                + ", " + transaction.getCat_id() + ")";
+        String query = "INSERT INTO " + TABLE_TRANSACTIONS +
+                "(" + TRANS_COLUMN_ID + ", "
+                + TRANS_COLUMN_AMOUNT + ", "
+                + TRANS_COLUMN_DESC + ", "
+                + TRANS_COLUMN_DATE + ", "
+                + TRANS_COLUMN_CAT + ") VALUES ("
+                + transaction.getId() + ", "
+                + transaction.getAmt() + ", '"
+                + transaction.getDesc() + "', '"
+                + transaction.getDate() + "', " + transaction.getCat_id() + ");";
+
+        try {
+            db.getConnection().createStatement().execute(query);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public ArrayList<DisplayItem> getFancyItems(){
+        ArrayList<DisplayItem> items = new ArrayList<>();
+        String query = "SELECT t.id, " +
+                " t.amount, " +
+                " t.description, " +
+                " t.date, " +
+                " c.cat_name " +
+                " FROM Transactions as t " +
+                "JOIN Categories as c on t.cat_id = c.id " +
+                "ORDER BY t.id ASC";
+        try {
+            Statement getItems = db.getConnection().createStatement();
+            ResultSet data = getItems.executeQuery(query);
+            while(data.next()) {
+                items.add(new DisplayItem(
+                        data.getInt("id"),
+                        data.getString("amount"),
+                        data.getString("description"),
+                        data.getString("date"),
+                        data.getString("cat_name")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return items;
     }
 
     public static TransactionTable getInstance(){
