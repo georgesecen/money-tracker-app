@@ -93,9 +93,12 @@ public class StatisticsTab extends Tab {
                 expenseCategoryTotals.put(catId, expenseCategoryTotals.get(catId) + amount);
             }
 
-            // Add new rolling income/expense to line chart data series
-            incomeSeries.getData().add(new XYChart.Data<>(transaction.getDate().toString(), rollingIncomes));
-            expenseSeries.getData().add(new XYChart.Data<>(transaction.getDate().toString(), rollingExpenses));
+            // If we have calculated total income/expense sum for date (could be multiple transactions on same date)
+            // add new rolling income/expense to line chart data series for date
+            if (i + 1 >= transactions.size() || !transaction.getDate().equals(transactions.get(i + 1).getDate())){
+                incomeSeries.getData().add(new XYChart.Data<>(transaction.getDate().toString(), rollingIncomes));
+                expenseSeries.getData().add(new XYChart.Data<>(transaction.getDate().toString(), rollingExpenses));
+            }
         }
 
         // Get the starting index of where the last timeframe before this timeframe started
