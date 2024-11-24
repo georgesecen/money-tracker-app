@@ -196,29 +196,36 @@ public class LoginPane extends BorderPane {
         });
 
 
-        Pane pane = new Pane();
+        // Pane will hold the greeting text welcoming and showing them the signup/login
+        StackPane CTAContainer = new StackPane();
 
-        // Create properties for each of the border corner radius
-        IntegerProperty topLeft = new SimpleIntegerProperty(1);
-        IntegerProperty topRight = new SimpleIntegerProperty(1);
-        IntegerProperty bottomRight = new SimpleIntegerProperty(1);
-        IntegerProperty bottomLeft = new SimpleIntegerProperty(1);
+        // Vbox will hold sign in/login information and button
+        VBox greetingInfoContainer = new VBox();
 
-        // Bind the border radius properties to the pane style
-        pane.styleProperty().bind(Bindings.format("-fx-background-color: lightblue; -fx-background-radius: %dpx %dpx %dpx %dpx; -fx-border-radius: %dpx %dpx %dpx %dpx;",
-                topLeft, topRight, bottomRight, bottomLeft, topLeft, topRight, bottomRight, bottomLeft));
+        // Add all CTA text and button to the greetingInfoContainer container
+        Text welcomeText = new Text("Hello, Friend!");
+        Text provideInfoText = new Text("Register with your database details to use all app features.");
+        Button animateCTAButton = new Button("Sign Up");
+        greetingInfoContainer.getChildren().addAll(welcomeText, provideInfoText, animateCTAButton);
+        greetingInfoContainer.setAlignment(Pos.CENTER);
+
+        CTAContainer.getChildren().add(greetingInfoContainer);
+
+//        // Create properties for each of the border corner radius
+//        IntegerProperty topLeft = new SimpleIntegerProperty(1);
+//        IntegerProperty topRight = new SimpleIntegerProperty(1);
+//        IntegerProperty bottomRight = new SimpleIntegerProperty(1);
+//        IntegerProperty bottomLeft = new SimpleIntegerProperty(1);
+//
+//        // Bind the border radius properties to the pane style
+//        CTAContainer.styleProperty().bind(Bindings.format("-fx-background-color: lightblue; -fx-background-radius: %dpx %dpx %dpx %dpx; -fx-border-radius: %dpx %dpx %dpx %dpx;",
+//                topLeft, topRight, bottomRight, bottomLeft, topLeft, topRight, bottomRight, bottomLeft));
+//
+//
+//        animateProperties(30000, new double[]{300, 500}, new Property[]{topLeft, topRight});
 
 
-        animateProperties(30000, new double[]{300, 500}, new Property[]{topLeft, topRight});
-
-        pane.setMinWidth(100);
-        pane.setMaxWidth(100);
-        pane.setMaxHeight(100);
-        pane.setMinHeight(100);
-
-
-
-        this.setTop(pane);
+        this.setTop(CTAContainer);
         this.setCenter(loginContainer);
     }
 
@@ -267,6 +274,34 @@ public class LoginPane extends BorderPane {
         // After the text fades out change it so that the new text fades in
         fadeOut.setOnFinished(e->{
             textNode.setText(newText);
+        });
+
+        transitions.play();
+    }
+
+    /**
+     * Animates a button node, so it fades out, changes text, and fades in with new text.
+     * @param buttonNode Button node which you want to animate.
+     * @param newText Text that you want to replace the current button node text with.
+     * @param animationLength Length of the animation in milliseconds.
+     */
+    public void animateButtonChange(Button buttonNode, String newText, double animationLength){
+        // Fade button node out
+        FadeTransition fadeOut = new FadeTransition(Duration.seconds(animationLength), buttonNode);
+        fadeOut.setFromValue(1);
+        fadeOut.setToValue(0);
+
+        // Fade button node in
+        FadeTransition fadeIn = new FadeTransition(Duration.seconds(animationLength), buttonNode);
+        fadeIn.setFromValue(0);
+        fadeIn.setToValue(1);
+
+        SequentialTransition transitions = new SequentialTransition();
+        transitions.getChildren().addAll(fadeOut, fadeIn);
+
+        // After the text fades out change it so that the new text fades in
+        fadeOut.setOnFinished(e->{
+            buttonNode.setText(newText);
         });
 
         transitions.play();
