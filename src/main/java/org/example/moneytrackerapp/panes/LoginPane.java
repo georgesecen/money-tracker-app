@@ -3,10 +3,12 @@ package org.example.moneytrackerapp.panes;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import javafx.animation.FadeTransition;
-import javafx.animation.SequentialTransition;
+import javafx.animation.*;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
@@ -14,7 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
@@ -23,6 +25,12 @@ import org.example.moneytrackerapp.database.Database;
 import org.example.moneytrackerapp.scenes.MainScene;
 
 import java.io.*;
+import java.lang.reflect.Array;
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 import static org.example.moneytrackerapp.HelloApplication.mainScene;
 
@@ -188,9 +196,52 @@ public class LoginPane extends BorderPane {
         });
 
 
+        Pane pane = new Pane();
 
-        this.setTop(testTextContainer);
+        // Create properties for each of the border corner radius
+        IntegerProperty topLeft = new SimpleIntegerProperty(1);
+        IntegerProperty topRight = new SimpleIntegerProperty(1);
+        IntegerProperty bottomRight = new SimpleIntegerProperty(1);
+        IntegerProperty bottomLeft = new SimpleIntegerProperty(1);
+
+        // Bind the border radius properties to the pane style
+        pane.styleProperty().bind(Bindings.format("-fx-background-color: lightblue; -fx-background-radius: %dpx %dpx %dpx %dpx; -fx-border-radius: %dpx %dpx %dpx %dpx;",
+                topLeft, topRight, bottomRight, bottomLeft, topLeft, topRight, bottomRight, bottomLeft));
+
+
+        animateProperties(30000, new double[]{300, 500}, new Property[]{topLeft, topRight});
+
+        pane.setMinWidth(100);
+        pane.setMaxWidth(100);
+        pane.setMaxHeight(100);
+        pane.setMinHeight(100);
+
+
+
+        this.setTop(pane);
         this.setCenter(loginContainer);
+    }
+
+
+    /**
+     * Animates bound properties of a JavaFx node to specified target values.
+     * @param animationLength Length of the animation in milliseconds.
+     * @param targetValues Values to update properties to.
+     * @param properties Properties to be updated.
+     */
+    public void animateProperties(double animationLength, double[] targetValues, Property[] properties){
+
+        Timeline timeline = new Timeline();
+
+        for (int i = 0; i < properties.length; i++) {
+
+            // Add the property with its corresponding target value to the keyframe and timeline
+            KeyValue keyValue = new KeyValue(properties[i], targetValues[i]);
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(animationLength), keyValue);
+            timeline.getKeyFrames().add(keyFrame);
+        }
+
+        timeline.play();
     }
 
     /**
