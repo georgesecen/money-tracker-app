@@ -200,11 +200,11 @@ public class LoginPane extends BorderPane {
         CTAContainer.getChildren().add(greetingInfoContainer);
         CTAContainer.setMaxWidth(400);
 
-        // Create properties for each of the border corner radius (default radius is 0px for each corner)
-        IntegerProperty topLeft = new SimpleIntegerProperty(0);
-        IntegerProperty topRight = new SimpleIntegerProperty(0);
-        IntegerProperty bottomRight = new SimpleIntegerProperty(0);
-        IntegerProperty bottomLeft = new SimpleIntegerProperty(0);
+        // Create properties for each of the border corner radius
+        IntegerProperty topLeft = new SimpleIntegerProperty(35);
+        IntegerProperty topRight = new SimpleIntegerProperty(10);
+        IntegerProperty bottomRight = new SimpleIntegerProperty(10);
+        IntegerProperty bottomLeft = new SimpleIntegerProperty(20);
 
         // Bind the border radius properties to the pane style
         CTAContainer.styleProperty().bind(Bindings.format("-fx-background-color: lightblue; -fx-background-radius: %dpx %dpx %dpx %dpx; -fx-border-radius: %dpx %dpx %dpx %dpx;",
@@ -213,25 +213,35 @@ public class LoginPane extends BorderPane {
 
         // Animate the CTA on click
         // TODO: Potentially change flag to a timer so animation must finish before it can run again
-        AtomicBoolean flag = new AtomicBoolean(true);
+        AtomicBoolean flag = new AtomicBoolean(true); // Used to know if the CTA is showing sign up or sign in
         animateCTAButton.setOnAction(e->{
 
             // If the CTA is showing signup text, change it to show sign in text, vice versa
             if (flag.get()){
+                // Animate text and buttons
                 animateTextChange(welcomeText, "Welcome Back!", 225);
                 animateTextChange(provideInfoText, "Enter your database details.", 225);
                 animateButtonChange(animateCTAButton, "Sign In", 225);
+
+                // Animate border radius
+                animateProperties(225, new double[]{10, 35, 20, 10}, new Property[]{topLeft, topRight, bottomRight, bottomLeft});
+
                 flag.set(false);
             }
             else{
+                // Animate text and buttons
                 animateTextChange(welcomeText, "Hello, Friend!", 225);
                 animateTextChange(provideInfoText, "Register with your database details to use all app features.", 225);
                 animateButtonChange(animateCTAButton, "Sign Up", 225);
+
+                // Animate border radius
+                animateProperties(225, new double[]{35, 10, 10, 20}, new Property[]{topLeft, topRight, bottomRight, bottomLeft});
+
                 flag.set(true);
             }
 
         });
-//        animateProperties(30000, new double[]{300, 500}, new Property[]{topLeft, topRight});
+
 
 
         this.setTop(CTAContainer);
