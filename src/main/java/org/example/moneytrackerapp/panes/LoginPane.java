@@ -6,18 +6,11 @@ import com.google.gson.JsonParser;
 import javafx.animation.*;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputControl;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.*;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import org.example.moneytrackerapp.HelloApplication;
@@ -25,12 +18,7 @@ import org.example.moneytrackerapp.database.Database;
 import org.example.moneytrackerapp.scenes.MainScene;
 
 import java.io.*;
-import java.lang.reflect.Array;
-import java.sql.Time;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.example.moneytrackerapp.HelloApplication.mainScene;
 
@@ -210,18 +198,39 @@ public class LoginPane extends BorderPane {
         greetingInfoContainer.setAlignment(Pos.CENTER);
 
         CTAContainer.getChildren().add(greetingInfoContainer);
+        CTAContainer.setMaxWidth(400);
 
-//        // Create properties for each of the border corner radius
-//        IntegerProperty topLeft = new SimpleIntegerProperty(1);
-//        IntegerProperty topRight = new SimpleIntegerProperty(1);
-//        IntegerProperty bottomRight = new SimpleIntegerProperty(1);
-//        IntegerProperty bottomLeft = new SimpleIntegerProperty(1);
-//
-//        // Bind the border radius properties to the pane style
-//        CTAContainer.styleProperty().bind(Bindings.format("-fx-background-color: lightblue; -fx-background-radius: %dpx %dpx %dpx %dpx; -fx-border-radius: %dpx %dpx %dpx %dpx;",
-//                topLeft, topRight, bottomRight, bottomLeft, topLeft, topRight, bottomRight, bottomLeft));
-//
-//
+        // Create properties for each of the border corner radius (default radius is 0px for each corner)
+        IntegerProperty topLeft = new SimpleIntegerProperty(0);
+        IntegerProperty topRight = new SimpleIntegerProperty(0);
+        IntegerProperty bottomRight = new SimpleIntegerProperty(0);
+        IntegerProperty bottomLeft = new SimpleIntegerProperty(0);
+
+        // Bind the border radius properties to the pane style
+        CTAContainer.styleProperty().bind(Bindings.format("-fx-background-color: lightblue; -fx-background-radius: %dpx %dpx %dpx %dpx; -fx-border-radius: %dpx %dpx %dpx %dpx;",
+                topLeft, topRight, bottomRight, bottomLeft, topLeft, topRight, bottomRight, bottomLeft));
+
+
+        // Animate the CTA on click
+        // TODO: Potentially change flag to a timer so animation must finish before it can run again
+        AtomicBoolean flag = new AtomicBoolean(true);
+        animateCTAButton.setOnAction(e->{
+
+            // If the CTA is showing signup text, change it to show sign in text, vice versa
+            if (flag.get()){
+                animateTextChange(welcomeText, "Welcome Back!", 225);
+                animateTextChange(provideInfoText, "Enter your database details.", 225);
+                animateButtonChange(animateCTAButton, "Sign In", 225);
+                flag.set(false);
+            }
+            else{
+                animateTextChange(welcomeText, "Hello, Friend!", 225);
+                animateTextChange(provideInfoText, "Register with your database details to use all app features.", 225);
+                animateButtonChange(animateCTAButton, "Sign Up", 225);
+                flag.set(true);
+            }
+
+        });
 //        animateProperties(30000, new double[]{300, 500}, new Property[]{topLeft, topRight});
 
 
@@ -259,12 +268,12 @@ public class LoginPane extends BorderPane {
      */
     public void animateTextChange(Text textNode, String newText, double animationLength){
         // Fade text node out
-        FadeTransition fadeOut = new FadeTransition(Duration.seconds(animationLength), textNode);
+        FadeTransition fadeOut = new FadeTransition(Duration.millis(animationLength), textNode);
         fadeOut.setFromValue(1);
         fadeOut.setToValue(0);
 
         // Fade text node in
-        FadeTransition fadeIn = new FadeTransition(Duration.seconds(animationLength), textNode);
+        FadeTransition fadeIn = new FadeTransition(Duration.millis(animationLength), textNode);
         fadeIn.setFromValue(0);
         fadeIn.setToValue(1);
 
@@ -287,12 +296,12 @@ public class LoginPane extends BorderPane {
      */
     public void animateButtonChange(Button buttonNode, String newText, double animationLength){
         // Fade button node out
-        FadeTransition fadeOut = new FadeTransition(Duration.seconds(animationLength), buttonNode);
+        FadeTransition fadeOut = new FadeTransition(Duration.millis(animationLength), buttonNode);
         fadeOut.setFromValue(1);
         fadeOut.setToValue(0);
 
         // Fade button node in
-        FadeTransition fadeIn = new FadeTransition(Duration.seconds(animationLength), buttonNode);
+        FadeTransition fadeIn = new FadeTransition(Duration.millis(animationLength), buttonNode);
         fadeIn.setFromValue(0);
         fadeIn.setToValue(1);
 
