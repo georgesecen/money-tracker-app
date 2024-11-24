@@ -109,6 +109,11 @@ public class AddTransactionTab extends Tab {
                         cat.getSelectionModel().getSelectedItem().getId()
                 );
                 transactionTable.createTransaction(transaction);
+
+                // Redirect user to all transactions page
+                DisplayTransactionsTab.getInstance().refreshTable();
+                this.getTabPane().getSelectionModel().select(DisplayTransactionsTab.getInstance());
+
             } catch (Exception exception){
                 System.out.println("Invalid input");
                 // Add error message
