@@ -3,16 +3,21 @@ package org.example.moneytrackerapp.panes;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import javafx.animation.FadeTransition;
+import javafx.animation.SequentialTransition;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 import org.example.moneytrackerapp.HelloApplication;
 import org.example.moneytrackerapp.database.Database;
 import org.example.moneytrackerapp.scenes.MainScene;
@@ -170,6 +175,49 @@ public class LoginPane extends BorderPane {
                 System.out.println("Username does not exist");
             }
         });
+
+        Text testText = new Text("12346");
+        Button testButton = new Button("change all text");
+
+        HBox testTextContainer = new HBox();
+        testTextContainer.getChildren().addAll(testText, testButton);
+
+        testButton.setOnAction(e->{
+
+            animateTextChange(testText, "im changed", 0.5);
+        });
+
+
+
+        this.setTop(testTextContainer);
         this.setCenter(loginContainer);
+    }
+
+    /**
+     * Animates a text node, so it fades out, changes text, and fades in with new text.
+     * @param textNode Text node which you want to animate.
+     * @param newText Text that you want to replace the current text node text with.
+     * @param animationLength Length of the animation in milliseconds.
+     */
+    public void animateTextChange(Text textNode, String newText, double animationLength){
+        // Fade text node out
+        FadeTransition fadeOut = new FadeTransition(Duration.seconds(animationLength), textNode);
+        fadeOut.setFromValue(1);
+        fadeOut.setToValue(0);
+
+        // Fade text node in
+        FadeTransition fadeIn = new FadeTransition(Duration.seconds(animationLength), textNode);
+        fadeIn.setFromValue(0);
+        fadeIn.setToValue(1);
+
+        SequentialTransition transitions = new SequentialTransition();
+        transitions.getChildren().addAll(fadeOut, fadeIn);
+
+        // After the text fades out change it so that the new text fades in
+        fadeOut.setOnFinished(e->{
+            textNode.setText(newText);
+        });
+
+        transitions.play();
     }
 }
