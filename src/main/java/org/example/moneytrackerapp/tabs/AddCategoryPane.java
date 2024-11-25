@@ -30,14 +30,10 @@ public class AddCategoryPane extends GridPane {
         type2.setSelected(true);
 
         this.add(nameLabel, 0, 0);
-        this.add(name, 1, 0);
+        this.add(name, 1, 0, 2, 1);
 
         this.add(typeLabel, 0, 1);
         this.add(type1, 1, 1);
         this.add(type2, 2, 1);
-
-
-
-
     }
 }

@@ -6,9 +6,11 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Tab;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import org.example.moneytrackerapp.pojo.Category;
 import org.example.moneytrackerapp.tables.CategoryTable;
@@ -49,6 +51,7 @@ public class SettingsTab extends Tab {
 
         Button deleteCat = new Button("Delete Category");
         Button addCat = new Button("Add Category");
+
         HBox manageCats = new HBox(catComboBox, deleteCat, addCat);
         manageCats.setAlignment(Pos.TOP_RIGHT);
 
@@ -59,6 +62,14 @@ public class SettingsTab extends Tab {
 
 
         HBox body = new HBox(headers, content);
+
+        addCat.setOnAction(e -> {
+            AddCategoryPane pane = new AddCategoryPane();
+            root.setRight(pane);
+            //pane.setAlignment(Pos.TOP_RIGHT);
+            root.setMargin(pane, new Insets(30, 50, 30, 0));
+            root.setMargin(body, new Insets(30, 10, 30, 50));
+        });
 
         root.setTop(title);
         root.setAlignment(title, Pos.BOTTOM_CENTER);
