@@ -34,6 +34,22 @@ public class ManageCategoriesTab extends Tab {
         categories.setItems(FXCollections.observableArrayList(categoryTable.getAllCategories()));
         categories.getSelectionModel().select(0);
         Button deleteCat = new Button("X");
+        Text errorMsg = new Text("Cannot delete a default category!");
+        errorMsg.setVisible(false);
+
+
+        deleteCat.setOnAction(e -> {
+            int id = categories.getSelectionModel().getSelectedItem().getId();
+            if(id > 4){     // if the selected category is NOT a default category
+                categoryTable.deleteCategory(id);
+                errorMsg.setVisible(false);
+                //categories.setItems(FXCollections.observableArrayList(categoryTable.getAllCategories()));
+            }
+            else{
+                // Display error message
+                errorMsg.setVisible(true);
+            }
+        });
 
         GridPane content = new GridPane();
         content.setHgap(20);
@@ -43,6 +59,8 @@ public class ManageCategoriesTab extends Tab {
         content.add(userCategories, 0, 0);
         content.add(categories, 10, 0);
         content.add(deleteCat, 11, 0);
+        content.add(errorMsg, 10, 1, 2,1);
+
 
 
         // Set up the view
