@@ -10,6 +10,7 @@ public interface CategoryDAO {
     public ArrayList<Category> getAllIncomeCategories();
     public ArrayList<Category> getAllExpenseCategories();
     public Category getCategory(int id);
+    public void addCategory(Category category);
     public void deleteCategory(int id);
 
 }
