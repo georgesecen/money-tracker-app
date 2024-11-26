@@ -134,9 +134,11 @@ public class CategoryTable implements CategoryDAO {
         String query = "DELETE FROM " + TABLE_CATEGORIES + " WHERE " + CAT_COLUMN_ID + " = " + catID;
         try {
             Statement statement = db.getConnection().createStatement();
-            statement.executeQuery(query);
+            statement.execute(query);
+            System.out.println("Successfully deleted catagory.");
         } catch(Exception e) {
             e.printStackTrace();
+            System.out.println("Error deleting category");
         }
     }
 
