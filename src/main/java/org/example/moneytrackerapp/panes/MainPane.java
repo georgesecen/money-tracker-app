@@ -18,6 +18,7 @@ public class MainPane extends BorderPane {
         AddTransactionTab addTransactionTab = AddTransactionTab.getInstance();
         DisplayTransactionsTab displayTransactionsTab = DisplayTransactionsTab.getInstance();
         StatisticsTab statisticsTab = StatisticsTab.getInstance();
+
         tabPane.getTabs().addAll(displayTransactionsTab, addTransactionTab, statisticsTab);
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
