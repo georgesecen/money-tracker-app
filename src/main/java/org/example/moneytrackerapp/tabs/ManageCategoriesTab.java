@@ -67,6 +67,30 @@ public class ManageCategoriesTab extends Tab {
         typeButtons.setSpacing(50);
         typeButtons.setTranslateY(-12);
 
+        // Add button action handler
+        addCat.setOnAction(e -> {
+            // Get correct id of transaction type
+            int transTypeID;
+            if(income.isSelected()){
+                transTypeID = 1;
+            }
+            else{
+                transTypeID = 2;
+            }
+
+            if (catName.getText() != null) {
+                Category category = new Category(
+                        0,
+                        catName.getText(),
+                        transTypeID
+                );
+                categoryTable.addCategory(category);
+                categories.setItems(FXCollections.observableArrayList(categoryTable.getAllCategories()));
+                categories.getSelectionModel().select(0);
+            }
+        });
+
+        // Create pane to hold all page content
         GridPane content = new GridPane();
         content.setHgap(20);
         content.setVgap(40);
