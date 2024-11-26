@@ -33,16 +33,9 @@ public class SettingsTab extends Tab {
 
         CategoryTable categoryTable = CategoryTable.getInstance();
 
-        Text title = new Text("Settings");
+        Text title = new Text("Manage Categories");
 
         // Headers
-        //Text appearanceLabel = new Text("Appearance");
-
-        Text manageCatsLabel = new Text("Manage Categories");
-
-        VBox headers = new VBox(/*appearanceLabel,*/manageCatsLabel);
-        headers.setSpacing(200);
-        headers.setMinWidth(100);
 
         // Content
         ComboBox<Category> catComboBox = new ComboBox<>();
@@ -55,29 +48,30 @@ public class SettingsTab extends Tab {
         HBox manageCats = new HBox(catComboBox, deleteCat, addCat);
         manageCats.setAlignment(Pos.TOP_RIGHT);
 
-        VBox content = new VBox(manageCats);
-        content.setSpacing(20);
-        content.setAlignment(Pos.TOP_RIGHT);
-        content.setMinWidth(500);
+//        VBox content = new VBox(manageCats);
+//        content.setSpacing(20);
+//        content.setAlignment(Pos.TOP_RIGHT);
+//        content.setMinWidth(500);
 
-
-        HBox body = new HBox(headers, content);
+        AddCategoryPane pane = new AddCategoryPane();
+        root.setRight(pane);
+        pane.setVisible(false);
 
         addCat.setOnAction(e -> {
-            AddCategoryPane pane = new AddCategoryPane();
-            root.setRight(pane);
-            //pane.setAlignment(Pos.TOP_RIGHT);
-            root.setMargin(pane, new Insets(30, 50, 30, 0));
-            root.setMargin(body, new Insets(30, 10, 30, 50));
+            // set add pane to be visible
+            pane.setVisible(true);
+
         });
 
         root.setTop(title);
         root.setAlignment(title, Pos.BOTTOM_CENTER);
 
-        root.setCenter(body);
+        root.setCenter(manageCats);
 
         root.setMargin(title, new Insets(100, 30, 30, 30));
-        root.setMargin(body, new Insets(30, 200, 30, 200));
+        root.setMargin(manageCats, new Insets(30, 200, 30, 200));
+        root.setMargin(pane, new Insets(30, 50, 0, 0));
+
 
         this.setContent(root);
     }
