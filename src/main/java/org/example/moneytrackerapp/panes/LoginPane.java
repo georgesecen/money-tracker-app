@@ -18,6 +18,7 @@ import org.example.moneytrackerapp.database.Database;
 import org.example.moneytrackerapp.scenes.MainScene;
 
 import java.io.*;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.example.moneytrackerapp.HelloApplication.mainScene;
@@ -49,6 +50,9 @@ public class LoginPane extends BorderPane {
 
         // Container will hold sign in and sign up components
         HBox loginContainer = new HBox();
+        loginContainer.getStyleClass().add("shadowed-pane");
+        loginContainer.setMaxWidth(250);
+        loginContainer.setMaxHeight(250);
 
         // TODO: Add input validation and error messages if user logs in with invalid credentials
 

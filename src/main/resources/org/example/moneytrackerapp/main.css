@@ -1,5 +1,5 @@
 .root{
-    -fx-background-color: #212121;
+    -fx-background-color: #ffffff;
     -fx-font-family: impact;
     -fx-font-size:10pt;
 }
@@ -14,4 +14,13 @@
 }
 .button:hover{
     -fx-background-color:#558b2f;
+}
+
+.shadowed-pane{
+    -fx-background-color: white;
+    -fx-border-radius: 30px;
+    -fx-background-radius: 30px;
+    /* -fx-effect: dropshadow( <blur-type> , <color> , <blur> , <spread> , <offsetx> , <offsety> ) */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 17px, 0, 4px, 4px);
+
 }
