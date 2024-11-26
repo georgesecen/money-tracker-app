@@ -12,7 +12,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
@@ -23,7 +22,6 @@ import org.example.moneytrackerapp.scenes.MainScene;
 
 import java.io.*;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicReference;
 
 import static org.example.moneytrackerapp.HelloApplication.mainScene;
 
@@ -37,6 +35,8 @@ public class LoginPane extends BorderPane {
      * @throws FileNotFoundException
      */
     public LoginPane() throws FileNotFoundException {
+
+        this.getStyleClass().add("login-background");
 
         File credentialsFile = new File("src/main/java/org/example/moneytrackerapp/credentials.json");
 
@@ -335,7 +335,7 @@ public class LoginPane extends BorderPane {
      * @param fromX Starting x position of the translation animation.
      * @param toX The ending x position of the translation animation.
      */
-    public void animateFadeTranslate(Node node, double delay, double fadeAnimationLength, double translateAnimationLength, double fadeByValue, double fromX, double toX){
+    private void animateFadeTranslate(Node node, double delay, double fadeAnimationLength, double translateAnimationLength, double fadeByValue, double fromX, double toX){
 
         // Translate node
         TranslateTransition translate = new TranslateTransition(Duration.millis(translateAnimationLength), node);
@@ -362,7 +362,7 @@ public class LoginPane extends BorderPane {
      * @param toX The ending x position of the translation animation.
      * @param fadeByValue Value to add to opacity property of node during animation.
      */
-    public void animateTranslateFade(Node node, double delay, double translateAnimationLength, double fadeAnimationLength, double fromX, double toX, double fadeByValue){
+    private void animateTranslateFade(Node node, double delay, double translateAnimationLength, double fadeAnimationLength, double fromX, double toX, double fadeByValue){
 
         // Translate node
         TranslateTransition translate = new TranslateTransition(Duration.millis(translateAnimationLength), node);
@@ -385,7 +385,7 @@ public class LoginPane extends BorderPane {
      * @param targetValues Values to update properties to.
      * @param properties Properties to be updated.
      */
-    public void animateProperties(double animationLength, double[] targetValues, Property[] properties){
+    private void animateProperties(double animationLength, double[] targetValues, Property[] properties){
 
         Timeline timeline = new Timeline();
 
@@ -406,7 +406,7 @@ public class LoginPane extends BorderPane {
      * @param newText Text that you want to replace the current text node text with.
      * @param animationLength Length of the animation in milliseconds.
      */
-    public void animateTextChange(Text textNode, String newText, double animationLength){
+    private void animateTextChange(Text textNode, String newText, double animationLength){
         // Fade text node out
         FadeTransition fadeOut = new FadeTransition(Duration.millis(animationLength), textNode);
         fadeOut.setFromValue(1);
@@ -434,7 +434,7 @@ public class LoginPane extends BorderPane {
      * @param newText Text that you want to replace the current button node text with.
      * @param animationLength Length of the animation in milliseconds.
      */
-    public void animateButtonChange(Button buttonNode, String newText, double animationLength){
+    private void animateButtonChange(Button buttonNode, String newText, double animationLength){
         // Fade button node out
         FadeTransition fadeOut = new FadeTransition(Duration.millis(animationLength), buttonNode);
         fadeOut.setFromValue(1);
