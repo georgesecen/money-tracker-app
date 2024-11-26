@@ -62,7 +62,7 @@ public class LoginPane extends BorderPane {
 
         // Sign up component
         VBox signUpContainer = new VBox();
-//        signUpContainer.setBackground(new Background(new BackgroundFill(Paint.valueOf("blue"), null, null)));
+        signUpContainer.setBackground(new Background(new BackgroundFill(Paint.valueOf("green"), null, null)));
         signUpContainer.setMaxHeight(375);
         signUpContainer.setMaxWidth(325);
 
@@ -101,13 +101,22 @@ public class LoginPane extends BorderPane {
 
         // Sign in component
         VBox signInContainer = new VBox();
+        signInContainer.setBackground(new Background(new BackgroundFill(Paint.valueOf("blue"), null, null)));
+        signInContainer.setMaxHeight(375);
+        signInContainer.setMaxWidth(325);
 
         Text signInTitle = new Text("Sign In");
+        signInTitle.setFont(new Font(35));
+        VBox.setMargin(signInTitle, new Insets(20, 0, 20, 0));
+
         Text signInInstructions = new Text("Enter your username");
+        signInInstructions.setFont(new Font(15));
+        VBox.setMargin(signInInstructions, new Insets(0, 0, 5, 0));
 
         TextField signInUserField = new TextField();
         signInUserField.setPromptText("Username");
-        signInUserField.setMaxWidth(100);
+        signInUserField.setMaxWidth(250);
+        VBox.setMargin(signInUserField, new Insets(0, 0, 20, 0));
 
         Button signInButton = new Button("Sign In");
 
@@ -262,7 +271,8 @@ public class LoginPane extends BorderPane {
         });
 
         CTAContainer.setOpacity(0);
-        signInContainer.setOpacity(0);
+//        signInContainer.setOpacity(0);
+        signUpContainer.setOpacity(0);
 
 
 
