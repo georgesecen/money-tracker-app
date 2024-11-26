@@ -63,9 +63,9 @@ public class LoginPane extends BorderPane {
 
         // Sign up component
         VBox signUpContainer = new VBox();
-        signUpContainer.setBackground(new Background(new BackgroundFill(Paint.valueOf("green"), null, null)));
         signUpContainer.setMaxHeight(375);
         signUpContainer.setMaxWidth(325);
+        signUpContainer.setTranslateX(-163);
 
         Text signUpTitle = new Text("Sign Up");
         signUpTitle.setFont(new Font(35));
@@ -100,9 +100,9 @@ public class LoginPane extends BorderPane {
             node.setFocusTraversable(false);
         }
 
-        // Sign in component
+        // Sign in component (by default is not shown at first)
         VBox signInContainer = new VBox();
-        signInContainer.setBackground(new Background(new BackgroundFill(Paint.valueOf("blue"), null, null)));
+        signInContainer.setOpacity(0);
         signInContainer.setMaxHeight(375);
         signInContainer.setMaxWidth(325);
 
@@ -254,13 +254,11 @@ public class LoginPane extends BorderPane {
         TranslateTransition leftTransition = new TranslateTransition(Duration.millis(500), CTAContainer);
         leftTransition.setFromX(163);
         leftTransition.setToX(-163);
-        leftTransition.setInterpolator(Interpolator.EASE_BOTH);
 
         // Animation which moves cta to right side of parent container
         TranslateTransition rightTransition = new TranslateTransition(Duration.millis(500), CTAContainer);
         rightTransition.setFromX(-163);
         rightTransition.setToX(163);
-        rightTransition.setInterpolator(Interpolator.EASE_BOTH);
 
         // Animate the CTA on click
         // TODO: Potentially change flag to a timer so animation must finish before it can run again
@@ -284,6 +282,12 @@ public class LoginPane extends BorderPane {
                     // Translate CTA to left side of parent container
                     leftTransition.play();
 
+                    // Translate and vanish the sign up form behind the CTA as it passes by
+                    animateTranslateFade(signUpContainer, 1, 250, 1, -163, 50, -1);
+
+                    // Animate the sign in form so it is now visible to the user
+                    animateFadeTranslate(signInContainer,250, 1, 250, 1, 50, 163);
+
                     flag.set(false);
                 }
                 else{
@@ -298,20 +302,81 @@ public class LoginPane extends BorderPane {
                     // Translate CTA to right side of parent container
                     rightTransition.play();
 
+                    // Translate and vanish the sign in form behind the CTA as it passes by
+                    animateTranslateFade(signInContainer, 1, 250, 1, 163, 50, -1);
+
+                    // Animate the sign up form so it is now visible to the user
+                    animateFadeTranslate(signUpContainer, 250, 1, 250, 1, 50, -163);
+
                     flag.set(true);
                 }
             }
         });
 
 //        CTAContainer.setOpacity(0);
-        signInContainer.setOpacity(0);
-        signUpContainer.setOpacity(0);
+//        signInContainer.setOpacity(0);
+//        signUpContainer.setOpacity(0);
 
 
 
         // Add sign in/up forms and CTA to StackPane login container
         loginContainer.getChildren().addAll(signUpContainer, signInContainer, CTAContainer);
         this.setCenter(loginContainer);
+    }
+
+
+    /**
+     * Animates a node, so it fades and then translates horizontally sequentially.
+     * @param node JavaFx node to be animated.
+     * @param delay Delay in milliseconds before the animation begins.
+     * @param fadeAnimationLength Length of fade animation in milliseconds.
+     * @param translateAnimationLength Length of translate animation in milliseconds.
+     * @param fadeByValue Value to add to opacity property of node during animation.
+     * @param fromX Starting x position of the translation animation.
+     * @param toX The ending x position of the translation animation.
+     */
+    public void animateFadeTranslate(Node node, double delay, double fadeAnimationLength, double translateAnimationLength, double fadeByValue, double fromX, double toX){
+
+        // Translate node
+        TranslateTransition translate = new TranslateTransition(Duration.millis(translateAnimationLength), node);
+        translate.setFromX(fromX);
+        translate.setToX(toX);
+
+        // Make node fade out/in
+        FadeTransition fade = new FadeTransition(Duration.millis(fadeAnimationLength), node);
+        fade.setByValue(fadeByValue);
+
+        // Node should translate first, then fade out/in
+        SequentialTransition sequentialTransition = new SequentialTransition(fade, translate);
+        sequentialTransition.setDelay(Duration.millis(delay));
+        sequentialTransition.play();
+    }
+
+    /**
+     * Animates a node, so it translates horizontally and then fades sequentially.
+     * @param node JavaFx node to be animated.
+     * @param delay Delay in milliseconds before the animation begins.
+     * @param translateAnimationLength Length of translate animation in milliseconds.
+     * @param fadeAnimationLength Length of fade animation in milliseconds.
+     * @param fromX Starting x position of the translation animation.
+     * @param toX The ending x position of the translation animation.
+     * @param fadeByValue Value to add to opacity property of node during animation.
+     */
+    public void animateTranslateFade(Node node, double delay, double translateAnimationLength, double fadeAnimationLength, double fromX, double toX, double fadeByValue){
+
+        // Translate node
+        TranslateTransition translate = new TranslateTransition(Duration.millis(translateAnimationLength), node);
+        translate.setFromX(fromX);
+        translate.setToX(toX);
+
+        // Make node fade out/in
+        FadeTransition fade = new FadeTransition(Duration.millis(fadeAnimationLength), node);
+        fade.setByValue(fadeByValue);
+
+        // Node should translate first, then fade out/in
+        SequentialTransition sequentialTransition = new SequentialTransition(translate, fade);
+        sequentialTransition.setDelay(Duration.millis(delay));
+        sequentialTransition.play();
     }
 
     /**
