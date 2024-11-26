@@ -12,9 +12,6 @@
     -fx-border-radius:10;
     -fx-padding:10px;
 }
-.button:hover{
-    -fx-background-color:#558b2f;
-}
 
 .shadowed-pane{
     -fx-background-color: white;
@@ -24,6 +21,44 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 17px, 0, 5px, 5px);
 }
 
-.login-background{
+.gradient-background{
     -fx-background-color: linear-gradient(to right top, #ffffff, #e2e2e2, #c9d6ff);
+}
+
+
+/*  LOGIN PANE CSS */
+.button-dimensions{
+    -fx-font-family: "sans-serif";
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 37px 8px 37px;
+}
+
+.title-text{
+    -fx-font-family: "sans-serif";
+    -fx-font-weight: bold;
+    -fx-font-size: 35px;
+}
+
+.description-text{
+    -fx-font-family: "sans-serif";
+    -fx-font-size: 15px;
+}
+
+.cta-text{
+    -fx-fill: white;
+}
+
+.light-themed-button{
+    -fx-background-color: #9966ff;
+    -fx-color: white;
+    -fx-border-width: 0px;
+}
+
+.dark-themed-button{
+    -fx-background-color: #9966ff;
+    -fx-color: white;
+    -fx-border-color: white;
+    -fx-border-width: 1px;
+    -fx-border-radius: 7px;
 }

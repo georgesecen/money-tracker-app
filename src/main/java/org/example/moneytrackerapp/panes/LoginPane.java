@@ -36,7 +36,7 @@ public class LoginPane extends BorderPane {
      */
     public LoginPane() throws FileNotFoundException {
 
-        this.getStyleClass().add("login-background");
+        this.getStyleClass().add("gradient-background");
 
         File credentialsFile = new File("src/main/java/org/example/moneytrackerapp/credentials.json");
 
@@ -68,29 +68,34 @@ public class LoginPane extends BorderPane {
         signUpContainer.setTranslateX(-163);
 
         Text signUpTitle = new Text("Sign Up");
-        signUpTitle.setFont(new Font(35));
+        signUpTitle.getStyleClass().addAll("title-text");
         VBox.setMargin(signUpTitle, new Insets(20, 0, 20, 0));
 
         Text signUpInstructions = new Text("Enter your database credentials");
+        signUpInstructions.getStyleClass().add("description-text");
         signUpInstructions.setFont(new Font(15));
         VBox.setMargin(signUpInstructions, new Insets(0, 0, 5, 0));
 
         TextField signUpNameField = new TextField();
         signUpNameField.setPromptText("DB Name");
+        signUpNameField.getStyleClass().add("description-text");
         signUpNameField.setMaxWidth(250);
         VBox.setMargin(signUpNameField, new Insets(0, 0, 12, 0));
 
         TextField signUpUserField = new TextField();
         signUpUserField.setPromptText("Username");
+        signUpUserField.getStyleClass().add("description-text");
         signUpUserField.setMaxWidth(250);
         VBox.setMargin(signUpUserField, new Insets(0, 0, 12, 0));
 
         TextField signUpPassField = new TextField();
         signUpPassField.setPromptText("Password");
+        signUpPassField.getStyleClass().add("description-text");
         signUpPassField.setMaxWidth(250);
         VBox.setMargin(signUpPassField, new Insets(0, 0, 20, 0));
 
         Button signUpButton = new Button("Sign Up");
+        signUpButton.getStyleClass().addAll("button-dimensions", "light-themed-button");
 
         signUpContainer.getChildren().addAll(signUpTitle, signUpInstructions, signUpUserField, signUpNameField, signUpPassField, signUpButton);
         signUpContainer.setAlignment(Pos.CENTER);
@@ -107,7 +112,7 @@ public class LoginPane extends BorderPane {
         signInContainer.setMaxWidth(325);
 
         Text signInTitle = new Text("Sign In");
-        signInTitle.setFont(new Font(35));
+        signInTitle.getStyleClass().addAll("title-text");
         VBox.setMargin(signInTitle, new Insets(20, 0, 20, 0));
 
         Text signInInstructions = new Text("Enter your username");
@@ -116,10 +121,12 @@ public class LoginPane extends BorderPane {
 
         TextField signInUserField = new TextField();
         signInUserField.setPromptText("Username");
+        signInUserField.getStyleClass().add("description-text");
         signInUserField.setMaxWidth(250);
         VBox.setMargin(signInUserField, new Insets(0, 0, 20, 0));
 
         Button signInButton = new Button("Sign In");
+        signInButton.getStyleClass().addAll("button-dimensions", "light-themed-button");
 
         signInContainer.getChildren().addAll(signInTitle, signInInstructions, signInUserField, signInButton);
         signInContainer.setAlignment(Pos.CENTER);
@@ -200,18 +207,6 @@ public class LoginPane extends BorderPane {
             }
         });
 
-        Text testText = new Text("12346");
-        Button testButton = new Button("change all text");
-
-        HBox testTextContainer = new HBox();
-        testTextContainer.getChildren().addAll(testText, testButton);
-
-        testButton.setOnAction(e->{
-
-            animateTextChange(testText, "im changed", 0.5);
-        });
-
-
         // Pane will hold the greeting text welcoming and showing them the signup/login
         StackPane CTAContainer = new StackPane();
         CTAContainer.setMaxHeight(375);
@@ -222,16 +217,18 @@ public class LoginPane extends BorderPane {
 
         // Add all CTA text and button to the greetingInfoContainer container
         Text welcomeText = new Text("Hello, Friend!");
-        welcomeText.setFont(new Font(35));
+        welcomeText.getStyleClass().addAll("cta-text", "title-text");
         VBox.setMargin(welcomeText, new Insets(20, 0, 20, 0));
 
         Text provideInfoText = new Text("Register with your database details to use all app features.");
+        provideInfoText.getStyleClass().addAll("cta-text", "description-text");
         provideInfoText.setWrappingWidth(290);
         provideInfoText.setTextAlignment(TextAlignment.CENTER);
-        provideInfoText.setFont(new Font(15));
         VBox.setMargin(provideInfoText, new Insets(0, 0, 20, 0));
 
-        Button animateCTAButton = new Button("Sign Up");
+        Button animateCTAButton = new Button("Sign In");
+        animateCTAButton.getStyleClass().addAll("button-dimensions", "dark-themed-button");
+
         greetingInfoContainer.getChildren().addAll(welcomeText, provideInfoText, animateCTAButton);
         greetingInfoContainer.setAlignment(Pos.CENTER);
 
@@ -245,7 +242,7 @@ public class LoginPane extends BorderPane {
         IntegerProperty bottomLeft = new SimpleIntegerProperty(90);
 
         // Bind the border radius properties to the pane style
-        CTAContainer.styleProperty().bind(Bindings.format("-fx-background-color: lightblue; -fx-background-radius: %dpx %dpx %dpx %dpx; -fx-border-radius: %dpx %dpx %dpx %dpx;",
+        CTAContainer.styleProperty().bind(Bindings.format("-fx-background-color: #9966ff; -fx-background-radius: %dpx %dpx %dpx %dpx; -fx-border-radius: %dpx %dpx %dpx %dpx;",
                 topLeft, topRight, bottomRight, bottomLeft, topLeft, topRight, bottomRight, bottomLeft));
 
 
@@ -274,7 +271,7 @@ public class LoginPane extends BorderPane {
                     // Animate text and buttons
                     animateTextChange(welcomeText, "Welcome Back!", 300);
                     animateTextChange(provideInfoText, "Enter your database details.", 300);
-                    animateButtonChange(animateCTAButton, "Sign In", 300);
+                    animateButtonChange(animateCTAButton, "Sign Up", 300);
 
                     // Animate CTA border radius
                     animateProperties(500, new double[]{30, 120, 90, 30}, new Property[]{topLeft, topRight, bottomRight, bottomLeft});
@@ -294,7 +291,7 @@ public class LoginPane extends BorderPane {
                     // Animate text and buttons
                     animateTextChange(welcomeText, "Hello, Friend!", 300);
                     animateTextChange(provideInfoText, "Register with your database details to use all app features.", 300);
-                    animateButtonChange(animateCTAButton, "Sign Up", 300);
+                    animateButtonChange(animateCTAButton, "Sign In", 300);
 
                     // Animate CTA border radius
                     animateProperties(500, new double[]{120, 30, 30, 90}, new Property[]{topLeft, topRight, bottomRight, bottomLeft});
