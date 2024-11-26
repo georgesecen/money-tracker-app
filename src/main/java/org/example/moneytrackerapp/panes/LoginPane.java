@@ -15,6 +15,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import org.example.moneytrackerapp.HelloApplication;
 import org.example.moneytrackerapp.database.Database;
@@ -213,26 +214,35 @@ public class LoginPane extends BorderPane {
 
         // Pane will hold the greeting text welcoming and showing them the signup/login
         StackPane CTAContainer = new StackPane();
+        CTAContainer.setMaxHeight(375);
+        CTAContainer.setMaxWidth(325);
 
         // Vbox will hold sign in/login information and button
         VBox greetingInfoContainer = new VBox();
 
         // Add all CTA text and button to the greetingInfoContainer container
         Text welcomeText = new Text("Hello, Friend!");
+        welcomeText.setFont(new Font(35));
+        VBox.setMargin(welcomeText, new Insets(20, 0, 20, 0));
+
         Text provideInfoText = new Text("Register with your database details to use all app features.");
+        provideInfoText.setWrappingWidth(290);
+        provideInfoText.setTextAlignment(TextAlignment.CENTER);
+        provideInfoText.setFont(new Font(15));
+        VBox.setMargin(provideInfoText, new Insets(0, 0, 20, 0));
+
         Button animateCTAButton = new Button("Sign Up");
         greetingInfoContainer.getChildren().addAll(welcomeText, provideInfoText, animateCTAButton);
         greetingInfoContainer.setAlignment(Pos.CENTER);
 
         CTAContainer.getChildren().add(greetingInfoContainer);
-        CTAContainer.setMaxWidth(40);
-        CTAContainer.setMaxHeight(40);
 
-        // Create properties for each of the border corner radius
-        IntegerProperty topLeft = new SimpleIntegerProperty(35);
-        IntegerProperty topRight = new SimpleIntegerProperty(10);
-        IntegerProperty bottomRight = new SimpleIntegerProperty(10);
-        IntegerProperty bottomLeft = new SimpleIntegerProperty(20);
+
+        // Create properties for each of the border corner radius (default radius match radius of parent pane check css file)
+        IntegerProperty topLeft = new SimpleIntegerProperty(120);
+        IntegerProperty topRight = new SimpleIntegerProperty(30);
+        IntegerProperty bottomRight = new SimpleIntegerProperty(30);
+        IntegerProperty bottomLeft = new SimpleIntegerProperty(90);
 
         // Bind the border radius properties to the pane style
         CTAContainer.styleProperty().bind(Bindings.format("-fx-background-color: lightblue; -fx-background-radius: %dpx %dpx %dpx %dpx; -fx-border-radius: %dpx %dpx %dpx %dpx;",
@@ -252,7 +262,7 @@ public class LoginPane extends BorderPane {
                 animateButtonChange(animateCTAButton, "Sign In", 225);
 
                 // Animate border radius
-                animateProperties(225, new double[]{10, 35, 20, 10}, new Property[]{topLeft, topRight, bottomRight, bottomLeft});
+                animateProperties(225, new double[]{30, 120, 90, 30}, new Property[]{topLeft, topRight, bottomRight, bottomLeft});
 
                 flag.set(false);
             }
@@ -263,18 +273,16 @@ public class LoginPane extends BorderPane {
                 animateButtonChange(animateCTAButton, "Sign Up", 225);
 
                 // Animate border radius
-                animateProperties(225, new double[]{35, 10, 10, 20}, new Property[]{topLeft, topRight, bottomRight, bottomLeft});
+                animateProperties(225, new double[]{120, 30, 30, 90}, new Property[]{topLeft, topRight, bottomRight, bottomLeft});
 
                 flag.set(true);
             }
 
         });
 
-        CTAContainer.setOpacity(0);
-//        signInContainer.setOpacity(0);
+//        CTAContainer.setOpacity(0);
+        signInContainer.setOpacity(0);
         signUpContainer.setOpacity(0);
-
-
 
 
 
