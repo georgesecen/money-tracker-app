@@ -62,3 +62,15 @@
     -fx-border-width: 1px;
     -fx-border-radius: 7px;
 }
+
+
+/*  TAB PANE CSS */
+/* Move the tab labels off the screen so the user cannot use the labels to
+    change tabs they must use navbar
+*/
+.tab-pane .tab-header-area {
+    -fx-padding: 0;
+    -fx-translate-x: 9999999;
+}
+
+
