@@ -103,6 +103,21 @@ public class CategoryTable implements CategoryDAO {
         return null;
     }
 
+    /**
+     * Removes a record in the Categories table
+     * @param catID id of category to be deleted
+     */
+    @Override
+    public void deleteCategory(int catID) {
+        String query = "DELETE FROM " + TABLE_CATEGORIES + " WHERE " + CAT_COLUMN_ID + " = " + catID;
+        try {
+            Statement statement = db.getConnection().createStatement();
+            statement.executeQuery(query);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static CategoryTable getInstance(){
         if(instance == null){
             instance = new CategoryTable();
