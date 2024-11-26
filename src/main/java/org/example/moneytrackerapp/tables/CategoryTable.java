@@ -31,8 +31,9 @@ public class CategoryTable implements CategoryDAO {
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
                 categories.add(new Category(
+                    resultSet.getInt(CAT_COLUMN_ID),
                     resultSet.getString(CAT_COLUMN_NAME),
-                    resultSet.getInt(CAT_COLUMN_ID)
+                    resultSet.getInt(CAT_COLUMN_TRANS_ID)
                 ));
             }
         } catch(Exception e) {
@@ -52,7 +53,7 @@ public class CategoryTable implements CategoryDAO {
                 categories.add(new Category(
                         resultSet.getInt(CAT_COLUMN_ID),
                         resultSet.getString(CAT_COLUMN_NAME),
-                        resultSet.getInt(CAT_COLUMN_ID)
+                        resultSet.getInt(CAT_COLUMN_TRANS_ID)
                 ));
             }
         } catch(Exception e) {
@@ -72,7 +73,7 @@ public class CategoryTable implements CategoryDAO {
                 categories.add(new Category(
                         resultSet.getInt(CAT_COLUMN_ID),
                         resultSet.getString(CAT_COLUMN_NAME),
-                        resultSet.getInt(CAT_COLUMN_ID)
+                        resultSet.getInt(CAT_COLUMN_TRANS_ID)
                 ));
             }
         } catch(Exception e) {
@@ -92,8 +93,9 @@ public class CategoryTable implements CategoryDAO {
             ResultSet data = statement.executeQuery(query);
             if(data.next()) {
                 Category category = new Category(
+                    data.getInt(CAT_COLUMN_ID),
                     data.getString(CAT_COLUMN_NAME),
-                    data.getInt(CAT_COLUMN_ID)
+                    data.getInt(CAT_COLUMN_TRANS_ID)
                 );
                 return category;
             }
