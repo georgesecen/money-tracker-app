@@ -6,11 +6,14 @@ import com.google.gson.JsonParser;
 import javafx.animation.*;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import org.example.moneytrackerapp.HelloApplication;
@@ -49,29 +52,42 @@ public class LoginPane extends BorderPane {
         }
 
         // Container will hold sign in and sign up components
-        HBox loginContainer = new HBox();
+        StackPane loginContainer = new StackPane();
         loginContainer.getStyleClass().add("shadowed-pane");
-        loginContainer.setMaxWidth(250);
-        loginContainer.setMaxHeight(250);
+        loginContainer.setMaxWidth(650);
+        loginContainer.setMaxHeight(375);
+
 
         // TODO: Add input validation and error messages if user logs in with invalid credentials
 
         // Sign up component
         VBox signUpContainer = new VBox();
+//        signUpContainer.setBackground(new Background(new BackgroundFill(Paint.valueOf("blue"), null, null)));
+        signUpContainer.setMaxHeight(375);
+        signUpContainer.setMaxWidth(325);
+
         Text signUpTitle = new Text("Sign Up");
+        signUpTitle.setFont(new Font(35));
+        VBox.setMargin(signUpTitle, new Insets(20, 0, 20, 0));
+
         Text signUpInstructions = new Text("Enter your database credentials");
+        signUpInstructions.setFont(new Font(15));
+        VBox.setMargin(signUpInstructions, new Insets(0, 0, 5, 0));
 
         TextField signUpNameField = new TextField();
         signUpNameField.setPromptText("DB Name");
-        signUpNameField.setMaxWidth(100);
+        signUpNameField.setMaxWidth(250);
+        VBox.setMargin(signUpNameField, new Insets(0, 0, 12, 0));
 
         TextField signUpUserField = new TextField();
         signUpUserField.setPromptText("Username");
-        signUpUserField.setMaxWidth(100);
+        signUpUserField.setMaxWidth(250);
+        VBox.setMargin(signUpUserField, new Insets(0, 0, 12, 0));
 
         TextField signUpPassField = new TextField();
         signUpPassField.setPromptText("Password");
-        signUpPassField.setMaxWidth(100);
+        signUpPassField.setMaxWidth(250);
+        VBox.setMargin(signUpPassField, new Insets(0, 0, 20, 0));
 
         Button signUpButton = new Button("Sign Up");
 
@@ -85,6 +101,7 @@ public class LoginPane extends BorderPane {
 
         // Sign in component
         VBox signInContainer = new VBox();
+
         Text signInTitle = new Text("Sign In");
         Text signInInstructions = new Text("Enter your username");
 
@@ -101,9 +118,6 @@ public class LoginPane extends BorderPane {
         for (Node node : signInContainer.getChildren()){
             node.setFocusTraversable(false);
         }
-
-        loginContainer.getChildren().addAll(signUpContainer, signInContainer);
-        loginContainer.setAlignment(Pos.CENTER);
 
         // Get json object from credentials file
         // {username: {dbname: name, password: pass}}
@@ -202,7 +216,8 @@ public class LoginPane extends BorderPane {
         greetingInfoContainer.setAlignment(Pos.CENTER);
 
         CTAContainer.getChildren().add(greetingInfoContainer);
-        CTAContainer.setMaxWidth(400);
+        CTAContainer.setMaxWidth(40);
+        CTAContainer.setMaxHeight(40);
 
         // Create properties for each of the border corner radius
         IntegerProperty topLeft = new SimpleIntegerProperty(35);
@@ -246,9 +261,17 @@ public class LoginPane extends BorderPane {
 
         });
 
+        CTAContainer.setOpacity(0);
+        signInContainer.setOpacity(0);
 
 
-        this.setTop(CTAContainer);
+
+
+
+        // Add sign in/up forms and CTA to StackPane login container
+        loginContainer.getChildren().addAll(signUpContainer, signInContainer, CTAContainer);
+
+
         this.setCenter(loginContainer);
     }
 
