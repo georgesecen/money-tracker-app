@@ -3,11 +3,10 @@ package org.example.moneytrackerapp.tabs;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Tab;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import org.example.moneytrackerapp.pojo.Category;
@@ -29,14 +28,15 @@ public class ManageCategoriesTab extends Tab {
 
         Text title = new Text("Manage Categories");
 
+        // Delete category section
         Text userCategories = new Text("Your categories: ");
         ComboBox<Category> categories = new ComboBox<>();
         categories.setItems(FXCollections.observableArrayList(categoryTable.getAllCategories()));
         categories.getSelectionModel().select(0);
         Button deleteCat = new Button("X");
         Text errorMsg = new Text("Cannot delete a default category!");
+        errorMsg.setTranslateY(-12);
         errorMsg.setVisible(false);
-
 
         deleteCat.setOnAction(e -> {
             int id = categories.getSelectionModel().getSelectedItem().getId();
@@ -51,6 +51,22 @@ public class ManageCategoriesTab extends Tab {
             }
         });
 
+        // Add category section
+        Text addLabel = new Text("Add a new category");
+        TextField catName = new TextField();
+        catName.setPromptText("Category name");
+        Button addCat = new Button("+");
+
+        ToggleGroup typeToggleGroup = new ToggleGroup();
+        RadioButton income = new RadioButton("Income");
+        income.setToggleGroup(typeToggleGroup);
+        RadioButton expense = new RadioButton("Expense");
+        expense.setToggleGroup(typeToggleGroup);
+        expense.setSelected(true);
+        HBox typeButtons = new HBox(income, expense);
+        typeButtons.setSpacing(50);
+        typeButtons.setTranslateY(-12);
+
         GridPane content = new GridPane();
         content.setHgap(20);
         content.setVgap(40);
@@ -61,6 +77,13 @@ public class ManageCategoriesTab extends Tab {
         content.add(deleteCat, 11, 0);
         content.add(errorMsg, 10, 1, 2,1);
 
+        content.add(addLabel, 0, 2);
+        content.add(catName, 10, 2);
+        content.add(addCat, 11, 2);
+        content.add(typeButtons, 10, 3,2,1);
+
+
+
 
 
         // Set up the view
@@ -68,7 +91,7 @@ public class ManageCategoriesTab extends Tab {
 
         root.setTop(title);
         root.setAlignment(title, Pos.CENTER);
-        root.setMargin(title, new Insets(100, 30, 30, 30));
+        root.setMargin(title, new Insets(100, 30, 0, 30));
 
 
         root.setCenter(content);
