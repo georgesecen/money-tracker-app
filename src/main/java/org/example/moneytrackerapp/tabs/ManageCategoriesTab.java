@@ -1,7 +1,9 @@
 package org.example.moneytrackerapp.tabs;
 
+import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.BorderPane;
@@ -27,15 +29,20 @@ public class ManageCategoriesTab extends Tab {
 
         Text title = new Text("Manage Categories");
 
-        Text userCategories = new Text("Your categories");
-        userCategories.setTextAlignment(TextAlignment.CENTER);
+        Text userCategories = new Text("Your categories: ");
         ComboBox<Category> categories = new ComboBox<>();
+        categories.setItems(FXCollections.observableArrayList(categoryTable.getAllCategories()));
+        categories.getSelectionModel().select(0);
+        Button deleteCat = new Button("X");
 
         GridPane content = new GridPane();
-        content.setHgap(10);
-        content.setVgap(10);
-        content.add(userCategories, 0, 0,3,1);
-        content.add(categories, 4, 0);
+        content.setHgap(20);
+        content.setVgap(40);
+        content.alignmentProperty().set(Pos.CENTER);
+
+        content.add(userCategories, 0, 0);
+        content.add(categories, 10, 0);
+        content.add(deleteCat, 11, 0);
 
 
         // Set up the view
