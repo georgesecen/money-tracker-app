@@ -21,6 +21,9 @@
     -fx-border-radius: 30px;
     -fx-background-radius: 30px;
     /* -fx-effect: dropshadow( <blur-type> , <color> , <blur> , <spread> , <offsetx> , <offsety> ) */
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 17px, 0, 4px, 4px);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 17px, 0, 5px, 5px);
+}
 
+.login-background{
+    -fx-background-color: linear-gradient(to right top, #ffffff, #e2e2e2, #c9d6ff);
 }
