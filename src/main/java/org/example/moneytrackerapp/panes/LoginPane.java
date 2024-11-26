@@ -22,8 +22,8 @@ import org.example.moneytrackerapp.database.Database;
 import org.example.moneytrackerapp.scenes.MainScene;
 
 import java.io.*;
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static org.example.moneytrackerapp.HelloApplication.mainScene;
 
@@ -236,7 +236,7 @@ public class LoginPane extends BorderPane {
         greetingInfoContainer.setAlignment(Pos.CENTER);
 
         CTAContainer.getChildren().add(greetingInfoContainer);
-
+        CTAContainer.setTranslateX(163); // So CTA's right corner lines up with parent container right corner
 
         // Create properties for each of the border corner radius (default radius match radius of parent pane check css file)
         IntegerProperty topLeft = new SimpleIntegerProperty(120);
@@ -249,35 +249,58 @@ public class LoginPane extends BorderPane {
                 topLeft, topRight, bottomRight, bottomLeft, topLeft, topRight, bottomRight, bottomLeft));
 
 
+
+        // Animation which moves cta to left side of parent container
+        TranslateTransition leftTransition = new TranslateTransition(Duration.millis(500), CTAContainer);
+        leftTransition.setFromX(163);
+        leftTransition.setToX(-163);
+        leftTransition.setInterpolator(Interpolator.EASE_BOTH);
+
+        // Animation which moves cta to right side of parent container
+        TranslateTransition rightTransition = new TranslateTransition(Duration.millis(500), CTAContainer);
+        rightTransition.setFromX(-163);
+        rightTransition.setToX(163);
+        rightTransition.setInterpolator(Interpolator.EASE_BOTH);
+
         // Animate the CTA on click
         // TODO: Potentially change flag to a timer so animation must finish before it can run again
         AtomicBoolean flag = new AtomicBoolean(true); // Used to know if the CTA is showing sign up or sign in
+
         animateCTAButton.setOnAction(e->{
 
-            // If the CTA is showing signup text, change it to show sign in text, vice versa
-            if (flag.get()){
-                // Animate text and buttons
-                animateTextChange(welcomeText, "Welcome Back!", 225);
-                animateTextChange(provideInfoText, "Enter your database details.", 225);
-                animateButtonChange(animateCTAButton, "Sign In", 225);
+            // If the CTA is not currently in an animation
+            if (leftTransition.getStatus() == Animation.Status.STOPPED && rightTransition.getStatus() == Animation.Status.STOPPED){
 
-                // Animate border radius
-                animateProperties(225, new double[]{30, 120, 90, 30}, new Property[]{topLeft, topRight, bottomRight, bottomLeft});
+                // If the CTA is showing signup text, change it to show sign in text, vice versa
+                if (flag.get()){
+                    // Animate text and buttons
+                    animateTextChange(welcomeText, "Welcome Back!", 300);
+                    animateTextChange(provideInfoText, "Enter your database details.", 300);
+                    animateButtonChange(animateCTAButton, "Sign In", 300);
 
-                flag.set(false);
+                    // Animate CTA border radius
+                    animateProperties(500, new double[]{30, 120, 90, 30}, new Property[]{topLeft, topRight, bottomRight, bottomLeft});
+
+                    // Translate CTA to left side of parent container
+                    leftTransition.play();
+
+                    flag.set(false);
+                }
+                else{
+                    // Animate text and buttons
+                    animateTextChange(welcomeText, "Hello, Friend!", 300);
+                    animateTextChange(provideInfoText, "Register with your database details to use all app features.", 300);
+                    animateButtonChange(animateCTAButton, "Sign Up", 300);
+
+                    // Animate CTA border radius
+                    animateProperties(500, new double[]{120, 30, 30, 90}, new Property[]{topLeft, topRight, bottomRight, bottomLeft});
+
+                    // Translate CTA to right side of parent container
+                    rightTransition.play();
+
+                    flag.set(true);
+                }
             }
-            else{
-                // Animate text and buttons
-                animateTextChange(welcomeText, "Hello, Friend!", 225);
-                animateTextChange(provideInfoText, "Register with your database details to use all app features.", 225);
-                animateButtonChange(animateCTAButton, "Sign Up", 225);
-
-                // Animate border radius
-                animateProperties(225, new double[]{120, 30, 30, 90}, new Property[]{topLeft, topRight, bottomRight, bottomLeft});
-
-                flag.set(true);
-            }
-
         });
 
 //        CTAContainer.setOpacity(0);
@@ -288,11 +311,8 @@ public class LoginPane extends BorderPane {
 
         // Add sign in/up forms and CTA to StackPane login container
         loginContainer.getChildren().addAll(signUpContainer, signInContainer, CTAContainer);
-
-
         this.setCenter(loginContainer);
     }
-
 
     /**
      * Animates bound properties of a JavaFx node to specified target values.
