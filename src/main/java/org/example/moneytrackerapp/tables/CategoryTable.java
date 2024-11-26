@@ -40,7 +40,7 @@ public class CategoryTable implements CategoryDAO {
         }
         return categories;
     }
-//TODO discuss implementation of method/change logic
+
     @Override
     public ArrayList<Category> getAllIncomeCategories() {
         //TODO no static ID's
@@ -61,7 +61,7 @@ public class CategoryTable implements CategoryDAO {
         }
         return categories;
     }
-//TODO discuss implementation of method/change logic
+
     @Override
     public ArrayList<Category> getAllExpenseCategories() {
         String query = "SELECT * FROM " + TABLE_CATEGORIES;
@@ -104,7 +104,42 @@ public class CategoryTable implements CategoryDAO {
         }
         return null;
     }
+    
+    /**
+     * Adds a record into the Category table
+     * @param category Category object to be added
+     */
+    @Override
+    public void addCategory(Category category) {
+        String query = "INSERT INTO " + TABLE_CATEGORIES +
+                "(" + CAT_COLUMN_ID + ", "
+                + CAT_COLUMN_NAME + ", "
+                + CAT_COLUMN_TRANS_ID + ") VALUES ("
+                + category.getId() + ", '"
+                + category.getName() + "', "
+                + category.getTrans_type() + ");";
+        try {
+            db.getConnection().createStatement().execute(query);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
 
+    /**
+     * Removes a record in the Categories table
+     * @param catID id of category to be deleted
+     */
+    @Override
+    public void deleteCategory(int catID) {
+        String query = "DELETE FROM " + TABLE_CATEGORIES + " WHERE " + CAT_COLUMN_ID + " = " + catID;
+        try {
+            Statement statement = db.getConnection().createStatement();
+            statement.executeQuery(query);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
     public static CategoryTable getInstance(){
         if(instance == null){
             instance = new CategoryTable();
