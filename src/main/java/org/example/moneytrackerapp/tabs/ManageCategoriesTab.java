@@ -43,7 +43,8 @@ public class ManageCategoriesTab extends Tab {
             if(id > 4){     // if the selected category is NOT a default category
                 categoryTable.deleteCategory(id);
                 errorMsg.setVisible(false);
-                //categories.setItems(FXCollections.observableArrayList(categoryTable.getAllCategories()));
+                categories.setItems(FXCollections.observableArrayList(categoryTable.getAllCategories()));
+                categories.getSelectionModel().select(0);
             }
             else{
                 // Display error message
