@@ -85,6 +85,8 @@ public class LoginPane extends BorderPane {
 
         TextField signInUserField = new TextField();
         signInUserField.setPromptText("Username");
+        //TODO remove later - used now for ease of testing
+        signInUserField.setText("cmcrae");
         signInUserField.setMaxWidth(100);
 
         Button signInButton = new Button("Sign In");

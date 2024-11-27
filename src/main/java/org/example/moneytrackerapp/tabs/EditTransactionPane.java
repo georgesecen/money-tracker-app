@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
@@ -12,8 +13,9 @@ import org.example.moneytrackerapp.pojo.DatabaseItem;
 import org.example.moneytrackerapp.pojo.Transaction;
 import org.example.moneytrackerapp.tables.CategoryTable;
 import org.example.moneytrackerapp.tables.TransactionTable;
-import org.example.moneytrackerapp.tables.TransactionTypeTable;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class EditTransactionPane extends GridPane {
@@ -32,53 +34,44 @@ public class EditTransactionPane extends GridPane {
         this.setHgap(10);
 
         Transaction transaction1 = transaction;
-        //TODO these have to be private but wont work if they are
 
-        CategoryTable categoryTable = CategoryTable().getInstance();
-        TransactionTable transactionTable = TransactionTable().getInstance();
+        CategoryTable categoryTable = CategoryTable.getInstance();
+        TransactionTable transactionTable = TransactionTable.getInstance();
         // Amount
-        Text amount = new Text("Amount:");
-        ComboBox<Transaction> comboName = new ComboBox<>();
-        ArrayList<Transaction> allTransactions = transactionTable.getAllTransactions();
-        comboName.setItems(FXCollections.observableArrayList(allTransactions));
-        //TODO different arraylist??
-        comboName.getSelectionModel().select(find(allTransactions, transaction.getId()));
-        this.add(amount, 0,0);
-        this.add(comboName, 1,0);
+        Text amountLabel = new Text("Amount:");
+        TextField amount = new TextField();
+        amount.setText(String.valueOf(transaction.getAmt()));
+        this.add(amountLabel, 0,0);
+        this.add(amount, 1,0);
         // Description
         Text descriptionLabel = new Text("Description");
         TextField description = new TextField();
-        year.setText(String.valueOf(transaction.getDesc()));
+        description.setText(String.valueOf(transaction.getDesc()));
         this.add(descriptionLabel,0,1);
         this.add(description,1,1);
         // Date
-        //TODO change!!!!!!
         Text date = new Text("Date");
-        ComboBox<Transaction> locationComboBox = new ComboBox<>();
-        ArrayList<Transaction> allTransactionDates = TransactionTable.getInstance().getAllTransactions();
-        locationComboBox.setItems(FXCollections.observableArrayList(allTransactionDates));
-        //TODO needs int - not date vvvvvvv
-        locationComboBox.getSelectionModel().select(find(allTransactionDates, transaction.getId()));
+        DatePicker datePicker = new DatePicker();
+        //TODO show date properly
+        datePicker.setValue(LocalDate.now());
         this.add(date,0,3);
-        this.add(locationComboBox,1,3);
-        Button update = new Button("Update");
+        this.add(datePicker,1,3);
         // Categories
         Text categories = new Text("Categories:");
         ComboBox<Category> conditionComboBox = new ComboBox<>();
         ArrayList<Category> allConditions = categoryTable.getAllCategories();
         conditionComboBox.setItems(FXCollections.observableArrayList(allConditions));
-        //TODO check to see if transaction.getCat_id() needs to be name instead
         conditionComboBox.getSelectionModel().select(find(allConditions, transaction.getCat_id()));
         this.add(categories,0,2);
         this.add(conditionComboBox,1,2);
+        Button update = new Button("Update");
 
         update.setOnAction(e->{
-            transaction.setAmt(locationComboBox.getSelectionModel().getSelectedItem().getId());
-            transaction.setDesc(conditionComboBox.getSelectionModel().getSelectedItem().getName());
-            transaction.setDate(comboName.getSelectionModel().getSelectedItem().getDate());
-            //TODO not description??
-            transaction.setCat_id(Integer.parseInt(categories.getText()));
-            transactionTable.updateTransaction(transaction);
+            transaction.setAmt(Double.parseDouble(amount.getText()));
+            transaction.setDesc(description.getText());
+//            transaction.setDate(comboName.getSelectionModel().getSelectedItem().getDate());
+//            transaction.setCat_id(Integer.parseInt(categories.getText()));
+//            transactionTable.updateTransaction(transaction);
             DisplayTransactionsTab.getInstance().refreshTable();
 //            StatisticsTab.getInstance().generateChart();
         });

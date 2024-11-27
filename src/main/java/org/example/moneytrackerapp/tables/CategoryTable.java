@@ -30,9 +30,11 @@ public class CategoryTable implements CategoryDAO {
             Statement statement = db.getConnection().createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
+                //TODO go back to 2 arg constructor
                 categories.add(new Category(
-                    resultSet.getString(CAT_COLUMN_NAME),
-                    resultSet.getInt(CAT_COLUMN_ID)
+                        resultSet.getInt(CAT_COLUMN_ID),
+                        resultSet.getString(CAT_COLUMN_NAME),
+                        resultSet.getInt(CAT_COLUMN_ID)
                 ));
             }
         } catch(Exception e) {
@@ -86,24 +88,24 @@ public class CategoryTable implements CategoryDAO {
      * GetCategory
      * returns a single category
      */
-    @Override
-    public Category getCategory(int id) {
-        String query = "SELECT * FROM " + TABLE_CATEGORIES + " WHERE " + CAT_COLUMN_ID + " = " + id;
-        try {
-            Statement statement = db.getConnection().createStatement();
-            ResultSet data = statement.executeQuery(query);
-            if(data.next()) {
-                Category category = new Category(
-                    data.getString(CAT_COLUMN_NAME),
-                    data.getInt(CAT_COLUMN_ID)
-                );
-                return category;
-            }
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+//    @Override
+//    public Category getCategory(int id) {
+//        String query = "SELECT * FROM " + TABLE_CATEGORIES + " WHERE " + CAT_COLUMN_ID + " = " + id;
+//        try {
+//            Statement statement = db.getConnection().createStatement();
+//            ResultSet data = statement.executeQuery(query);
+//            if(data.next()) {
+//                Category category = new Category(
+//                    data.getString(CAT_COLUMN_NAME),
+//                    data.getInt(CAT_COLUMN_ID)
+//                );
+//                return category;
+//            }
+//        } catch(Exception e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
 
     public static CategoryTable getInstance(){
         if(instance == null){
