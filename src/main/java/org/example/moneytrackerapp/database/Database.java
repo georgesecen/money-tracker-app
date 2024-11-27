@@ -29,7 +29,8 @@ public class Database {
                 createTable(TABLE_TRANSACTION_TYPES, CREATE_TABLE_TRANSACTION_TYPES, connection);
                 createTable(TABLE_CATEGORIES, CREATE_TABLE_CATEGORIES, connection);
                 createTable(TABLE_TRANSACTIONS, CREATE_TABLE_TRANSACTIONS, connection);
-                // Insert default records
+                insertDefaultRecords(INSERT_DEFAULT_TRANS_TYPES, connection);
+                insertDefaultRecords(INSERT_DEFAULT_CATEGORIES, connection);
             } catch(Exception e) {
                 System.out.println("Error connecting or creating database in Database.java");
                 e.printStackTrace();
@@ -71,8 +72,18 @@ public class Database {
         }
     }
 
-    public void insertDefaultRecords(String query) throws SQLException {
-
+    /**
+     * Method to run insert queries
+     * @param query insert query to be executed
+     * @param connection database connection
+     */
+    public void insertDefaultRecords(String query, Connection connection) {
+        try {
+            Statement statement = connection.createStatement();
+            statement.execute(query);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**

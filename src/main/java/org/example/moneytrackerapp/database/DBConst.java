@@ -61,6 +61,6 @@ public class DBConst {
             "INSERT INTO " + TABLE_CATEGORIES
                     + " VALUES (1, 'Income', 1), "
                     + "(2, 'Bills', 2), "
-                    + "(3, 'Groceries', 3), "
-                    + "(4, 'Misc', 4);";
+                    + "(3, 'Groceries', 2), "
+                    + "(4, 'Misc', 2);";
 }
