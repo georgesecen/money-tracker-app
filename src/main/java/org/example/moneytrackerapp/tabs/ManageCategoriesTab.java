@@ -11,6 +11,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import org.example.moneytrackerapp.pojo.Category;
 import org.example.moneytrackerapp.tables.CategoryTable;
+import org.example.moneytrackerapp.tables.TransactionTable;
 
 /**
  * ManageCategoriesTab class represents a page that will allow the user
@@ -24,6 +25,7 @@ public class ManageCategoriesTab extends Tab {
     public ManageCategoriesTab() {
         this.setText("Manage Categories");
 
+        TransactionTable transactionTable = TransactionTable.getInstance();
         CategoryTable categoryTable = CategoryTable.getInstance();
 
         Text title = new Text("Manage Categories");
@@ -41,6 +43,9 @@ public class ManageCategoriesTab extends Tab {
         deleteCat.setOnAction(e -> {
             int id = categories.getSelectionModel().getSelectedItem().getId();
             if(id > 4){     // if the selected category is NOT a default category
+                // Delete all transactions with that category
+                transactionTable.deleteTransactionByCategory(id);
+
                 categoryTable.deleteCategory(id);
                 errorMsg.setVisible(false);
                 categories.setItems(FXCollections.observableArrayList(categoryTable.getAllCategories()));
