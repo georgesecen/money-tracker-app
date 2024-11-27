@@ -1,5 +1,6 @@
 package org.example.moneytrackerapp.database;
 import org.example.moneytrackerapp.pojo.Category;
+import org.example.moneytrackerapp.pojo.TransactionType;
 import org.example.moneytrackerapp.tables.CategoryTable;
 import org.example.moneytrackerapp.tables.TransactionTypeTable;
 
@@ -70,12 +71,8 @@ public class Database {
         }
     }
 
-    public void addDefaultRecords(){
-        CategoryTable categoryTable = CategoryTable.getInstance();
-        TransactionTypeTable transTypeTable = new TransactionTypeTable();
+    public void insertDefaultRecords(String query) throws SQLException {
 
-        Category c = new Category(0, "Income", 1);
-        categoryTable.addCategory(c);
     }
 
     /**
