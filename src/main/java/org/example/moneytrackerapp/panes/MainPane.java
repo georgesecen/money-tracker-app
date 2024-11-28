@@ -28,18 +28,26 @@ public class MainPane extends BorderPane {
     public MainPane(){
         HelloApplication.mainStage.setTitle("Money Tracker App");
 
+        this.getStyleClass().add("gradient-background");
+
+        // StackPane used to style tab pane as some styles don't work and to add the
+        // navbar on top of the tabpane
+        StackPane tabPaneContainer = new StackPane();
+        tabPaneContainer.getStyleClass().add("tab-pane-container");
+        tabPaneContainer.setMaxWidth(1000);
+        tabPaneContainer.setMaxHeight(600);
+
         // TabPane navigation bar
         TabPane tabPane = new TabPane();
+        tabPane.setMaxWidth(1000);
+        tabPane.setMaxHeight(600);
+
         AddTransactionTab addTransactionTab = AddTransactionTab.getInstance();
         DisplayTransactionsTab displayTransactionsTab = DisplayTransactionsTab.getInstance();
         StatisticsTab statisticsTab = StatisticsTab.getInstance();
 
         tabPane.getTabs().addAll(displayTransactionsTab, addTransactionTab, statisticsTab);
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
-
-//        // Change tab
-//        tabPane.getSelectionModel().select(statisticsTab);
-
 
         // StackPane will hold all the nav bar components
         StackPane navbar = new StackPane();
@@ -120,11 +128,14 @@ public class MainPane extends BorderPane {
         navbar.getChildren().addAll(circle, icons);
 
 
-
+        // Add tabpane and nav bar to the container and put the nav bar on the left
+        // border of the tabpane
+        tabPaneContainer.getChildren().addAll(tabPane, navbar);
+        StackPane.setAlignment(navbar, Pos.CENTER_LEFT);
+        navbar.setTranslateX(-57);
 
         Database db = Database.getInstance();
-        this.setLeft(navbar);
-        this.setCenter(tabPane);
+        this.setCenter(tabPaneContainer);
     }
 
     /**
