@@ -2,6 +2,7 @@ package org.example.moneytrackerapp.scenes;
 
 import javafx.scene.Scene;
 import org.example.moneytrackerapp.Const;
+import org.example.moneytrackerapp.HelloApplication;
 import org.example.moneytrackerapp.panes.LoginPane;
 
 import java.io.IOException;
@@ -18,4 +19,5 @@ public class LoginScene extends Scene {
     public LoginScene() throws IOException {
         super(new LoginPane(), Const.SCREEN_WIDTH, Const.SCREEN_HEIGHT);
     }
+
 }

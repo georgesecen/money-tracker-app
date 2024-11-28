@@ -1,0 +1,64 @@
+.root{
+    -fx-background-color: #ffffff;
+    -fx-font-family: impact;
+    -fx-font-size:10pt;
+}
+.button {
+    -fx-font-size:12pt;
+    -fx-background-radius:10;
+    -fx-background-color:rgb(0,0,255);
+    -fx-text-fill:#FFFFFF;
+    -fx-border-color:#000000;
+    -fx-border-radius:10;
+    -fx-padding:10px;
+}
+
+.shadowed-pane{
+    -fx-background-color: white;
+    -fx-border-radius: 30px;
+    -fx-background-radius: 30px;
+    /* -fx-effect: dropshadow( <blur-type> , <color> , <blur> , <spread> , <offsetx> , <offsety> ) */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 17px, 0, 5px, 5px);
+}
+
+.gradient-background{
+    -fx-background-color: linear-gradient(to right top, #ffffff, #e2e2e2, #c9d6ff);
+}
+
+
+/*  LOGIN PANE CSS */
+.button-dimensions{
+    -fx-font-family: "sans-serif";
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 37px 8px 37px;
+}
+
+.title-text{
+    -fx-font-family: "sans-serif";
+    -fx-font-weight: bold;
+    -fx-font-size: 35px;
+}
+
+.description-text{
+    -fx-font-family: "sans-serif";
+    -fx-font-size: 15px;
+}
+
+.cta-text{
+    -fx-fill: white;
+}
+
+.light-themed-button{
+    -fx-background-color: #9966ff;
+    -fx-color: white;
+    -fx-border-width: 0px;
+}
+
+.dark-themed-button{
+    -fx-background-color: #9966ff;
+    -fx-color: white;
+    -fx-border-color: white;
+    -fx-border-width: 1px;
+    -fx-border-radius: 7px;
+}

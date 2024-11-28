@@ -1,5 +1,6 @@
 package org.example.moneytrackerapp.tables;
 
+import javafx.scene.chart.PieChart;
 import org.example.moneytrackerapp.dao.CategoryDAO;
 import org.example.moneytrackerapp.database.Database;
 import org.example.moneytrackerapp.pojo.Category;
@@ -12,12 +13,11 @@ import static org.example.moneytrackerapp.database.DBConst.*;
 
 public class CategoryTable implements CategoryDAO {
     private static CategoryTable instance;
+    Database db = Database.getInstance();
+    ArrayList<Category> categories;
     private CategoryTable(){
         db = Database.getInstance();
     }
-
-    Database db = Database.getInstance();
-    ArrayList<Category> categories;
     /**
      * GetAllCategories
      * returns all categories
@@ -44,6 +44,7 @@ public class CategoryTable implements CategoryDAO {
 
     @Override
     public ArrayList<Category> getAllIncomeCategories() {
+        //TODO no static ID's
         String query = "SELECT * FROM " + TABLE_CATEGORIES + " WHERE " + CAT_COLUMN_TRANS_ID + " = 1";
         categories = new ArrayList<>();
         try {
@@ -64,7 +65,7 @@ public class CategoryTable implements CategoryDAO {
 
     @Override
     public ArrayList<Category> getAllExpenseCategories() {
-        String query = "SELECT * FROM " + TABLE_CATEGORIES + " WHERE " + CAT_COLUMN_TRANS_ID + " = 2";
+        String query = "SELECT * FROM " + TABLE_CATEGORIES;
         categories = new ArrayList<>();
         try {
             Statement statement = db.getConnection().createStatement();
@@ -81,6 +82,7 @@ public class CategoryTable implements CategoryDAO {
         }
         return categories;
     }
+
     /**
      * GetCategory
      * returns a single category
@@ -104,6 +106,27 @@ public class CategoryTable implements CategoryDAO {
         }
         return null;
     }
+
+    //TODO not sure this method is needed - will address after merging featureEditTransactions into development branch
+//    @Override
+//    public Category getCategory(int id) {
+//        String query = "SELECT * FROM " + TABLE_CATEGORIES + " WHERE " + CAT_COLUMN_ID + " = " + id;
+//        try {
+//            Statement statement = db.getConnection().createStatement();
+//            ResultSet data = statement.executeQuery(query);
+//            if(data.next()) {
+//                Category category = new Category(
+//                    data.getString(CAT_COLUMN_NAME),
+//                    data.getInt(CAT_COLUMN_ID)
+//                );
+//                return category;
+//            }
+//        } catch(Exception e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
+
 
     /**
      * Adds a record into the Category table

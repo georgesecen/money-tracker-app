@@ -47,7 +47,6 @@ public class AddTransactionTab extends Tab {
         typeBox.alignmentProperty().set(Pos.CENTER);
         typeBox.setSpacing(20);
 
-
         // Transaction amount
         Text amountLabel = new Text("Amount");
         TextField amount = new TextField();
@@ -57,6 +56,7 @@ public class AddTransactionTab extends Tab {
         TextField desc = new TextField();
 
         // Category
+        System.out.println(categoryTable.getAllCategories());
         Text catLabel = new Text("Category");
         ComboBox<Category> cat = new ComboBox<>();
         cat.setItems(FXCollections.observableArrayList(categoryTable.getAllExpenseCategories()));
@@ -101,9 +101,10 @@ public class AddTransactionTab extends Tab {
                     amtEntered,
                     desc.getText(),
                     Date.valueOf(date.getValue()),
-                    cat.getSelectionModel().getSelectedItem().getId()
+                    cat.getSelectionModel().getSelectedItem().getDBId()
             );
             transactionTable.createTransaction(transaction);
+            DisplayTransactionsTab.getInstance().refreshTable();
         });
 
 
