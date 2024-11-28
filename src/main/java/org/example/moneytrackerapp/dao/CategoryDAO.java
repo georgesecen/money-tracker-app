@@ -9,6 +9,7 @@ public interface CategoryDAO {
     public ArrayList<Category> getAllCategories();
     public ArrayList<Category> getAllIncomeCategories();
     public ArrayList<Category> getAllExpenseCategories();
-    public Category getCategory(int id);
+    //TODO uncomment getCategory
+//    public Category getCategory(int id);
 
 }

@@ -47,7 +47,6 @@ public class AddTransactionTab extends Tab {
         typeBox.alignmentProperty().set(Pos.CENTER);
         typeBox.setSpacing(20);
 
-
         // Transaction amount
         Text amountLabel = new Text("Amount");
         TextField amount = new TextField();
@@ -77,53 +76,42 @@ public class AddTransactionTab extends Tab {
         DatePicker date = new DatePicker();
         date.setValue(LocalDate.now());
 
-        // Text to display error message
-        Text errorMessage = new Text("");
-
         // Submit
         Button submit = new Button("Add Transaction");
         submit.setOnAction(e -> {
-            // Ensure all field entries are valid before proceeding
-            try{
-                // First sanitize the amount input
-                // If income is selected, change a negative input to positive
-                // If expense is selected, change a positive input to negative
-                double amtEntered = Double.parseDouble(amount.getText());
-                if(type1.isSelected()) {
-                    if (amtEntered < 0) {
-                        amtEntered *= -1;
-                    }
+
+            // First sanitize the amount input
+            // If income is selected, change a negative input to positive
+            // If expense is selected, change a positive input to negative
+            double amtEntered = Double.parseDouble(amount.getText());
+            if(type1.isSelected()) {
+                if (amtEntered < 0) {
+                    amtEntered *= -1;
                 }
-                else{
-                    if(amtEntered > 0) {
-                        amtEntered *= -1;
-                    }
-                }
-
-                // Create and add the new transaction
-                Transaction transaction = new Transaction(
-                        0,
-                        amtEntered,
-                        desc.getText(),
-                        Date.valueOf(date.getValue()),
-                        cat.getSelectionModel().getSelectedItem().getId()
-                );
-                transactionTable.createTransaction(transaction);
-
-                // Redirect user to all transactions page
-                DisplayTransactionsTab.getInstance().refreshTable();
-                this.getTabPane().getSelectionModel().select(DisplayTransactionsTab.getInstance());
-
-            } catch (Exception exception){
-                System.out.println("Invalid input");
-                // Add error message
-                errorMessage.setText("Invalid input, please try again");
             }
+            else{
+                if(amtEntered > 0) {
+                    amtEntered *= -1;
+                }
+            }
+
+            // Create and add the new transaction
+            Transaction transaction = new Transaction(
+                    0,
+                    amtEntered,
+                    desc.getText(),
+                    Date.valueOf(date.getValue()),
+                    cat.getSelectionModel().getSelectedItem().getDBId()
+            );
+            transactionTable.createTransaction(transaction);
+            DisplayTransactionsTab.getInstance().refreshTable();
         });
+
+
 
         // Vbox to hold form
         VBox form = new VBox(typeLabel, typeBox, amountLabel, amount, descLabel, desc,
-                                        catLabel, cat, dateLabel, date, errorMessage, submit);
+                                        catLabel, cat, dateLabel, date, submit);
         form.setSpacing(10);
 
 
@@ -132,7 +120,7 @@ public class AddTransactionTab extends Tab {
         root.setAlignment(title, Pos.BOTTOM_CENTER);
         root.setCenter(form);
         root.setMargin(title, new Insets(100, 30, 30, 30));
-        root.setMargin(form, new Insets(30, 300, 30, 300));
+        root.setMargin(form, new Insets(30, 200, 30, 200));
 
         form.setAlignment(Pos.CENTER);
         this.setContent(root);
