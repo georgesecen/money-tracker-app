@@ -107,26 +107,6 @@ public class CategoryTable implements CategoryDAO {
         return null;
     }
 
-    //TODO not sure this method is needed - will address after merging featureEditTransactions into development branch
-    public Category getCategory(int id) {
-        String query = "SELECT * FROM " + TABLE_CATEGORIES + " WHERE " + CAT_COLUMN_ID + " = " + id;
-        try {
-            Statement statement = db.getConnection().createStatement();
-            ResultSet data = statement.executeQuery(query);
-            if(data.next()) {
-                Category category = new Category(
-                    data.getInt(CAT_COLUMN_ID),
-                    data.getString(CAT_COLUMN_NAME),
-                    data.getInt(CAT_COLUMN_TRANS_ID)
-                );
-                return category;
-            }
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
 
     /**
      * Adds a record into the Category table

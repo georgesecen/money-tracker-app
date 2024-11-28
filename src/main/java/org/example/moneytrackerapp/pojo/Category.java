@@ -25,7 +25,7 @@ public class Category extends DatabaseItem {
      */
     public Category(int id, String name, int trans_type) {
         super(id);
-//        this.id = id;
+        this.id = id;
         this.name = name;
         this.trans_type = trans_type;
     }
