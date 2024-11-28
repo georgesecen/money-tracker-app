@@ -1,5 +1,6 @@
 package org.example.moneytrackerapp.tables;
 
+import javafx.scene.chart.PieChart;
 import org.example.moneytrackerapp.dao.CategoryDAO;
 import org.example.moneytrackerapp.database.Database;
 import org.example.moneytrackerapp.pojo.Category;
@@ -12,12 +13,11 @@ import static org.example.moneytrackerapp.database.DBConst.*;
 
 public class CategoryTable implements CategoryDAO {
     private static CategoryTable instance;
+    Database db = Database.getInstance();
+    ArrayList<Category> categories;
     private CategoryTable(){
         db = Database.getInstance();
     }
-
-    Database db = Database.getInstance();
-    ArrayList<Category> categories;
     /**
      * GetAllCategories
      * returns all categories
@@ -31,8 +31,9 @@ public class CategoryTable implements CategoryDAO {
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
                 categories.add(new Category(
+                    resultSet.getInt(CAT_COLUMN_ID),
                     resultSet.getString(CAT_COLUMN_NAME),
-                    resultSet.getInt(CAT_COLUMN_ID)
+                    resultSet.getInt(CAT_COLUMN_TRANS_ID)
                 ));
             }
         } catch(Exception e) {
@@ -53,7 +54,7 @@ public class CategoryTable implements CategoryDAO {
                 categories.add(new Category(
                         resultSet.getInt(CAT_COLUMN_ID),
                         resultSet.getString(CAT_COLUMN_NAME),
-                        resultSet.getInt(CAT_COLUMN_ID)
+                        resultSet.getInt(CAT_COLUMN_TRANS_ID)
                 ));
             }
         } catch(Exception e) {
@@ -64,8 +65,7 @@ public class CategoryTable implements CategoryDAO {
 
     @Override
     public ArrayList<Category> getAllExpenseCategories() {
-        String query = "SELECT * FROM " + TABLE_CATEGORIES;
-//        String query = "SELECT * FROM " + TABLE_CATEGORIES + " WHERE " + CAT_COLUMN_TRANS_ID + " = 2";
+        String query = "SELECT * FROM " + TABLE_CATEGORIES + " WHERE " + CAT_COLUMN_TRANS_ID + " = 2";
         categories = new ArrayList<>();
         try {
             Statement statement = db.getConnection().createStatement();
@@ -74,7 +74,7 @@ public class CategoryTable implements CategoryDAO {
                 categories.add(new Category(
                         resultSet.getInt(CAT_COLUMN_ID),
                         resultSet.getString(CAT_COLUMN_NAME),
-                        resultSet.getInt(CAT_COLUMN_ID)
+                        resultSet.getInt(CAT_COLUMN_TRANS_ID)
                 ));
             }
         } catch(Exception e) {
@@ -82,6 +82,7 @@ public class CategoryTable implements CategoryDAO {
         }
         return categories;
     }
+
     /**
      * GetCategory
      * returns a single category
@@ -94,8 +95,9 @@ public class CategoryTable implements CategoryDAO {
             ResultSet data = statement.executeQuery(query);
             if(data.next()) {
                 Category category = new Category(
+                    data.getInt(CAT_COLUMN_ID),
                     data.getString(CAT_COLUMN_NAME),
-                    data.getInt(CAT_COLUMN_ID)
+                    data.getInt(CAT_COLUMN_TRANS_ID)
                 );
                 return category;
             }
@@ -134,12 +136,14 @@ public class CategoryTable implements CategoryDAO {
         String query = "DELETE FROM " + TABLE_CATEGORIES + " WHERE " + CAT_COLUMN_ID + " = " + catID;
         try {
             Statement statement = db.getConnection().createStatement();
-            statement.executeQuery(query);
+            statement.execute(query);
+            System.out.println("Successfully deleted catagory.");
         } catch(Exception e) {
             e.printStackTrace();
+            System.out.println("Error deleting category");
         }
     }
-    
+
     public static CategoryTable getInstance(){
         if(instance == null){
             instance = new CategoryTable();

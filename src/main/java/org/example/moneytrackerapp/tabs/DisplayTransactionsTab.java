@@ -1,6 +1,8 @@
 package org.example.moneytrackerapp.tabs;
 
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
@@ -10,15 +12,18 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import org.example.moneytrackerapp.pojo.DisplayItem;
+import org.example.moneytrackerapp.pojo.Transaction;
 import org.example.moneytrackerapp.tables.TransactionTable;
 
 public class DisplayTransactionsTab extends Tab {
     public TableView tableView;
     private static DisplayTransactionsTab instance;
+    /**
+     * Class Constructor
+     */
     public DisplayTransactionsTab() {
         TransactionTable transaction = TransactionTable.getInstance();
         tableView = new TableView();
-
         //Amount
         TableColumn<DisplayItem, String> column1 =
                 new TableColumn<>("Amount");
@@ -37,7 +42,6 @@ public class DisplayTransactionsTab extends Tab {
         // Category
         TableColumn<DisplayItem, String> column4 =
                 new TableColumn<>("Category");
-
         column4.setCellValueFactory(
                 e-> new SimpleStringProperty(e.getValue().getCategory()));
 
@@ -46,7 +50,7 @@ public class DisplayTransactionsTab extends Tab {
         BorderPane root  = new BorderPane();
         // Set Text Title
         Text title = new Text("Transactions");
-
+        // Add columns and items to table
         tableView.getColumns().addAll(column1, column2, column3, column4);
         tableView.getItems().addAll(transaction.getFancyItems());
         root.setCenter(tableView);
@@ -55,8 +59,11 @@ public class DisplayTransactionsTab extends Tab {
         content.setAlignment(Pos.CENTER);
         root.setTop(content);
         this.setContent(root);
-
+        // Create remove button
         Button removeItem = new Button("Remove Item");
+        /**
+         * Deletes transaction from DB and refreshes Table
+         */
         removeItem.setOnAction(e->{
             DisplayItem remove = (DisplayItem) tableView.getSelectionModel().getSelectedItem();
             transaction.deleteTransaction(remove.getId());
@@ -66,14 +73,32 @@ public class DisplayTransactionsTab extends Tab {
             //TODO implement after charts are merged
 //            StatisticsTab.getInstance().generateChart();
         });
+        tableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                if(newValue != null){
+                    Transaction selectedItem = transaction.getTransaction(((DisplayItem) newValue).getId());
+                    //Item object version of DisplayItem (Selected in table)
+                    EditTransactionPane pane = new EditTransactionPane(selectedItem);
+                    root.setRight(pane);
+                }
+            }
+        });
         root.setBottom(removeItem);
-
+        this.setContent(root);
     }
+    /**
+     * Updates table with new values
+     */
     public void refreshTable(){
         TransactionTable table = TransactionTable.getInstance();
         tableView.getItems().clear();
         tableView.getItems().addAll(table.getFancyItems());
     }
+    /**
+     * Reaches out to database for new instance of DisplayTransactionsTab
+     * @return instance;
+     */
     public static DisplayTransactionsTab getInstance(){
         if(instance == null){
             instance = new DisplayTransactionsTab();

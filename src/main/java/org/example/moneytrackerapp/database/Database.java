@@ -47,7 +47,6 @@ public class Database {
      */
     public static Database getInstance(){
         if(instance == null){
-            //TODO Replace constructor values with values read from file
             instance = new Database();
         }
         return instance;
@@ -81,7 +80,10 @@ public class Database {
         try {
             Statement statement = connection.createStatement();
             statement.execute(query);
-        } catch(Exception e) {
+        }  catch (SQLIntegrityConstraintViolationException ex){
+            System.out.println("Entries already exist");
+
+        }catch(Exception e) {
             e.printStackTrace();
         }
     }
