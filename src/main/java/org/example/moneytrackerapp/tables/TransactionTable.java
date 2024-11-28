@@ -103,6 +103,21 @@ public class TransactionTable implements TransactionDAO {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Remove all transactions in table with the chosen Category id
+     * @param cat_id Category id
+     */
+    public void deleteTransactionByCategory(int cat_id) {
+        String query = "DELETE FROM " + TABLE_TRANSACTIONS + " WHERE " + TRANS_COLUMN_CAT + " = " + cat_id;
+        try {
+            Statement statement = db.getConnection().createStatement();
+            statement.execute(query);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Method to insert a transaction into database
      * @param transaction;
@@ -126,6 +141,7 @@ public class TransactionTable implements TransactionDAO {
             e.printStackTrace();
         }
     }
+
     /**
      * Method to display all formatted transactions from database
      * @return items
