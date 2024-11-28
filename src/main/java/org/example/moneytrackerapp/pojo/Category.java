@@ -35,6 +35,7 @@ public class Category extends DatabaseItem {
      * @param name Category name
      * @param trans_type integer represents type of transaction
      */
+    //TODO do not need this constructor
 //    public Category(String name, int trans_type) {
 ////        super(id);
 //        this.name = name;

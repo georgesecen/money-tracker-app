@@ -40,7 +40,6 @@ public class Database {
      */
     public static Database getInstance(){
         if(instance == null){
-            //TODO Replace constructor values with values read from file
             instance = new Database();
         }
         return instance;

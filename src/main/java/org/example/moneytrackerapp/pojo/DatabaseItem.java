@@ -7,7 +7,7 @@ public class DatabaseItem {
         this.id = id;
     }
 
-    public int getId() {
+    public int getDBId() {
         return id;
     }
 

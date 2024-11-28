@@ -101,7 +101,7 @@ public class AddTransactionTab extends Tab {
                     amtEntered,
                     desc.getText(),
                     Date.valueOf(date.getValue()),
-                    cat.getSelectionModel().getSelectedItem().getId()
+                    cat.getSelectionModel().getSelectedItem().getDBId()
             );
             transactionTable.createTransaction(transaction);
             DisplayTransactionsTab.getInstance().refreshTable();

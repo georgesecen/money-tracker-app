@@ -30,7 +30,6 @@ public class CategoryTable implements CategoryDAO {
             Statement statement = db.getConnection().createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
-                //TODO go back to 2 arg constructor
                 categories.add(new Category(
                         resultSet.getInt(CAT_COLUMN_ID),
                         resultSet.getString(CAT_COLUMN_NAME),
@@ -42,7 +41,6 @@ public class CategoryTable implements CategoryDAO {
         }
         return categories;
     }
-//TODO discuss implementation of method/change logic
     @Override
     public ArrayList<Category> getAllIncomeCategories() {
         //TODO no static ID's
@@ -63,11 +61,9 @@ public class CategoryTable implements CategoryDAO {
         }
         return categories;
     }
-//TODO discuss implementation of method/change logic
     @Override
     public ArrayList<Category> getAllExpenseCategories() {
         String query = "SELECT * FROM " + TABLE_CATEGORIES;
-//        String query = "SELECT * FROM " + TABLE_CATEGORIES + " WHERE " + CAT_COLUMN_TRANS_ID + " = 2";
         categories = new ArrayList<>();
         try {
             Statement statement = db.getConnection().createStatement();
@@ -88,6 +84,7 @@ public class CategoryTable implements CategoryDAO {
      * GetCategory
      * returns a single category
      */
+    //TODO not sure this method is needed - will address after merging featureEditTransactions into development branch
 //    @Override
 //    public Category getCategory(int id) {
 //        String query = "SELECT * FROM " + TABLE_CATEGORIES + " WHERE " + CAT_COLUMN_ID + " = " + id;
