@@ -6,11 +6,8 @@ import org.example.moneytrackerapp.HelloApplication;
 import org.example.moneytrackerapp.tabs.StatisticsTab;
 import org.example.moneytrackerapp.database.Database;
 import org.example.moneytrackerapp.tabs.AddTransactionTab;
-<<<<<<< HEAD
 import org.example.moneytrackerapp.tabs.ManageCategoriesTab;
-=======
 import org.example.moneytrackerapp.tabs.DisplayTransactionsTab;
->>>>>>> development
 
 public class MainPane extends BorderPane {
     public MainPane(){
