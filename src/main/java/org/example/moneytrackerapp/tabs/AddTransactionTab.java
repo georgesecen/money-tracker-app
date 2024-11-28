@@ -4,18 +4,14 @@ import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import org.example.moneytrackerapp.pojo.Category;
 import org.example.moneytrackerapp.pojo.Transaction;
 import org.example.moneytrackerapp.tables.CategoryTable;
 import org.example.moneytrackerapp.tables.TransactionTable;
-import org.example.moneytrackerapp.tables.TransactionTypeTable;
 import java.sql.Date;
 
 import java.time.LocalDate;
@@ -29,7 +25,6 @@ public class AddTransactionTab extends Tab {
         // Get tables
         TransactionTable transactionTable = TransactionTable.getInstance();
         CategoryTable categoryTable = CategoryTable.getInstance();
-        TransactionTypeTable transactionTypeTable = new TransactionTypeTable();
 
         // Title
         Text title = new Text("Add Transaction");
@@ -46,7 +41,6 @@ public class AddTransactionTab extends Tab {
         HBox typeBox = new HBox(type1, type2);
         typeBox.alignmentProperty().set(Pos.CENTER);
         typeBox.setSpacing(20);
-
 
         // Transaction amount
         Text amountLabel = new Text("Amount");
@@ -77,25 +71,26 @@ public class AddTransactionTab extends Tab {
         DatePicker date = new DatePicker();
         date.setValue(LocalDate.now());
 
-        // Text to display error message
+        //Text to display error message
         Text errorMessage = new Text("");
 
         // Submit
         Button submit = new Button("Add Transaction");
         submit.setOnAction(e -> {
-            // Ensure all field entries are valid before proceeding
-            try{
+            // ensure all fields are valid before proceeding
+            try {
+
+
                 // First sanitize the amount input
                 // If income is selected, change a negative input to positive
                 // If expense is selected, change a positive input to negative
                 double amtEntered = Double.parseDouble(amount.getText());
-                if(type1.isSelected()) {
+                if (type1.isSelected()) {
                     if (amtEntered < 0) {
                         amtEntered *= -1;
                     }
-                }
-                else{
-                    if(amtEntered > 0) {
+                } else {
+                    if (amtEntered > 0) {
                         amtEntered *= -1;
                     }
                 }
@@ -106,20 +101,22 @@ public class AddTransactionTab extends Tab {
                         amtEntered,
                         desc.getText(),
                         Date.valueOf(date.getValue()),
-                        cat.getSelectionModel().getSelectedItem().getId()
+                        cat.getSelectionModel().getSelectedItem().getDBId()
                 );
                 transactionTable.createTransaction(transaction);
 
-                // Redirect user to all transactions page
+                // Refresh and redirect user to all transactions page
                 DisplayTransactionsTab.getInstance().refreshTable();
                 this.getTabPane().getSelectionModel().select(DisplayTransactionsTab.getInstance());
 
-            } catch (Exception exception){
+            } catch (Exception ex) {
                 System.out.println("Invalid input");
                 // Add error message
                 errorMessage.setText("Invalid input, please try again");
             }
         });
+
+
 
         // Vbox to hold form
         VBox form = new VBox(typeLabel, typeBox, amountLabel, amount, descLabel, desc,
@@ -132,7 +129,7 @@ public class AddTransactionTab extends Tab {
         root.setAlignment(title, Pos.BOTTOM_CENTER);
         root.setCenter(form);
         root.setMargin(title, new Insets(100, 30, 30, 30));
-        root.setMargin(form, new Insets(30, 300, 30, 300));
+        root.setMargin(form, new Insets(30, 200, 30, 200));
 
         form.setAlignment(Pos.CENTER);
         this.setContent(root);

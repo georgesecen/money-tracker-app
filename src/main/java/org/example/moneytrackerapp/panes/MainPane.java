@@ -3,7 +3,6 @@ package org.example.moneytrackerapp.panes;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
 import javafx.geometry.Pos;
-import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TabPane;
@@ -13,14 +12,13 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
-import javafx.scene.text.Text;
 import javafx.util.Duration;
 import org.example.moneytrackerapp.HelloApplication;
 import org.example.moneytrackerapp.tabs.StatisticsTab;
 import org.example.moneytrackerapp.database.Database;
 import org.example.moneytrackerapp.tabs.AddTransactionTab;
+import org.example.moneytrackerapp.tabs.ManageCategoriesTab;
 import org.example.moneytrackerapp.tabs.DisplayTransactionsTab;
-
 import java.io.FileInputStream;
 import java.util.Objects;
 
@@ -43,10 +41,11 @@ public class MainPane extends BorderPane {
         tabPane.setMaxHeight(600);
 
         AddTransactionTab addTransactionTab = AddTransactionTab.getInstance();
+        ManageCategoriesTab manageCategoriesTab = ManageCategoriesTab.getInstance();
         DisplayTransactionsTab displayTransactionsTab = DisplayTransactionsTab.getInstance();
         StatisticsTab statisticsTab = StatisticsTab.getInstance();
 
-        tabPane.getTabs().addAll(displayTransactionsTab, addTransactionTab, statisticsTab);
+        tabPane.getTabs().addAll(displayTransactionsTab, addTransactionTab, statisticsTab, manageCategoriesTab);
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
         // StackPane will hold all the nav bar components
