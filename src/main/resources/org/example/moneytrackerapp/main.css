@@ -73,4 +73,15 @@
     -fx-translate-x: 9999999;
 }
 
+.nav-button{
+    -fx-background-color: transparent;
+    -fx-border-width: 0px;
+}
+
+.nav-bar{
+    -fx-background-color: #9966ff;
+    -fx-border-radius: 50px;
+    -fx-background-radius: 50px;
+}
+
 

@@ -1,5 +1,6 @@
 package org.example.moneytrackerapp.panes;
 
+import javafx.geometry.Pos;
 import javafx.geometry.Side;
 import javafx.scene.control.Button;
 import javafx.scene.control.TabPane;
@@ -38,37 +39,64 @@ public class MainPane extends BorderPane {
 
         // StackPane will hold all the nav bar components
         StackPane navbar = new StackPane();
+        navbar.getStyleClass().add("nav-bar");
+        navbar.setMaxWidth(50);
+        navbar.setMinWidth(50);
+        navbar.setMaxHeight(250);
 
-        // Circle behind navbar icons
-        Circle circle = new Circle(50);
-
+        // Circle behind navbar icons, by default behind display transactions icon
+        Circle circle = new Circle(20);
+        circle.setStyle("-fx-fill: #5b3c99");
+        circle.setTranslateY(-86);
 
 
         VBox icons = new VBox();
+        icons.setAlignment(Pos.CENTER);
+        icons.setSpacing(15);
 
         // Get all the icons for the navbar
         Image displayTransactionsIcon = new Image(getClass().getResourceAsStream("/images/grid.png"));
         ImageView displayTransactionsImage = new ImageView(displayTransactionsIcon);
+        displayTransactionsImage.setFitWidth(22);
+        displayTransactionsImage.setFitHeight(22);
+
+        Image addTransactionIcon = new Image(getClass().getResourceAsStream("/images/settings.png"));
+        ImageView addTransactionImage = new ImageView(addTransactionIcon);
+        addTransactionImage.setFitWidth(22);
+        addTransactionImage.setFitHeight(22);
+
         Image statisticsIcon = new Image(getClass().getResourceAsStream("/images/chart.png"));
         ImageView statisticsImage = new ImageView(statisticsIcon);
+        statisticsImage.setFitWidth(22);
+        statisticsImage.setFitHeight(22);
+
         Image settingsIcon = new Image(getClass().getResourceAsStream("/images/settings.png"));
         ImageView settingsImage = new ImageView(settingsIcon);
+        settingsImage.setFitWidth(22);
+        settingsImage.setFitHeight(22);
 
         // Create buttons for every icon
         Button displayTransactionsButton = new Button();
+        displayTransactionsButton.getStyleClass().add("nav-button");
         displayTransactionsButton.setGraphic(displayTransactionsImage);
 
+        Button addTransactionButton = new Button();
+        addTransactionButton.getStyleClass().add("nav-button");
+        addTransactionButton.setGraphic(addTransactionImage);
+
         Button displayStatisticsButton = new Button();
+        displayStatisticsButton.getStyleClass().add("nav-button");
         displayStatisticsButton.setGraphic(statisticsImage);
 
         Button settingsButton = new Button();
+        settingsButton.getStyleClass().add("nav-button");
         settingsButton.setGraphic(settingsImage);
 
-        icons.getChildren().addAll(displayTransactionsButton, displayStatisticsButton, settingsButton);
+        icons.getChildren().addAll(displayTransactionsButton, addTransactionButton, displayStatisticsButton, settingsButton);
 
 
 
-        navbar.getChildren().addAll(icons);
+        navbar.getChildren().addAll(circle, icons);
 
 
 
