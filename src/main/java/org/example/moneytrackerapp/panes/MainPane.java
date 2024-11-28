@@ -1,7 +1,10 @@
 package org.example.moneytrackerapp.panes;
 
+import javafx.animation.Interpolator;
+import javafx.animation.TranslateTransition;
 import javafx.geometry.Pos;
 import javafx.geometry.Side;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
@@ -11,6 +14,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 import org.example.moneytrackerapp.HelloApplication;
 import org.example.moneytrackerapp.tabs.StatisticsTab;
 import org.example.moneytrackerapp.database.Database;
@@ -92,6 +96,13 @@ public class MainPane extends BorderPane {
         settingsButton.getStyleClass().add("nav-button");
         settingsButton.setGraphic(settingsImage);
 
+        // Animate the circle behind the icons to animate behind the icon
+        // which is clicked
+        displayTransactionsButton.setOnAction(e-> animateTranslateY(circle, 175, -86));
+        addTransactionButton.setOnAction(e-> animateTranslateY(circle, 175, -29));
+        displayStatisticsButton.setOnAction(e-> animateTranslateY(circle, 175, 28));
+        settingsButton.setOnAction(e-> animateTranslateY(circle, 175, 86));
+
         icons.getChildren().addAll(displayTransactionsButton, addTransactionButton, displayStatisticsButton, settingsButton);
 
 
@@ -104,5 +115,20 @@ public class MainPane extends BorderPane {
         Database db = Database.getInstance();
         this.setLeft(navbar);
         this.setCenter(tabPane);
+    }
+
+    /**
+     * Animates a node, so it translates to specified Y position.
+     * @param node JavaFx node to be animated.
+     * @param animationLength Length of animation in milliseconds.
+     * @param toY The ending Y position of the translation animation.
+     */
+    private void animateTranslateY(Node node, double animationLength, double toY){
+        TranslateTransition translate = new TranslateTransition(Duration.millis(animationLength), node);
+        translate.setToY(toY);
+
+        translate.setInterpolator(Interpolator.EASE_BOTH);
+
+        translate.play();
     }
 }
