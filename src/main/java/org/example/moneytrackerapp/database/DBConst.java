@@ -48,4 +48,19 @@ public class DBConst {
                     TRANS_COLUMN_CAT + " int NOT NULL, " +
                     "PRIMARY KEY(" + TRANS_COLUMN_ID + "), " +
                     "FOREIGN KEY(" + TRANS_COLUMN_CAT + ") REFERENCES " + TABLE_CATEGORIES + "(" + CAT_COLUMN_ID + "))";
+
+    /**
+     * INSERT INTO STATEMENTS
+     */
+    public static final String INSERT_DEFAULT_TRANS_TYPES =
+            "INSERT INTO " + TABLE_TRANSACTION_TYPES
+            + " VALUES (1, 'Income'), "
+            + "(2, 'Expense');";
+
+    public static final String INSERT_DEFAULT_CATEGORIES =
+            "INSERT INTO " + TABLE_CATEGORIES
+                    + " VALUES (1, 'Income', 1), "
+                    + "(2, 'Bills', 2), "
+                    + "(3, 'Groceries', 2), "
+                    + "(4, 'Misc', 2);";
 }

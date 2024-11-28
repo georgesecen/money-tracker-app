@@ -106,8 +106,7 @@ public class CategoryTable implements CategoryDAO {
         }
         return null;
     }
-
-
+    
     /**
      * Adds a record into the Category table
      * @param category Category object to be added
