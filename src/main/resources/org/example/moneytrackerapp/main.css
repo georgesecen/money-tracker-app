@@ -22,7 +22,7 @@
 }
 
 .gradient-background{
-    -fx-background-color: linear-gradient(to right top, #7f7fd5, #86a8e7, #91eae4);
+    -fx-background-color: linear-gradient(to right top, #91eae4, #86a8e7, #b6b6de);
 }
 
 

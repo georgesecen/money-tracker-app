@@ -71,7 +71,7 @@ public class MainPane extends BorderPane {
         displayTransactionsImage.setFitWidth(22);
         displayTransactionsImage.setFitHeight(22);
 
-        Image addTransactionIcon = new Image(getClass().getResourceAsStream("/images/settings.png"));
+        Image addTransactionIcon = new Image(getClass().getResourceAsStream("/images/add.png"));
         ImageView addTransactionImage = new ImageView(addTransactionIcon);
         addTransactionImage.setFitWidth(22);
         addTransactionImage.setFitHeight(22);
@@ -81,10 +81,10 @@ public class MainPane extends BorderPane {
         statisticsImage.setFitWidth(22);
         statisticsImage.setFitHeight(22);
 
-        Image settingsIcon = new Image(getClass().getResourceAsStream("/images/settings.png"));
-        ImageView settingsImage = new ImageView(settingsIcon);
-        settingsImage.setFitWidth(22);
-        settingsImage.setFitHeight(22);
+        Image manageCategoriesIcon = new Image(getClass().getResourceAsStream("/images/settings.png"));
+        ImageView manageCategoriesImage = new ImageView(manageCategoriesIcon);
+        manageCategoriesImage.setFitWidth(22);
+        manageCategoriesImage.setFitHeight(22);
 
         // Create buttons for every icon
         Button displayTransactionsButton = new Button();
@@ -99,9 +99,9 @@ public class MainPane extends BorderPane {
         displayStatisticsButton.getStyleClass().add("nav-button");
         displayStatisticsButton.setGraphic(statisticsImage);
 
-        Button settingsButton = new Button();
-        settingsButton.getStyleClass().add("nav-button");
-        settingsButton.setGraphic(settingsImage);
+        Button manageCategoriesButton = new Button();
+        manageCategoriesButton.getStyleClass().add("nav-button");
+        manageCategoriesButton.setGraphic(manageCategoriesImage);
 
         // Animate the circle behind the icons to animate behind the icon which is clicked and switch to that tab
         displayTransactionsButton.setOnAction(e-> {
@@ -116,11 +116,12 @@ public class MainPane extends BorderPane {
             animateTranslateY(circle, 175, 28);
             tabPane.getSelectionModel().select(statisticsTab);
         });
+        manageCategoriesButton.setOnAction(e-> {
+            animateTranslateY(circle, 175, 86);
+            tabPane.getSelectionModel().select(manageCategoriesTab);
+        });
 
-        // TODO: Send tab to settings tab once settings tab is added to project
-        settingsButton.setOnAction(e-> animateTranslateY(circle, 175, 86));
-
-        icons.getChildren().addAll(displayTransactionsButton, addTransactionButton, displayStatisticsButton, settingsButton);
+        icons.getChildren().addAll(displayTransactionsButton, addTransactionButton, displayStatisticsButton, manageCategoriesButton);
 
 
 
