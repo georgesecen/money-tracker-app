@@ -96,11 +96,21 @@ public class MainPane extends BorderPane {
         settingsButton.getStyleClass().add("nav-button");
         settingsButton.setGraphic(settingsImage);
 
-        // Animate the circle behind the icons to animate behind the icon
-        // which is clicked
-        displayTransactionsButton.setOnAction(e-> animateTranslateY(circle, 175, -86));
-        addTransactionButton.setOnAction(e-> animateTranslateY(circle, 175, -29));
-        displayStatisticsButton.setOnAction(e-> animateTranslateY(circle, 175, 28));
+        // Animate the circle behind the icons to animate behind the icon which is clicked and switch to that tab
+        displayTransactionsButton.setOnAction(e-> {
+            animateTranslateY(circle, 175, -86);
+            tabPane.getSelectionModel().select(displayTransactionsTab);
+        });
+        addTransactionButton.setOnAction(e-> {
+            animateTranslateY(circle, 175, -29);
+            tabPane.getSelectionModel().select(addTransactionTab);
+        });
+        displayStatisticsButton.setOnAction(e-> {
+            animateTranslateY(circle, 175, 28);
+            tabPane.getSelectionModel().select(statisticsTab);
+        });
+
+        // TODO: Send tab to settings tab once settings tab is added to project
         settingsButton.setOnAction(e-> animateTranslateY(circle, 175, 86));
 
         icons.getChildren().addAll(displayTransactionsButton, addTransactionButton, displayStatisticsButton, settingsButton);
