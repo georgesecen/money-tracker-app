@@ -105,6 +105,9 @@ public class AddTransactionTab extends Tab {
             );
             transactionTable.createTransaction(transaction);
             DisplayTransactionsTab.getInstance().refreshTable();
+
+            // Redirect user to all transactions page
+            this.getTabPane().getSelectionModel().select(DisplayTransactionsTab.getInstance());
         });
 
 

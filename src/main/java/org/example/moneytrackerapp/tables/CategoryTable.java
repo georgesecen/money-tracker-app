@@ -63,7 +63,7 @@ public class CategoryTable implements CategoryDAO {
     }
     @Override
     public ArrayList<Category> getAllExpenseCategories() {
-        String query = "SELECT * FROM " + TABLE_CATEGORIES;
+        String query = "SELECT * FROM " + TABLE_CATEGORIES + " WHERE " + CAT_COLUMN_TRANS_ID + " = 2";
         categories = new ArrayList<>();
         try {
             Statement statement = db.getConnection().createStatement();
@@ -85,24 +85,24 @@ public class CategoryTable implements CategoryDAO {
      * returns a single category
      */
     //TODO not sure this method is needed - will address after merging featureEditTransactions into development branch
-//    @Override
-//    public Category getCategory(int id) {
-//        String query = "SELECT * FROM " + TABLE_CATEGORIES + " WHERE " + CAT_COLUMN_ID + " = " + id;
-//        try {
-//            Statement statement = db.getConnection().createStatement();
-//            ResultSet data = statement.executeQuery(query);
-//            if(data.next()) {
-//                Category category = new Category(
-//                    data.getString(CAT_COLUMN_NAME),
-//                    data.getInt(CAT_COLUMN_ID)
-//                );
-//                return category;
-//            }
-//        } catch(Exception e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
+    public Category getCategory(int id) {
+        String query = "SELECT * FROM " + TABLE_CATEGORIES + " WHERE " + CAT_COLUMN_ID + " = " + id;
+        try {
+            Statement statement = db.getConnection().createStatement();
+            ResultSet data = statement.executeQuery(query);
+            if(data.next()) {
+                Category category = new Category(
+                    data.getInt(CAT_COLUMN_ID),
+                    data.getString(CAT_COLUMN_NAME),
+                    data.getInt(CAT_COLUMN_TRANS_ID)
+                );
+                return category;
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public static CategoryTable getInstance(){
         if(instance == null){
