@@ -5,6 +5,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -28,9 +29,12 @@ public class AddTransactionTab extends Tab {
 
         // Title
         Text title = new Text("Add Transaction");
+        title.getStyleClass().add("title-text");
 
         // Transaction type
         Text typeLabel = new Text("Transaction Type");
+        typeLabel.getStyleClass().add("description-text");
+
         ToggleGroup typeToggleGroup = new ToggleGroup();
         RadioButton type1 = new RadioButton("Income");
         type1.setToggleGroup(typeToggleGroup);
@@ -44,15 +48,18 @@ public class AddTransactionTab extends Tab {
 
         // Transaction amount
         Text amountLabel = new Text("Amount");
+        amountLabel.getStyleClass().add("description-text");
         TextField amount = new TextField();
 
         // Description
         Text descLabel = new Text("Description");
+        descLabel.getStyleClass().add("description-text");
         TextField desc = new TextField();
 
         // Category
         System.out.println(categoryTable.getAllCategories());
         Text catLabel = new Text("Category");
+        catLabel.getStyleClass().add("description-text");
         ComboBox<Category> cat = new ComboBox<>();
         cat.setItems(FXCollections.observableArrayList(categoryTable.getAllExpenseCategories()));
         cat.getSelectionModel().select(0);
@@ -68,19 +75,26 @@ public class AddTransactionTab extends Tab {
 
         // Date
         Text dateLabel = new Text("Date");
+        dateLabel.getStyleClass().add("description-text");
         DatePicker date = new DatePicker();
         date.setValue(LocalDate.now());
+
+        GridPane pane = new GridPane();
+        pane.setAlignment(Pos.CENTER);
+        pane.add(catLabel, 0, 0);
+        pane.add(cat, 0, 1);
+        pane.add(dateLabel, 1, 0);
+        pane.add(date, 1, 1);
 
         //Text to display error message
         Text errorMessage = new Text("");
 
         // Submit
         Button submit = new Button("Add Transaction");
+        submit.getStyleClass().addAll("button-dimensions", "light-themed-button");
         submit.setOnAction(e -> {
             // ensure all fields are valid before proceeding
             try {
-
-
                 // First sanitize the amount input
                 // If income is selected, change a negative input to positive
                 // If expense is selected, change a positive input to negative
@@ -120,7 +134,7 @@ public class AddTransactionTab extends Tab {
 
         // Vbox to hold form
         VBox form = new VBox(typeLabel, typeBox, amountLabel, amount, descLabel, desc,
-                                        catLabel, cat, dateLabel, date, errorMessage, submit);
+                                        pane, errorMessage, submit);
         form.setSpacing(10);
 
 
