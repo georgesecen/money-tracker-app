@@ -5,6 +5,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -78,6 +79,13 @@ public class AddTransactionTab extends Tab {
         DatePicker date = new DatePicker();
         date.setValue(LocalDate.now());
 
+        GridPane pane = new GridPane();
+        pane.setAlignment(Pos.CENTER);
+        pane.add(catLabel, 0, 0);
+        pane.add(cat, 0, 1);
+        pane.add(dateLabel, 1, 0);
+        pane.add(date, 1, 1);
+
         //Text to display error message
         Text errorMessage = new Text("");
 
@@ -126,7 +134,7 @@ public class AddTransactionTab extends Tab {
 
         // Vbox to hold form
         VBox form = new VBox(typeLabel, typeBox, amountLabel, amount, descLabel, desc,
-                                        catLabel, cat, dateLabel, date, errorMessage, submit);
+                                        pane, errorMessage, submit);
         form.setSpacing(10);
 
 
