@@ -28,9 +28,12 @@ public class AddTransactionTab extends Tab {
 
         // Title
         Text title = new Text("Add Transaction");
+        title.getStyleClass().add("title-text");
 
         // Transaction type
         Text typeLabel = new Text("Transaction Type");
+        typeLabel.getStyleClass().add("description-text");
+
         ToggleGroup typeToggleGroup = new ToggleGroup();
         RadioButton type1 = new RadioButton("Income");
         type1.setToggleGroup(typeToggleGroup);
@@ -44,15 +47,18 @@ public class AddTransactionTab extends Tab {
 
         // Transaction amount
         Text amountLabel = new Text("Amount");
+        amountLabel.getStyleClass().add("description-text");
         TextField amount = new TextField();
 
         // Description
         Text descLabel = new Text("Description");
+        descLabel.getStyleClass().add("description-text");
         TextField desc = new TextField();
 
         // Category
         System.out.println(categoryTable.getAllCategories());
         Text catLabel = new Text("Category");
+        catLabel.getStyleClass().add("description-text");
         ComboBox<Category> cat = new ComboBox<>();
         cat.setItems(FXCollections.observableArrayList(categoryTable.getAllExpenseCategories()));
         cat.getSelectionModel().select(0);
@@ -68,6 +74,7 @@ public class AddTransactionTab extends Tab {
 
         // Date
         Text dateLabel = new Text("Date");
+        dateLabel.getStyleClass().add("description-text");
         DatePicker date = new DatePicker();
         date.setValue(LocalDate.now());
 
@@ -76,11 +83,10 @@ public class AddTransactionTab extends Tab {
 
         // Submit
         Button submit = new Button("Add Transaction");
+        submit.getStyleClass().addAll("button-dimensions", "light-themed-button");
         submit.setOnAction(e -> {
             // ensure all fields are valid before proceeding
             try {
-
-
                 // First sanitize the amount input
                 // If income is selected, change a negative input to positive
                 // If expense is selected, change a positive input to negative
