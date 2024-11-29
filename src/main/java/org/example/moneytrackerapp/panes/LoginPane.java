@@ -108,6 +108,7 @@ public class LoginPane extends BorderPane {
         // Sign in component (by default is not shown at first)
         VBox signInContainer = new VBox();
         signInContainer.setOpacity(0);
+        signInContainer.setViewOrder(10);
         signInContainer.setMaxHeight(375);
         signInContainer.setMaxWidth(325);
 
