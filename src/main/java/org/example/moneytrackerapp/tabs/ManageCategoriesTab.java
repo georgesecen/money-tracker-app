@@ -121,7 +121,7 @@ public class ManageCategoriesTab extends Tab {
 
         root.setTop(title);
         root.setAlignment(title, Pos.CENTER);
-        root.setMargin(title, new Insets(100, 30, 0, 30));
+        root.setMargin(title, new Insets(0, 30, 0, 30));
 
 
         root.setCenter(content);

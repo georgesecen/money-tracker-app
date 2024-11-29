@@ -128,7 +128,7 @@ public class AddTransactionTab extends Tab {
         root.setTop(title);
         root.setAlignment(title, Pos.BOTTOM_CENTER);
         root.setCenter(form);
-        root.setMargin(title, new Insets(100, 30, 30, 30));
+        root.setMargin(title, new Insets(0, 30, 30, 30));
         root.setMargin(form, new Insets(30, 200, 30, 200));
 
         form.setAlignment(Pos.CENTER);
