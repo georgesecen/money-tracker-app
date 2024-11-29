@@ -281,9 +281,11 @@ public class LoginPane extends BorderPane {
 
                     // Translate and vanish the sign up form behind the CTA as it passes by
                     animateTranslateFade(signUpContainer, 1, 250, 1, -163, 50, -1);
+                    signUpContainer.setViewOrder(10);
 
                     // Animate the sign in form so it is now visible to the user
                     animateFadeTranslate(signInContainer,250, 1, 250, 1, 50, 163);
+                    signInContainer.setViewOrder(0);
 
                     flag.set(false);
                 }
@@ -301,19 +303,16 @@ public class LoginPane extends BorderPane {
 
                     // Translate and vanish the sign in form behind the CTA as it passes by
                     animateTranslateFade(signInContainer, 1, 250, 1, 163, 50, -1);
+                    signInContainer.setViewOrder(10);
 
                     // Animate the sign up form so it is now visible to the user
                     animateFadeTranslate(signUpContainer, 250, 1, 250, 1, 50, -163);
+                    signUpContainer.setViewOrder(0);
 
                     flag.set(true);
                 }
             }
         });
-
-//        CTAContainer.setOpacity(0);
-//        signInContainer.setOpacity(0);
-//        signUpContainer.setOpacity(0);
-
 
 
         // Add sign in/up forms and CTA to StackPane login container
