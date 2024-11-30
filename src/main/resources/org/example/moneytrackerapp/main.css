@@ -2,6 +2,8 @@
     -fx-background-color: #ffffff;
     -fx-font-family: "sans-serif";
     -fx-font-size:10pt;
+    -fx-accent: #d4c3f6;
+    -fx-focus-color: #d4c3f6;
 }
 .button {
     -fx-font-size:12pt;
