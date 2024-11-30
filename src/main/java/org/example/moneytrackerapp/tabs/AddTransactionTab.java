@@ -32,7 +32,7 @@ public class AddTransactionTab extends Tab {
         title.getStyleClass().add("title-text");
 
         // Transaction type
-        Text typeLabel = new Text("Transaction Type");
+        Text typeLabel = new Text("Transaction type");
         typeLabel.getStyleClass().add("description-text");
 
         ToggleGroup typeToggleGroup = new ToggleGroup();
@@ -45,6 +45,7 @@ public class AddTransactionTab extends Tab {
         HBox typeBox = new HBox(type1, type2);
         typeBox.alignmentProperty().set(Pos.CENTER);
         typeBox.setSpacing(20);
+        typeBox.setTranslateY(-6);
 
         // Transaction amount
         Text amountLabel = new Text("Amount");
@@ -54,12 +55,15 @@ public class AddTransactionTab extends Tab {
         amount.alignmentProperty().set(Pos.CENTER);
         amount.setPromptText("00.00");
         amount.getStyleClass().add("input-box");
+        amount.setTranslateY(-10);
 
         // Description
         Text descLabel = new Text("Description");
         descLabel.getStyleClass().add("description-text");
         TextField desc = new TextField();
+        desc.setMaxWidth(350);
         desc.getStyleClass().add("input-box");
+        desc.setTranslateY(-10);
 
         // Category
         System.out.println(categoryTable.getAllCategories());
@@ -100,9 +104,12 @@ public class AddTransactionTab extends Tab {
 
         //Text to display error message
         Text errorMessage = new Text("");
+        errorMessage.setTranslateY(25);
+
 
         // Submit
         Button submit = new Button("Add Transaction");
+        submit.setTranslateY(20);
         submit.getStyleClass().addAll("button-dimensions", "light-themed-button");
         submit.setOnAction(e -> {
             // ensure all fields are valid before proceeding
@@ -147,8 +154,7 @@ public class AddTransactionTab extends Tab {
         // Vbox to hold form
         VBox form = new VBox(typeLabel, typeBox, amountLabel, amount, descLabel, desc,
                                         pane, submit, errorMessage);
-        form.setSpacing(10);
-
+        form.setSpacing(15);
 
         // Display elements
         root.setTop(title);
