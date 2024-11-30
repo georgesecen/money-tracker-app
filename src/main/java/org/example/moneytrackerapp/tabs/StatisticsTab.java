@@ -53,6 +53,19 @@ public class StatisticsTab extends Tab {
         NumberAxis yAxis = new NumberAxis();
         lineChart = new LineChart<>(xAxis, yAxis);
 
+        // Style line chart
+        lineChart.getStyleClass().addAll("widget", "linechart");
+        lineChart.setMaxSize(700, 300);
+        lineChart.setVerticalGridLinesVisible(false);
+        lineChart.setCreateSymbols(false);
+        xAxis.setTickMarkVisible(false);
+        yAxis.setTickMarkVisible(false);
+        yAxis.getStyleClass().add("y-axis");
+        yAxis.setMinorTickVisible(false);
+
+
+
+
         // Add buttons which control what timeframe data is shown for
         HBox timeframesContainer = new HBox();
         Button month = new Button("30 Days");
@@ -71,11 +84,11 @@ public class StatisticsTab extends Tab {
         generateCharts(30);
 
         // Add all charts and data to border pane
-        root.setTop(timeframesContainer);
-        root.setLeft(incomesPieChart);
-        root.setRight(expensesPieChart);
+//        root.setTop(timeframesContainer);
+//        root.setLeft(incomesPieChart);
+//        root.setRight(expensesPieChart);
         root.setCenter(lineChart);
-        root.setBottom(previousTimeframeText);
+//        root.setBottom(previousTimeframeText);
         this.setContent(root);
 
     }
