@@ -6,7 +6,6 @@
 .button {
     -fx-font-size:12pt;
     -fx-background-radius:10;
-    -fx-background-color:rgb(0,0,255);
     -fx-text-fill:#FFFFFF;
     -fx-border-color:#000000;
     -fx-border-radius:10;
@@ -106,6 +105,25 @@
 }
 
 
+/* ADD TRANSAC TAB STYLES */
+.combo-box, .input-box, .date-picker{
+    -fx-background-radius: 12;
+}
+
+.date-picker > .text-field{
+    -fx-background-radius: 12 0 0 12;
+}
+
+.date-picker > .arrow-button {
+    -fx-background-radius: 0 12 12 0;
+}
+
+.date-picker .button {
+    -fx-padding:5;
+    -fx-border-color: none;
+}
+
+
 /*  ALL STATISTICS ITEMS CSS */
 
 .widget{
@@ -143,6 +161,3 @@
 .piechart .chart-title{
     -fx-padding: 30 0 0 0;
 }
-
-
-
