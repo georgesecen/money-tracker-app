@@ -131,9 +131,13 @@
 }
 
 .small-button {
-
+    -fx-padding: 6 8;
+    -fx-background-color: #b5dcf8;
+    -fx-text-fill: black;
 }
-
+.small-button:hover{
+    -fx-background-color: #d4e8f6;
+}
 
 /*  ALL STATISTICS ITEMS CSS */
 

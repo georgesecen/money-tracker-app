@@ -4,9 +4,12 @@ import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import org.example.moneytrackerapp.pojo.Category;
@@ -40,8 +43,14 @@ public class ManageCategoriesTab extends Tab {
         categories.getSelectionModel().select(0);
         categories.setMinWidth(160);
 
-        Button deleteCat = new Button("x");
-        deleteCat.getStyleClass().add("light-themed-button");
+        Button deleteCat = new Button();
+        deleteCat.getStyleClass().addAll("light-themed-button", "small-button");
+        Image trashIcon = new Image(getClass().getResourceAsStream("/images/trash-bin.png"));
+        ImageView trashIconImg = new ImageView(trashIcon);
+        trashIconImg.setFitHeight(18);
+        trashIconImg.setFitWidth(18);
+        deleteCat.setGraphic(trashIconImg);
+
 
         Text errorMsg = new Text("Cannot delete a default category!");
         errorMsg.setTranslateY(-12);
@@ -72,8 +81,8 @@ public class ManageCategoriesTab extends Tab {
         catName.setPromptText("Category name");
         catName.getStyleClass().add("input-box");
 
-        Button addCat = new Button("+");
-        addCat.getStyleClass().add("light-themed-button");
+        Button addCat = new Button(" + ");
+        addCat.getStyleClass().addAll("light-themed-button", "small-button");
 
         ToggleGroup typeToggleGroup = new ToggleGroup();
         RadioButton income = new RadioButton("Income");
