@@ -73,6 +73,7 @@ public class EditTransactionPane extends GridPane {
         this.add(categoryComboBox,1,2);
         // Create update button
         Button update = new Button("Update");
+        update.getStyleClass().addAll("light-themed-button", "button-dimensions");
         /**
          * Run update query on transactions table and refresh table
          */

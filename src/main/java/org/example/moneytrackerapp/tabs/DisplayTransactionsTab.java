@@ -3,6 +3,7 @@ package org.example.moneytrackerapp.tabs;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
@@ -50,17 +51,26 @@ public class DisplayTransactionsTab extends Tab {
         BorderPane root  = new BorderPane();
         // Set Text Title
         Text title = new Text("Transactions");
+        title.getStyleClass().add("title-text");
         // Add columns and items to table
         tableView.getColumns().addAll(column1, column2, column3, column4);
         tableView.getItems().addAll(transaction.getFancyItems());
         root.setCenter(tableView);
         // VBox for transaction content
         VBox content = new VBox(title);
+        content.setPadding(new Insets(0, 0, 20, 0));
         content.setAlignment(Pos.CENTER);
         root.setTop(content);
         this.setContent(root);
         // Create remove button
         Button removeItem = new Button("Remove Item");
+        VBox buttonContainer = new VBox(removeItem);
+        buttonContainer.setPadding(new Insets(20,0,0,0));
+        removeItem.getStyleClass().addAll("light-themed-button", "button-dimensions");
+        column1.setMinWidth(120);
+        column2.setMinWidth(190);
+        column3.setMinWidth(120);
+        column4.setMinWidth(190);
         /**
          * Deletes transaction from DB and refreshes Table
          */
@@ -84,7 +94,7 @@ public class DisplayTransactionsTab extends Tab {
                 }
             }
         });
-        root.setBottom(removeItem);
+        root.setBottom(buttonContainer);
         this.setContent(root);
     }
     /**
