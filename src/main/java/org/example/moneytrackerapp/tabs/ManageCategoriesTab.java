@@ -29,13 +29,19 @@ public class ManageCategoriesTab extends Tab {
         CategoryTable categoryTable = CategoryTable.getInstance();
 
         Text title = new Text("Manage Categories");
+        title.getStyleClass().add("title-text");
 
         // Delete category section
         Text userCategories = new Text("Your categories: ");
+        userCategories.getStyleClass().add("description-text");
+
         ComboBox<Category> categories = new ComboBox<>();
         categories.setItems(FXCollections.observableArrayList(categoryTable.getAllCategories()));
         categories.getSelectionModel().select(0);
+
         Button deleteCat = new Button("X");
+        deleteCat.getStyleClass().add("light-themed-button");
+
         Text errorMsg = new Text("Cannot delete a default category!");
         errorMsg.setTranslateY(-12);
         errorMsg.setVisible(false);
@@ -59,9 +65,12 @@ public class ManageCategoriesTab extends Tab {
 
         // Add category section
         Text addLabel = new Text("Add a new category");
+        addLabel.getStyleClass().add("description-text");
+
         TextField catName = new TextField();
         catName.setPromptText("Category name");
         Button addCat = new Button("+");
+        addCat.getStyleClass().add("light-themed-button");
 
         ToggleGroup typeToggleGroup = new ToggleGroup();
         RadioButton income = new RadioButton("Income");
