@@ -38,8 +38,9 @@ public class ManageCategoriesTab extends Tab {
         ComboBox<Category> categories = new ComboBox<>();
         categories.setItems(FXCollections.observableArrayList(categoryTable.getAllCategories()));
         categories.getSelectionModel().select(0);
+        categories.setMinWidth(160);
 
-        Button deleteCat = new Button("X");
+        Button deleteCat = new Button("x");
         deleteCat.getStyleClass().add("light-themed-button");
 
         Text errorMsg = new Text("Cannot delete a default category!");
@@ -69,6 +70,8 @@ public class ManageCategoriesTab extends Tab {
 
         TextField catName = new TextField();
         catName.setPromptText("Category name");
+        catName.getStyleClass().add("input-box");
+
         Button addCat = new Button("+");
         addCat.getStyleClass().add("light-themed-button");
 
@@ -78,6 +81,7 @@ public class ManageCategoriesTab extends Tab {
         RadioButton expense = new RadioButton("Expense");
         expense.setToggleGroup(typeToggleGroup);
         expense.setSelected(true);
+
         HBox typeButtons = new HBox(income, expense);
         typeButtons.setSpacing(50);
         typeButtons.setTranslateY(-12);

@@ -125,6 +125,15 @@
     -fx-border-color: none;
 }
 
+.radio-button:selected .radio .dot {
+    -fx-background-color: #7555b6;
+    -fx-background-insets: 0;
+}
+
+.small-button {
+
+}
+
 
 /*  ALL STATISTICS ITEMS CSS */
 
