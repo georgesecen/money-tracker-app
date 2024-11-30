@@ -135,5 +135,14 @@
     -fx-border-color: transparent;
 }
 
+/*  PIE CHART CSS */
+.piechart{
+    -fx-padding: 0 -20 -20 -20;
+}
+
+.piechart .chart-title{
+    -fx-padding: 20 0 0 0;
+}
+
 
 

@@ -2,6 +2,7 @@ package org.example.moneytrackerapp.tabs;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.chart.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
@@ -48,6 +49,11 @@ public class StatisticsTab extends Tab {
         expensesPieChart = new PieChart();
         expensesPieChart.setTitle("Expenses by Category");
 
+        // Style the pie charts
+        incomesPieChart.setLegendVisible(false);
+        incomesPieChart.getStyleClass().addAll("widget", "piechart");
+        incomesPieChart.setMaxSize(350, 350);
+
         // Create the line chart
         CategoryAxis xAxis = new CategoryAxis(); // CategoryAxis is used to show date labels on x-axis
         NumberAxis yAxis = new NumberAxis();
@@ -69,10 +75,16 @@ public class StatisticsTab extends Tab {
         // Add buttons which control what timeframe data is shown for
         HBox timeframesContainer = new HBox();
         Button month = new Button("30 Days");
+        month.getStyleClass().addAll("button-dimensions" ,"light-themed-button");
         Button quarter = new Button("90 Days");
+        quarter.getStyleClass().addAll("button-dimensions" ,"light-themed-button");
         Button year = new Button("365 Days");
+        year.getStyleClass().addAll("button-dimensions" ,"light-themed-button");
         Button allTime = new Button("All Time");
+        allTime.getStyleClass().addAll("button-dimensions" ,"light-themed-button");
         timeframesContainer.getChildren().addAll(month, quarter, year, allTime);
+        timeframesContainer.setAlignment(Pos.CENTER);
+        timeframesContainer.setSpacing(5);
 
         // Generate charts for different timeframes according to what buttons were clicked
         month.setOnAction(e-> generateCharts(30));
@@ -84,10 +96,10 @@ public class StatisticsTab extends Tab {
         generateCharts(30);
 
         // Add all charts and data to border pane
-//        root.setTop(timeframesContainer);
-//        root.setLeft(incomesPieChart);
+        root.setTop(timeframesContainer);
+        root.setCenter(incomesPieChart);
 //        root.setRight(expensesPieChart);
-        root.setCenter(lineChart);
+//        root.setCenter(lineChart);
 //        root.setBottom(previousTimeframeText);
         this.setContent(root);
 
