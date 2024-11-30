@@ -101,7 +101,48 @@
     -fx-background-color: white;
     -fx-border-radius: 30px;
     -fx-background-radius: 30px;
+    /* -fx-effect: dropshadow( <blur-type> , <color> , <blur> , <spread> , <offsetx> , <offsety> ) */
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 17px, 0, 5px, 5px);
 }
+
+
+/*  ALL STATISTICS ITEMS CSS */
+
+.widget{
+    -fx-padding: 10px;
+    -fx-background-color: white;
+    -fx-border-radius: 7px;
+    -fx-background-radius: 7px;
+    /* -fx-effect: dropshadow( <blur-type> , <color> , <blur> , <spread> , <offsetx> , <offsety> ) */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.09), 17px, 0, 3px, 3px);
+}
+
+/*  LINE CHART CSS */
+.linechart .chart-plot-background {
+    -fx-background-color: transparent;
+}
+
+.linechart .chart-horizontal-grid-lines {
+    -fx-stroke: #ebebeb;
+    -fx-stroke-dash-array: 1;
+}
+
+.linechart .chart-legend{
+    -fx-background-color: transparent;
+}
+
+.y-axis{
+    -fx-border-color: transparent;
+}
+
+/*  PIE CHART CSS */
+.piechart{
+    -fx-padding: 0 -20 -20 -20;
+}
+
+.piechart .chart-title{
+    -fx-padding: 30 0 0 0;
+}
+
 
 
