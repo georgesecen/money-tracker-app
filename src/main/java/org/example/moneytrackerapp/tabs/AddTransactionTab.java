@@ -9,7 +9,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import org.example.moneytrackerapp.pojo.Category;
 import org.example.moneytrackerapp.pojo.Transaction;
 import org.example.moneytrackerapp.tables.CategoryTable;
@@ -53,11 +52,14 @@ public class AddTransactionTab extends Tab {
         TextField amount = new TextField();
         amount.setMaxWidth(130);
         amount.alignmentProperty().set(Pos.CENTER);
+        amount.setPromptText("00.00");
+        amount.getStyleClass().add("input-box");
 
         // Description
         Text descLabel = new Text("Description");
         descLabel.getStyleClass().add("description-text");
         TextField desc = new TextField();
+        desc.getStyleClass().add("input-box");
 
         // Category
         System.out.println(categoryTable.getAllCategories());
@@ -65,6 +67,7 @@ public class AddTransactionTab extends Tab {
         catLabel.getStyleClass().add("description-text");
         ComboBox<Category> cat = new ComboBox<>();
         cat.setMinWidth(140);
+        cat.getStyleClass().add("input-box");
         cat.setItems(FXCollections.observableArrayList(categoryTable.getAllExpenseCategories()));
         cat.getSelectionModel().select(0);
 
@@ -93,7 +96,7 @@ public class AddTransactionTab extends Tab {
         pane.add(dateLabel, 1, 0);
         pane.add(date, 1, 1);
         pane.setHgap(20);
-        pane.setVgap(20);
+        pane.setVgap(10);
 
         //Text to display error message
         Text errorMessage = new Text("");
@@ -143,7 +146,7 @@ public class AddTransactionTab extends Tab {
 
         // Vbox to hold form
         VBox form = new VBox(typeLabel, typeBox, amountLabel, amount, descLabel, desc,
-                                        pane, errorMessage, submit);
+                                        pane, submit, errorMessage);
         form.setSpacing(10);
 
 
@@ -151,8 +154,8 @@ public class AddTransactionTab extends Tab {
         root.setTop(title);
         root.setAlignment(title, Pos.BOTTOM_CENTER);
         root.setCenter(form);
-        root.setMargin(title, new Insets(0, 30, 30, 30));
-        root.setMargin(form, new Insets(30, 200, 30, 200));
+        //root.setMargin(title, new Insets(0, 30, 20, 30));
+        root.setMargin(form, new Insets(0, 200, 0, 200));
 
         form.setAlignment(Pos.CENTER);
         this.setContent(root);
