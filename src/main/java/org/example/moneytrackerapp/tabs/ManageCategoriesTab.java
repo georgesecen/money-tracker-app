@@ -4,9 +4,12 @@ import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import org.example.moneytrackerapp.pojo.Category;
@@ -29,13 +32,26 @@ public class ManageCategoriesTab extends Tab {
         CategoryTable categoryTable = CategoryTable.getInstance();
 
         Text title = new Text("Manage Categories");
+        title.getStyleClass().add("title-text");
 
         // Delete category section
         Text userCategories = new Text("Your categories: ");
+        userCategories.getStyleClass().add("description-text");
+
         ComboBox<Category> categories = new ComboBox<>();
         categories.setItems(FXCollections.observableArrayList(categoryTable.getAllCategories()));
         categories.getSelectionModel().select(0);
-        Button deleteCat = new Button("X");
+        categories.setMinWidth(160);
+
+        Button deleteCat = new Button();
+        deleteCat.getStyleClass().addAll("light-themed-button", "small-button");
+        Image trashIcon = new Image(getClass().getResourceAsStream("/images/trash-bin.png"));
+        ImageView trashIconImg = new ImageView(trashIcon);
+        trashIconImg.setFitHeight(18);
+        trashIconImg.setFitWidth(18);
+        deleteCat.setGraphic(trashIconImg);
+
+
         Text errorMsg = new Text("Cannot delete a default category!");
         errorMsg.setTranslateY(-12);
         errorMsg.setVisible(false);
@@ -59,9 +75,14 @@ public class ManageCategoriesTab extends Tab {
 
         // Add category section
         Text addLabel = new Text("Add a new category");
+        addLabel.getStyleClass().add("description-text");
+
         TextField catName = new TextField();
         catName.setPromptText("Category name");
-        Button addCat = new Button("+");
+        catName.getStyleClass().add("input-box");
+
+        Button addCat = new Button(" + ");
+        addCat.getStyleClass().addAll("light-themed-button", "small-button");
 
         ToggleGroup typeToggleGroup = new ToggleGroup();
         RadioButton income = new RadioButton("Income");
@@ -69,6 +90,7 @@ public class ManageCategoriesTab extends Tab {
         RadioButton expense = new RadioButton("Expense");
         expense.setToggleGroup(typeToggleGroup);
         expense.setSelected(true);
+
         HBox typeButtons = new HBox(income, expense);
         typeButtons.setSpacing(50);
         typeButtons.setTranslateY(-12);

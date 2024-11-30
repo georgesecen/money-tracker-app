@@ -2,6 +2,8 @@
     -fx-background-color: #ffffff;
     -fx-font-family: "sans-serif";
     -fx-font-size:10pt;
+    -fx-accent: #d4c3f6;
+    -fx-focus-color: #d4c3f6;
 }
 .button {
     -fx-font-size:12pt;
@@ -123,6 +125,19 @@
     -fx-border-color: none;
 }
 
+.radio-button:selected .radio .dot {
+    -fx-background-color: #7555b6;
+    -fx-background-insets: 0;
+}
+
+.small-button {
+    -fx-padding: 6 8;
+    -fx-background-color: #b5dcf8;
+    -fx-text-fill: black;
+}
+.small-button:hover{
+    -fx-background-color: #d4e8f6;
+}
 
 /*  ALL STATISTICS ITEMS CSS */
 
