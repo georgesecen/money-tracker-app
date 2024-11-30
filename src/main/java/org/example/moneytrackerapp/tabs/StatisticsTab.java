@@ -2,13 +2,13 @@ package org.example.moneytrackerapp.tabs;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.chart.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.Tooltip;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import org.example.moneytrackerapp.pojo.Category;
@@ -42,6 +42,8 @@ public class StatisticsTab extends Tab {
 
         // TODO: Change from text to grading system
         previousTimeframeText = new Text();
+        previousTimeframeText.getStyleClass().add("description-text");
+        previousTimeframeText.setWrappingWidth(600);
 
         // Create the income/expense pie charts
         incomesPieChart = new PieChart();
@@ -52,7 +54,10 @@ public class StatisticsTab extends Tab {
         // Style the pie charts
         incomesPieChart.setLegendVisible(false);
         incomesPieChart.getStyleClass().addAll("widget", "piechart");
-        incomesPieChart.setMaxSize(350, 350);
+        incomesPieChart.setMaxSize(300, 300);
+        expensesPieChart.setLegendVisible(false);
+        expensesPieChart.getStyleClass().addAll("widget", "piechart");
+        expensesPieChart.setMaxSize(300, 300);
 
         // Create the line chart
         CategoryAxis xAxis = new CategoryAxis(); // CategoryAxis is used to show date labels on x-axis
@@ -61,15 +66,14 @@ public class StatisticsTab extends Tab {
 
         // Style line chart
         lineChart.getStyleClass().addAll("widget", "linechart");
-        lineChart.setMaxSize(700, 300);
+        lineChart.setMinWidth(600);
+        lineChart.setMaxHeight(350);
         lineChart.setVerticalGridLinesVisible(false);
         lineChart.setCreateSymbols(false);
         xAxis.setTickMarkVisible(false);
         yAxis.setTickMarkVisible(false);
         yAxis.getStyleClass().add("y-axis");
         yAxis.setMinorTickVisible(false);
-
-
 
 
         // Add buttons which control what timeframe data is shown for
@@ -95,12 +99,26 @@ public class StatisticsTab extends Tab {
         // Default timeframe shown to user is 30 days
         generateCharts(30);
 
+        // Vbox to position the pie charts
+        VBox pieChartsContainer = new VBox();
+        pieChartsContainer.getChildren().addAll(incomesPieChart, expensesPieChart);
+        pieChartsContainer.setSpacing(10);
+
+        // Vbox to position line chart and previous timeframe text
+        VBox timeframeContainer = new VBox();
+        timeframeContainer.getChildren().addAll(lineChart, previousTimeframeText);
+        timeframeContainer.setSpacing(10);
+
+        // Hbox to position all the charts together
+        HBox chartsContainer = new HBox();
+        chartsContainer.getChildren().addAll(timeframeContainer, pieChartsContainer);
+        chartsContainer.setSpacing(10);
+        chartsContainer.setPadding(new Insets(20, 10, 20, 10));
+
+
         // Add all charts and data to border pane
         root.setTop(timeframesContainer);
-        root.setCenter(incomesPieChart);
-//        root.setRight(expensesPieChart);
-//        root.setCenter(lineChart);
-//        root.setBottom(previousTimeframeText);
+        root.setCenter(chartsContainer);
         this.setContent(root);
 
     }
