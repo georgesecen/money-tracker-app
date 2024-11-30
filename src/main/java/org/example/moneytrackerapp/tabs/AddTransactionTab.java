@@ -9,6 +9,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import org.example.moneytrackerapp.pojo.Category;
 import org.example.moneytrackerapp.pojo.Transaction;
 import org.example.moneytrackerapp.tables.CategoryTable;
@@ -50,6 +51,8 @@ public class AddTransactionTab extends Tab {
         Text amountLabel = new Text("Amount");
         amountLabel.getStyleClass().add("description-text");
         TextField amount = new TextField();
+        amount.setMaxWidth(130);
+        amount.alignmentProperty().set(Pos.CENTER);
 
         // Description
         Text descLabel = new Text("Description");
@@ -61,6 +64,7 @@ public class AddTransactionTab extends Tab {
         Text catLabel = new Text("Category");
         catLabel.getStyleClass().add("description-text");
         ComboBox<Category> cat = new ComboBox<>();
+        cat.setMinWidth(140);
         cat.setItems(FXCollections.observableArrayList(categoryTable.getAllExpenseCategories()));
         cat.getSelectionModel().select(0);
 
@@ -78,13 +82,18 @@ public class AddTransactionTab extends Tab {
         dateLabel.getStyleClass().add("description-text");
         DatePicker date = new DatePicker();
         date.setValue(LocalDate.now());
+        date.setMinWidth(120);
 
+
+        // Pane holding category and date selection
         GridPane pane = new GridPane();
         pane.setAlignment(Pos.CENTER);
         pane.add(catLabel, 0, 0);
         pane.add(cat, 0, 1);
         pane.add(dateLabel, 1, 0);
         pane.add(date, 1, 1);
+        pane.setHgap(20);
+        pane.setVgap(20);
 
         //Text to display error message
         Text errorMessage = new Text("");
