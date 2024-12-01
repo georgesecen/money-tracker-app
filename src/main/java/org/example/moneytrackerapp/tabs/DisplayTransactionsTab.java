@@ -88,7 +88,6 @@ public class DisplayTransactionsTab extends Tab {
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
                 if(newValue != null){
                     Transaction selectedItem = transaction.getTransaction(((DisplayItem) newValue).getId());
-                    //Item object version of DisplayItem (Selected in table)
                     EditTransactionPane pane = new EditTransactionPane(selectedItem);
                     root.setRight(pane);
                 }

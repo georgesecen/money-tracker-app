@@ -47,12 +47,14 @@ public class EditTransactionPane extends GridPane {
         // Amount
         Text amountLabel = new Text("Amount:");
         TextField amount = new TextField();
+        amount.getStyleClass().add("input-box");
         amount.setText(String.valueOf(transaction.getAmt()));
         this.add(amountLabel, 0,0);
         this.add(amount, 1,0);
         // Description
         Text descriptionLabel = new Text("Description");
         TextField description = new TextField();
+        description.getStyleClass().add("input-box");
         description.setText(transaction.getDesc());
         this.add(descriptionLabel,0,1);
         this.add(description,1,1);
