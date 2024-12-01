@@ -2,11 +2,12 @@
     -fx-background-color: #ffffff;
     -fx-font-family: "sans-serif";
     -fx-font-size:10pt;
+    -fx-accent: #d4c3f6;
+    -fx-focus-color: #d4c3f6;
 }
 .button {
     -fx-font-size:12pt;
     -fx-background-radius:10;
-    -fx-background-color:rgb(0,0,255);
     -fx-text-fill:#FFFFFF;
     -fx-border-color:#000000;
     -fx-border-radius:10;
@@ -105,6 +106,38 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 17px, 0, 5px, 5px);
 }
 
+
+/* ADD TRANSAC TAB STYLES */
+.combo-box, .input-box, .date-picker{
+    -fx-background-radius: 12;
+}
+
+.date-picker > .text-field{
+    -fx-background-radius: 12 0 0 12;
+}
+
+.date-picker > .arrow-button {
+    -fx-background-radius: 0 12 12 0;
+}
+
+.date-picker .button {
+    -fx-padding:5;
+    -fx-border-color: none;
+}
+
+.radio-button:selected .radio .dot {
+    -fx-background-color: #7555b6;
+    -fx-background-insets: 0;
+}
+
+.small-button {
+    -fx-padding: 6 8;
+    -fx-background-color: #b5dcf8;
+    -fx-text-fill: black;
+}
+.small-button:hover{
+    -fx-background-color: #d4e8f6;
+}
 
 /*  ALL STATISTICS ITEMS CSS */
 

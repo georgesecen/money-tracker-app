@@ -32,7 +32,7 @@ public class AddTransactionTab extends Tab {
         title.getStyleClass().add("title-text");
 
         // Transaction type
-        Text typeLabel = new Text("Transaction Type");
+        Text typeLabel = new Text("Transaction type");
         typeLabel.getStyleClass().add("description-text");
 
         ToggleGroup typeToggleGroup = new ToggleGroup();
@@ -45,22 +45,33 @@ public class AddTransactionTab extends Tab {
         HBox typeBox = new HBox(type1, type2);
         typeBox.alignmentProperty().set(Pos.CENTER);
         typeBox.setSpacing(20);
+        typeBox.setTranslateY(-6);
 
         // Transaction amount
         Text amountLabel = new Text("Amount");
         amountLabel.getStyleClass().add("description-text");
         TextField amount = new TextField();
+        amount.setMaxWidth(130);
+        amount.alignmentProperty().set(Pos.CENTER);
+        amount.setPromptText("00.00");
+        amount.getStyleClass().add("input-box");
+        amount.setTranslateY(-10);
 
         // Description
         Text descLabel = new Text("Description");
         descLabel.getStyleClass().add("description-text");
         TextField desc = new TextField();
+        desc.setMaxWidth(350);
+        desc.getStyleClass().add("input-box");
+        desc.setTranslateY(-10);
 
         // Category
         System.out.println(categoryTable.getAllCategories());
         Text catLabel = new Text("Category");
         catLabel.getStyleClass().add("description-text");
         ComboBox<Category> cat = new ComboBox<>();
+        cat.setMinWidth(140);
+        cat.getStyleClass().add("input-box");
         cat.setItems(FXCollections.observableArrayList(categoryTable.getAllExpenseCategories()));
         cat.getSelectionModel().select(0);
 
@@ -78,19 +89,27 @@ public class AddTransactionTab extends Tab {
         dateLabel.getStyleClass().add("description-text");
         DatePicker date = new DatePicker();
         date.setValue(LocalDate.now());
+        date.setMinWidth(120);
 
+
+        // Pane holding category and date selection
         GridPane pane = new GridPane();
         pane.setAlignment(Pos.CENTER);
         pane.add(catLabel, 0, 0);
         pane.add(cat, 0, 1);
         pane.add(dateLabel, 1, 0);
         pane.add(date, 1, 1);
+        pane.setHgap(20);
+        pane.setVgap(10);
 
         //Text to display error message
         Text errorMessage = new Text("");
+        errorMessage.setTranslateY(25);
+
 
         // Submit
         Button submit = new Button("Add Transaction");
+        submit.setTranslateY(20);
         submit.getStyleClass().addAll("button-dimensions", "light-themed-button");
         submit.setOnAction(e -> {
             // ensure all fields are valid before proceeding
@@ -134,16 +153,15 @@ public class AddTransactionTab extends Tab {
 
         // Vbox to hold form
         VBox form = new VBox(typeLabel, typeBox, amountLabel, amount, descLabel, desc,
-                                        pane, errorMessage, submit);
-        form.setSpacing(10);
-
+                                        pane, submit, errorMessage);
+        form.setSpacing(15);
 
         // Display elements
         root.setTop(title);
         root.setAlignment(title, Pos.BOTTOM_CENTER);
         root.setCenter(form);
-        root.setMargin(title, new Insets(0, 30, 30, 30));
-        root.setMargin(form, new Insets(30, 200, 30, 200));
+        //root.setMargin(title, new Insets(0, 30, 20, 30));
+        root.setMargin(form, new Insets(0, 200, 0, 200));
 
         form.setAlignment(Pos.CENTER);
         this.setContent(root);
