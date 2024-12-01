@@ -12,6 +12,7 @@
     -fx-border-color:#000000;
     -fx-border-radius:10;
     -fx-padding:10px;
+    -fx-cursor: hand;
 }
 
 .shadowed-pane{
@@ -124,6 +125,14 @@
     -fx-padding:5;
     -fx-border-color: none;
 }
+
+.combo-box > .list-cell{
+    -fx-background-color: white;
+    -fx-border-color: #c5c5c5;
+    -fx-border-radius: 12 0 0 12;
+    -fx-cursor: hand;
+}
+
 
 .radio-button:selected .radio .dot {
     -fx-background-color: #7555b6;
