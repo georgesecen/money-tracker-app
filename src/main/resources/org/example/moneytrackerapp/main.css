@@ -12,6 +12,7 @@
     -fx-border-color:#000000;
     -fx-border-radius:10;
     -fx-padding:10px;
+    -fx-cursor: hand;
 }
 
 .shadowed-pane{
