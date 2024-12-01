@@ -176,3 +176,33 @@
 .piechart .chart-title{
     -fx-padding: 30 0 0 0;
 }
+
+/*DISPLAY TABLE STYLES*/
+.table-view .column-header,
+.table-view .column-header .filler,
+.table-view .column-header-background .filler {
+    -fx-background-color: #9966ff;
+}
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 1.4em;
+    -fx-padding: 10px;
+    -fx-alignment: left;
+}
+.table-row-cell {
+    -fx-padding: 5px 10px;
+    -fx-font-size: 1.1em;
+    -fx-font-weight: bold;
+}
+.table-row-cell:filled:selected {
+    -fx-background-color: #9966ff;
+    -fx-text-fill: white;
+    -fx-table-cell-border-color: transparent;
+}
+.table-view {
+    -fx-table-cell-border-color: transparent;
+}
+.table-view .table-row-cell {
+    -fx-border-width: 1;
+}
