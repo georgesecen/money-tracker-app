@@ -1,6 +1,8 @@
 package org.example.moneytrackerapp.tabs;
 
 import javafx.animation.FadeTransition;
+import javafx.animation.PauseTransition;
+import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
@@ -113,7 +115,7 @@ public class AddTransactionTab extends Tab {
         Text errorMessage = new Text("Invalid input, please try again");
         errorMessage.setTranslateY(35);
 
-        Text successMessage = new Text("Entry has been added");
+        Text successMessage = new Text("Entry has been added!");
 
 
 
@@ -149,14 +151,17 @@ public class AddTransactionTab extends Tab {
                 );
                 transactionTable.createTransaction(transaction);
 
-                // Refresh and redirect user to all transactions page
+                // Display success message
+                displayMessage(successMessage);
+
+                // Refresh transactions page table
                 DisplayTransactionsTab.getInstance().refreshTable();
-                this.getTabPane().getSelectionModel().select(DisplayTransactionsTab.getInstance());
 
             } catch (Exception ex) {
                 System.out.println("Invalid input");
 
                 // display error message
+                displayMessage(errorMessage);
             }
         });
 
@@ -199,5 +204,25 @@ public class AddTransactionTab extends Tab {
             cat.setItems(FXCollections.observableArrayList(categoryTable.getAllIncomeCategories()));
             cat.getSelectionModel().select(0);
         }
+    }
+
+    /**
+     * Takes a message and plays an animation on it to
+     * display it. The animation lowers the text by 30 units
+     * and then returns it to its original position.
+     *
+     * @param message text to be animated
+     */
+    private void displayMessage(Text message){
+        double initialPos = message.getTranslateY();
+        TranslateTransition slideIn = new TranslateTransition(Duration.millis(300), message);
+        slideIn.setToY(30 + initialPos);
+
+        TranslateTransition slideOut = new TranslateTransition(Duration.millis(300), message);
+        slideOut.setToY(initialPos);
+
+        SequentialTransition st = new SequentialTransition();
+        st.getChildren().addAll(slideIn, new PauseTransition(Duration.millis(1400)), slideOut);
+        st.play();
     }
 }
