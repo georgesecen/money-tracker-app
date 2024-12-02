@@ -142,6 +142,9 @@ public class AddTransactionTab extends Tab {
                 DisplayTransactionsTab.getInstance().refreshTable();
                 this.getTabPane().getSelectionModel().select(DisplayTransactionsTab.getInstance());
 
+                // Update charts after adding item
+                StatisticsTab.getInstance().generateCharts(30);
+
             } catch (Exception ex) {
                 System.out.println("Invalid input");
                 // Add error message
