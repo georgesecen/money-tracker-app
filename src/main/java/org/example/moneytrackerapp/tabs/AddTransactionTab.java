@@ -82,12 +82,10 @@ public class AddTransactionTab extends Tab {
         cat.getSelectionModel().select(0);
 
         type1.setOnAction(e -> {
-            cat.setItems(FXCollections.observableArrayList(categoryTable.getAllIncomeCategories()));
-            cat.getSelectionModel().select(0);
+            refreshCategoryBox(categoryTable);
         });
         type2.setOnAction(e -> {
-            cat.setItems(FXCollections.observableArrayList(categoryTable.getAllExpenseCategories()));
-            cat.getSelectionModel().select(0);
+            refreshCategoryBox(categoryTable);
         });
 
         // Date
