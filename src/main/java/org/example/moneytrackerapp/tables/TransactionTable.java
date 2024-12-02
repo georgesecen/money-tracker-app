@@ -3,16 +3,25 @@ import org.example.moneytrackerapp.dao.TransactionDAO;
 import org.example.moneytrackerapp.database.Database;
 import org.example.moneytrackerapp.pojo.DisplayItem;
 import org.example.moneytrackerapp.pojo.Transaction;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
 import static org.example.moneytrackerapp.database.DBConst.*;
 
+/**
+ * TransactionTable class represents a table that holds
+ * methods responsible for CRUD operations
+ *
+ * @author Cameron McRae
+ */
 public class TransactionTable implements TransactionDAO {
     private static TransactionTable instance;
+
+    /**
+     * Private constructor that grabs the table instance
+     * from the database
+     */
     private TransactionTable(){
         db = Database.getInstance();
     }
@@ -103,7 +112,6 @@ public class TransactionTable implements TransactionDAO {
             e.printStackTrace();
         }
     }
-
     /**
      * Remove all transactions in table with the chosen Category id
      * @param cat_id Category id
@@ -117,7 +125,6 @@ public class TransactionTable implements TransactionDAO {
             e.printStackTrace();
         }
     }
-
     /**
      * Method to insert a transaction into database
      * @param transaction;
@@ -141,9 +148,9 @@ public class TransactionTable implements TransactionDAO {
             e.printStackTrace();
         }
     }
-
     /**
      * Method to display all formatted transactions from database
+     * ordered by date
      * @return items
      */
     public ArrayList<DisplayItem> getFancyItems(){
@@ -155,7 +162,7 @@ public class TransactionTable implements TransactionDAO {
                 " c.cat_name " +
                 " FROM Transactions as t " +
                 "JOIN Categories as c on t.cat_id = c.id " +
-                "ORDER BY t.id ASC";
+                "ORDER BY t.date ASC";
         try {
             Statement getItems = db.getConnection().createStatement();
             ResultSet data = getItems.executeQuery(query);
