@@ -17,9 +17,14 @@ import org.example.moneytrackerapp.tables.TransactionTable;
 import java.sql.Date;
 import java.util.ArrayList;
 
+/**
+ * Class EditTransactionsPane is a pane that is displayed
+ * in the DisplayTransactionsTab. It allows users to update transactions
+ *
+ * @author cameronmcrae
+ */
 public class EditTransactionPane extends GridPane {
     /**
-     *
      * @param arrayList;
      * @param id;
      * @return searchList array position
@@ -34,7 +39,7 @@ public class EditTransactionPane extends GridPane {
         return 0;
     }
     /**
-     * Class constructor
+     * Class constructor that takes transaction as argument
      * @param transaction;
      */
     public EditTransactionPane(Transaction transaction) {
@@ -44,28 +49,28 @@ public class EditTransactionPane extends GridPane {
         Transaction transaction1 = transaction;
         CategoryTable categoryTable = CategoryTable.getInstance();
         TransactionTable transactionTable = TransactionTable.getInstance();
-        // Amount
+        // Amount Form Field
         Text amountLabel = new Text("Amount:");
         TextField amount = new TextField();
         amount.getStyleClass().add("input-box");
         amount.setText(String.valueOf(transaction.getAmt()));
         this.add(amountLabel, 0,0);
         this.add(amount, 1,0);
-        // Description
+        // Description Form Field
         Text descriptionLabel = new Text("Description");
         TextField description = new TextField();
         description.getStyleClass().add("input-box");
         description.setText(transaction.getDesc());
         this.add(descriptionLabel,0,1);
         this.add(description,1,1);
-        // Date
+        // Date Form Field - Date-Picker
         Text date = new Text("Date");
         DatePicker datePicker = new DatePicker();
         datePicker.setValue(transaction.getDate().toLocalDate());
         datePicker.getValue();
         this.add(date,0,3);
         this.add(datePicker,1,3);
-        // Categories
+        // Categories Form Field - ComboBox
         Text categories = new Text("Categories:");
         ComboBox<Category> categoryComboBox = new ComboBox<>();
         ArrayList<Category> allCategories = categoryTable.getAllCategories();
@@ -73,11 +78,11 @@ public class EditTransactionPane extends GridPane {
         categoryComboBox.getSelectionModel().select(find(allCategories, transaction.getCat_id()));
         this.add(categories,0,2);
         this.add(categoryComboBox,1,2);
-        // Create update button
+        // Create Update Button
         Button update = new Button("Update");
         update.getStyleClass().addAll("light-themed-button", "button-dimensions");
         /**
-         * Run update query on transactions table and refresh table
+         * Runs update query on transactions table and refresh table
          */
         update.setOnAction(e->{
             transaction.setAmt(Double.parseDouble(amount.getText()));

@@ -16,6 +16,8 @@ import org.example.moneytrackerapp.pojo.Category;
 import org.example.moneytrackerapp.tables.CategoryTable;
 import org.example.moneytrackerapp.tables.TransactionTable;
 
+import static org.example.moneytrackerapp.tabs.AddTransactionTab.refreshCategoryBox;
+
 /**
  * ManageCategoriesTab class represents a page that will allow the user
  * to customize the app by deleting or adding additional
@@ -71,6 +73,9 @@ public class ManageCategoriesTab extends Tab {
                 errorMsg.setVisible(false);
                 categories.setItems(FXCollections.observableArrayList(categoryTable.getAllCategories()));
                 categories.getSelectionModel().select(0);
+
+                // Refresh combobox on add entry page
+                refreshCategoryBox(categoryTable);
             }
             else{
                 // Display error message
@@ -120,6 +125,9 @@ public class ManageCategoriesTab extends Tab {
                 categoryTable.addCategory(category);
                 categories.setItems(FXCollections.observableArrayList(categoryTable.getAllCategories()));
                 categories.getSelectionModel().select(0);
+
+                // Refresh combobox on add entry page
+                refreshCategoryBox(categoryTable);
             }
         });
 

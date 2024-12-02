@@ -16,63 +16,70 @@ import org.example.moneytrackerapp.pojo.DisplayItem;
 import org.example.moneytrackerapp.pojo.Transaction;
 import org.example.moneytrackerapp.tables.TransactionTable;
 
+/**
+ * DisplayTransactionsTab class shows as a tab in the
+ * main pane. It displays table information ordered by date
+ *
+ * @author Cameron McRae
+ */
 public class DisplayTransactionsTab extends Tab {
     public TableView tableView;
     private static DisplayTransactionsTab instance;
     /**
-     * Class Constructor
+     * Class constructor responsible for displaying table
+     * and EditTransactionPane
      */
     public DisplayTransactionsTab() {
         TransactionTable transaction = TransactionTable.getInstance();
         tableView = new TableView();
-        //Amount
+        // Table Column Amount
         TableColumn<DisplayItem, String> column1 =
                 new TableColumn<>("Amount");
         column1.setCellValueFactory(
                 e-> new SimpleStringProperty(e.getValue().getAmount()));
-        // Description
+        // Table Column Description
         TableColumn<DisplayItem, String> column2 =
                 new TableColumn<>("Description");
         column2.setCellValueFactory(
                 e-> new SimpleStringProperty(e.getValue().getDescription()));
-        // Date
+        // Table Column Date
         TableColumn<DisplayItem, String> column3 =
                 new TableColumn<>("Date");
         column3.setCellValueFactory(
                 e-> new SimpleStringProperty(e.getValue().getDate()));
-        // Category
+        // Table Column Category
         TableColumn<DisplayItem, String> column4 =
                 new TableColumn<>("Category");
         column4.setCellValueFactory(
                 e-> new SimpleStringProperty(e.getValue().getCategory()));
-
         // Set Tab Title
         this.setText("Display Transactions");
         BorderPane root  = new BorderPane();
-        // Set Text Title
+        // Set Tab Header
         Text title = new Text("Transactions");
         title.getStyleClass().add("title-text");
-        // Add columns and items to table
+        // Add Columns and Formatted Items to Table
         tableView.getColumns().addAll(column1, column2, column3, column4);
         tableView.getItems().addAll(transaction.getFancyItems());
         root.setCenter(tableView);
-        // VBox for transaction content
+        // VBox for Transaction Content
         VBox content = new VBox(title);
         content.setPadding(new Insets(0, 0, 20, 0));
         content.setAlignment(Pos.CENTER);
         root.setTop(content);
         this.setContent(root);
-        // Create remove button
+        // Create Remove Button
         Button removeItem = new Button("Remove Item");
         VBox buttonContainer = new VBox(removeItem);
         buttonContainer.setPadding(new Insets(20,0,0,0));
         removeItem.getStyleClass().addAll("light-themed-button", "button-dimensions");
+        // Set Column Widths
         column1.setMinWidth(120);
         column2.setMinWidth(190);
         column3.setMinWidth(120);
         column4.setMinWidth(190);
         /**
-         * Deletes transaction from DB and refreshes Table
+         * Deletes transaction from DB and refreshes table
          */
         removeItem.setOnAction(e->{
             DisplayItem remove = (DisplayItem) tableView.getSelectionModel().getSelectedItem();
@@ -83,6 +90,9 @@ public class DisplayTransactionsTab extends Tab {
             //TODO implement after charts are merged
 //            StatisticsTab.getInstance().generateChart();
         });
+        /**
+         * Change listener
+         */
         tableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
@@ -97,7 +107,7 @@ public class DisplayTransactionsTab extends Tab {
         this.setContent(root);
     }
     /**
-     * Updates table with new values
+     * refreshTable method clears table and re-populates with updated values
      */
     public void refreshTable(){
         TransactionTable table = TransactionTable.getInstance();
