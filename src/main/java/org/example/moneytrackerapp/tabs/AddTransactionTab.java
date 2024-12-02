@@ -17,8 +17,19 @@ import java.sql.Date;
 
 import java.time.LocalDate;
 
+/**
+ * This class represents a tab which will display a form
+ * to the user for inserting new Transaction records.
+ *
+ * @author Wania Sharif
+ */
 public class AddTransactionTab extends Tab {
     private static AddTransactionTab instance;
+
+    /**
+     * Constructor with no args that holds all of the
+     * page's elements.
+     */
     public AddTransactionTab() {
         this.setText("Add Transaction");
         BorderPane root = new BorderPane();
@@ -167,6 +178,13 @@ public class AddTransactionTab extends Tab {
         this.setContent(root);
     }
 
+    /**
+     * This method returns the current instance of the
+     * AddTransactionTab. If none exists, it will
+     * return a new one.
+     *
+     * @return instance of tab
+     */
     public static AddTransactionTab getInstance(){
         if(instance == null){
             instance = new AddTransactionTab();
