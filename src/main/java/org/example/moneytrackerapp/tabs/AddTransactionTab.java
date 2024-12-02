@@ -1,5 +1,9 @@
 package org.example.moneytrackerapp.tabs;
 
+import javafx.animation.FadeTransition;
+import javafx.animation.PauseTransition;
+import javafx.animation.SequentialTransition;
+import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -9,6 +13,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 import org.example.moneytrackerapp.pojo.Category;
 import org.example.moneytrackerapp.pojo.Transaction;
 import org.example.moneytrackerapp.tables.CategoryTable;
@@ -106,14 +111,18 @@ public class AddTransactionTab extends Tab {
         pane.setHgap(20);
         pane.setVgap(10);
 
-        //Text to display error message
-        Text errorMessage = new Text("");
-        errorMessage.setTranslateY(25);
+        // Texts to display messages
+        Text errorMessage = new Text("Invalid input, please try again");
+        errorMessage.setTranslateY(35);
+
+        Text successMessage = new Text("Entry has been added!");
+
+
 
 
         // Submit
         Button submit = new Button("Add Transaction");
-        submit.setTranslateY(20);
+        submit.setTranslateY(-40);
         submit.getStyleClass().addAll("button-dimensions", "light-themed-button");
         submit.setOnAction(e -> {
             // ensure all fields are valid before proceeding
@@ -142,14 +151,17 @@ public class AddTransactionTab extends Tab {
                 );
                 transactionTable.createTransaction(transaction);
 
-                // Refresh and redirect user to all transactions page
+                // Display success message
+                displayMessage(successMessage);
+
+                // Refresh transactions page table
                 DisplayTransactionsTab.getInstance().refreshTable();
-                this.getTabPane().getSelectionModel().select(DisplayTransactionsTab.getInstance());
 
             } catch (Exception ex) {
                 System.out.println("Invalid input");
-                // Add error message
-                errorMessage.setText("Invalid input, please try again");
+
+                // display error message
+                displayMessage(errorMessage);
             }
         });
 
@@ -157,7 +169,7 @@ public class AddTransactionTab extends Tab {
 
         // Vbox to hold form
         VBox form = new VBox(typeLabel, typeBox, amountLabel, amount, descLabel, desc,
-                                        pane, submit, errorMessage);
+                                        pane, errorMessage, successMessage, submit);
         form.setSpacing(15);
 
         // Display elements
@@ -192,5 +204,25 @@ public class AddTransactionTab extends Tab {
             cat.setItems(FXCollections.observableArrayList(categoryTable.getAllIncomeCategories()));
             cat.getSelectionModel().select(0);
         }
+    }
+
+    /**
+     * Takes a message and plays an animation on it to
+     * display it. The animation lowers the text by 30 units
+     * and then returns it to its original position.
+     *
+     * @param message text to be animated
+     */
+    private void displayMessage(Text message){
+        double initialPos = message.getTranslateY();
+        TranslateTransition slideIn = new TranslateTransition(Duration.millis(300), message);
+        slideIn.setToY(30 + initialPos);
+
+        TranslateTransition slideOut = new TranslateTransition(Duration.millis(300), message);
+        slideOut.setToY(initialPos);
+
+        SequentialTransition st = new SequentialTransition();
+        st.getChildren().addAll(slideIn, new PauseTransition(Duration.millis(1400)), slideOut);
+        st.play();
     }
 }
