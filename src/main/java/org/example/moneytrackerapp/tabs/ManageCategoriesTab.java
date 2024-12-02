@@ -22,11 +22,16 @@ import static org.example.moneytrackerapp.tabs.AddTransactionTab.refreshCategory
  * ManageCategoriesTab class represents a page that will allow the user
  * to customize the app by deleting or adding additional
  * category types.
+ *
  * @author Wania Sharif
  */
 public class ManageCategoriesTab extends Tab {
     private static ManageCategoriesTab instance;
 
+    /**
+     * Constructor with no args that holds all of the
+     * page's elements.
+     */
     public ManageCategoriesTab() {
         this.setText("Manage Categories");
 
@@ -161,6 +166,13 @@ public class ManageCategoriesTab extends Tab {
         this.setContent(root);
     }
 
+    /**
+     * This method returns the current instance of the
+     * tab ManageCategoriesTab. If none exists, it will
+     * return a new one.
+     *
+     * @return instance of tab
+     */
     public static ManageCategoriesTab getInstance(){
         if(instance == null){
             instance = new ManageCategoriesTab();

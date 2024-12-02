@@ -1,5 +1,12 @@
 package org.example.moneytrackerapp.database;
 
+/**
+ * This class represents the database structure. It contains
+ * all database table and column names, creation queries for
+ * each table, and insert queries for default records.
+ *
+ * @author Wania Sharif
+ */
 public class DBConst {
     /**
      * TRANSACTIONS TABLE
