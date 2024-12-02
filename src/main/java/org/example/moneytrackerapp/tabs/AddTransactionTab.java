@@ -19,6 +19,12 @@ import java.time.LocalDate;
 
 public class AddTransactionTab extends Tab {
     private static AddTransactionTab instance;
+
+    private static ComboBox<Category> cat;
+    private static ToggleGroup typeToggleGroup;
+    private static RadioButton type1;
+    private static RadioButton type2;
+
     public AddTransactionTab() {
         this.setText("Add Transaction");
         BorderPane root = new BorderPane();
@@ -35,10 +41,10 @@ public class AddTransactionTab extends Tab {
         Text typeLabel = new Text("Transaction type");
         typeLabel.getStyleClass().add("description-text");
 
-        ToggleGroup typeToggleGroup = new ToggleGroup();
-        RadioButton type1 = new RadioButton("Income");
+        typeToggleGroup = new ToggleGroup();
+        type1 = new RadioButton("Income");
         type1.setToggleGroup(typeToggleGroup);
-        RadioButton type2 = new RadioButton("Expense");
+        type2 = new RadioButton("Expense");
         type2.setToggleGroup(typeToggleGroup);
         type2.setSelected(true);
 
@@ -69,7 +75,7 @@ public class AddTransactionTab extends Tab {
         System.out.println(categoryTable.getAllCategories());
         Text catLabel = new Text("Category");
         catLabel.getStyleClass().add("description-text");
-        ComboBox<Category> cat = new ComboBox<>();
+        cat = new ComboBox<>();
         cat.setMinWidth(140);
         cat.getStyleClass().add("input-box");
         cat.setItems(FXCollections.observableArrayList(categoryTable.getAllExpenseCategories()));
@@ -172,5 +178,21 @@ public class AddTransactionTab extends Tab {
             instance = new AddTransactionTab();
         }
         return instance;
+    }
+
+    /**
+     * Refreshes the combobox and its contents with categories
+     * corresponding to the type selected
+     *
+     * @param categoryTable Category table instance to get records from
+     */
+    public static void refreshCategoryBox(CategoryTable categoryTable){
+        if(typeToggleGroup.getSelectedToggle() == type2){
+            cat.setItems(FXCollections.observableArrayList(categoryTable.getAllExpenseCategories()));
+            cat.getSelectionModel().select(0);
+        } else if (typeToggleGroup.getSelectedToggle() == type1) {
+            cat.setItems(FXCollections.observableArrayList(categoryTable.getAllIncomeCategories()));
+            cat.getSelectionModel().select(0);
+        }
     }
 }
