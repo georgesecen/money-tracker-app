@@ -1,5 +1,9 @@
 package org.example.moneytrackerapp.tabs;
 
+import javafx.animation.FadeTransition;
+import javafx.animation.PauseTransition;
+import javafx.animation.SequentialTransition;
+import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -12,6 +16,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.util.Duration;
 import org.example.moneytrackerapp.pojo.Category;
 import org.example.moneytrackerapp.tables.CategoryTable;
 import org.example.moneytrackerapp.tables.TransactionTable;
@@ -60,12 +65,12 @@ public class ManageCategoriesTab extends Tab {
 
 
         Text errorMsg = new Text("Cannot delete a default category!");
-        errorMsg.setTranslateY(-12);
+        errorMsg.setTranslateY(-20);
         errorMsg.setOpacity(0);
 
         Text deleteSuccessMsg = new Text("Deleted category");
-        deleteSuccessMsg.setTranslateY(-12);
-        deleteSuccessMsg.setTranslateX(-150);
+        deleteSuccessMsg.setTranslateY(-20);
+        deleteSuccessMsg.setTranslateX(-190);
         deleteSuccessMsg.setOpacity(0);
 
         deleteCat.setOnAction(e -> {
@@ -75,7 +80,6 @@ public class ManageCategoriesTab extends Tab {
                 transactionTable.deleteTransactionByCategory(id);
 
                 categoryTable.deleteCategory(id);
-                errorMsg.setVisible(false);
                 categories.setItems(FXCollections.observableArrayList(categoryTable.getAllCategories()));
                 categories.getSelectionModel().select(0);
 
@@ -84,10 +88,13 @@ public class ManageCategoriesTab extends Tab {
 
                 // Refresh transactions page table
                 DisplayTransactionsTab.getInstance().refreshTable();
+
+                //Display success message
+                displayMessage(deleteSuccessMsg);
             }
             else{
                 // Display error message
-                errorMsg.setVisible(true);
+                displayMessage(errorMsg);
             }
         });
 
@@ -114,6 +121,7 @@ public class ManageCategoriesTab extends Tab {
         typeButtons.setTranslateY(-12);
 
         Text addSuccessMsg = new Text("Successfully added category");
+        addSuccessMsg.setTranslateY(-20);
         addSuccessMsg.setOpacity(0);
 
         // Add button action handler
@@ -139,6 +147,9 @@ public class ManageCategoriesTab extends Tab {
 
                 // Refresh combobox on add entry page
                 refreshCategoryBox(categoryTable);
+
+                // Display add success message
+                displayMessage(addSuccessMsg);
             }
         });
 
@@ -191,5 +202,25 @@ public class ManageCategoriesTab extends Tab {
             instance = new ManageCategoriesTab();
         }
         return instance;
+    }
+
+    /**
+     * method takes in a text and animates it to display it on
+     * the page momentarily using FadeTransition.
+     *
+     * @param message Text to display
+     */
+    private void displayMessage(Text message){
+        FadeTransition fadeIn = new FadeTransition(Duration.millis(200), message);
+        fadeIn.setFromValue(0.0);
+        fadeIn.setToValue(1.0);
+
+        FadeTransition fadeOut = new FadeTransition(Duration.millis(200), message);
+        fadeOut.setFromValue(1.0);
+        fadeOut.setToValue(0.0);
+
+        SequentialTransition st = new SequentialTransition();
+        st.getChildren().addAll(fadeIn, new PauseTransition(Duration.millis(1200)), fadeOut);
+        st.play();
     }
 }
