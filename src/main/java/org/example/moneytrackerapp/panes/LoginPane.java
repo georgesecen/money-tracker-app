@@ -174,7 +174,6 @@ public class LoginPane extends BorderPane {
                 }
                 // Log user into app
                 mainScene = new MainScene();
-                mainScene.getStylesheets().add(getClass().getResource("main.css").toExternalForm());
                 HelloApplication.sceneSwap(new MainScene());
             }
             else{
