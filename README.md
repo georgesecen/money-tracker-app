@@ -1,16 +1,17 @@
 # Money Tracker App
-
-## Description
 <img width="1277" alt="Screenshot 2024-11-28 at 12 48 08 PM" src="https://github.com/user-attachments/assets/bdd2f802-359d-4145-8eab-2d7484241f39">
 
+## Description
+MoneyTrackerApp is a software program that allows users to track their finances in an effective and visually pleasing manner. Once signed up users can add, update and delete transactions. This program even allows enough flexibility for users to add and delete their own unique categories for future transactions. Follow the **Getting Started Guide** below to get this app up and running!
 
 
 ### Technology
-- JavaFX version 20.0.2 with Gradle
+- JavaFX
+- Gradle Version 20.0.2
 - CSS
 - MySQL
 
-## Getting Start Guide
+## Getting Started Guide
 1. Make sure to have latest version of Intellij installed
 2. Clone Repository from https://github.com/cmcrae1989/MoneyTrackerApp/tree/development
 
@@ -38,6 +39,7 @@ https://github.com/user-attachments/assets/ac86126d-7566-4fb5-b11c-fc9e51b73a55
 9. Ensure that you're using Gradle version 20.0.2
 
 ## Compatibility
+MoneyTrackerApp is compatible with Windows/Mac/Linux operating systems.
 
 ## Authors
 
@@ -50,3 +52,4 @@ https://github.com/user-attachments/assets/ac86126d-7566-4fb5-b11c-fc9e51b73a55
 ## License
 
 ## Acknowledgement
+Special thanks to *Câi Filiault* for his lessons, advice and guidance thoughout the last year.
