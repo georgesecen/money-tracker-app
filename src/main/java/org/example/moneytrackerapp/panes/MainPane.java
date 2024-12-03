@@ -28,6 +28,9 @@ public class MainPane extends BorderPane {
 
         this.getStyleClass().add("gradient-background");
 
+        // Generate charts here, so it does not lag when navigating to statistics tab
+        StatisticsTab.getInstance().generateCharts(30);
+
         // StackPane used to style tab pane as some styles don't work and to add the
         // navbar on top of the tabpane
         StackPane tabPaneContainer = new StackPane();

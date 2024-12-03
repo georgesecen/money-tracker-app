@@ -167,6 +167,9 @@ public class AddTransactionTab extends Tab {
                 // Refresh transactions page table
                 DisplayTransactionsTab.getInstance().refreshTable();
 
+                // Update charts after adding item
+                StatisticsTab.getInstance().generateCharts(30);
+
             } catch (Exception ex) {
                 System.out.println("Invalid input");
 

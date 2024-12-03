@@ -47,17 +47,16 @@ public class StatisticsTab extends Tab {
 
         // Create the income/expense pie charts
         incomesPieChart = new PieChart();
+        incomesPieChart.getStyleClass().add("widget");
         incomesPieChart.setTitle("Incomes by Category");
-        expensesPieChart = new PieChart();
-        expensesPieChart.setTitle("Expenses by Category");
-
-        // Style the pie charts
         incomesPieChart.setLegendVisible(false);
-        incomesPieChart.getStyleClass().addAll("widget", "piechart");
-        incomesPieChart.setMaxSize(300, 300);
+        incomesPieChart.setLabelsVisible(false);
+
+        expensesPieChart = new PieChart();
+        expensesPieChart.getStyleClass().add("widget");
+        expensesPieChart.setTitle("Expenses by Category");
         expensesPieChart.setLegendVisible(false);
-        expensesPieChart.getStyleClass().addAll("widget", "piechart");
-        expensesPieChart.setMaxSize(300, 300);
+        expensesPieChart.setLabelsVisible(false);
 
         // Create the line chart
         CategoryAxis xAxis = new CategoryAxis(); // CategoryAxis is used to show date labels on x-axis
@@ -96,12 +95,9 @@ public class StatisticsTab extends Tab {
         year.setOnAction(e->generateCharts(365));
         allTime.setOnAction(e->generateCharts(9999));
 
-        // Default timeframe shown to user is 30 days
-        generateCharts(30);
-
         // Vbox to position the pie charts
         VBox pieChartsContainer = new VBox();
-        pieChartsContainer.getChildren().addAll(incomesPieChart, expensesPieChart);
+        pieChartsContainer.getChildren().addAll(incomesPieChart ,expensesPieChart);
         pieChartsContainer.setSpacing(10);
 
         // Vbox to position line chart and previous timeframe text
@@ -159,8 +155,9 @@ public class StatisticsTab extends Tab {
         double rollingIncomes = 0;
         double rollingExpenses = 0;
 
-        // Get days before current date
-        LocalDate date = LocalDate.now().minusDays(days);
+        // Get date and days before current date
+        LocalDate today = LocalDate.now();
+        LocalDate date = today.minusDays(days);
 
         // Get the starting index of where date should be in the transactions array
         int start = getIndexByTransactionDate(transactions, date);
@@ -213,12 +210,15 @@ public class StatisticsTab extends Tab {
         }
 
         // Get the starting index of where the last timeframe before this timeframe started
-        int previousTimeframeStart = getIndexByTransactionDate(transactions, date.minusDays(days * 2));
+        int previousTimeframeStart = getIndexByTransactionDate(transactions, today.minusDays(days * 2));
 
         // Get data for previous timeframe up until the start of the current already calculated timeframe
         double previousIncomes = 0;
         double previousExpenses = 0;
-        for (int i = previousTimeframeStart + 1; i < start; i++) {
+        int i = previousTimeframeStart + 1;
+
+        // While date at i is before the start of already calculated timeframe
+        while (i < transactions.size() && transactions.get(i).getDate().toLocalDate().isBefore(date)){
             // Get transaction at index and absolute value of amount in case its negative
             Transaction transaction = transactions.get(i);
             double amount = Math.abs(transaction.getAmt());
@@ -230,12 +230,13 @@ public class StatisticsTab extends Tab {
             else{
                 previousExpenses += amount;
             }
+            i++;
         }
 
         // TODO: Compare previous timeframes data with current timeframe and give the user a grade on performance compared to last timeframe
         // Add text to display previous timeframes data
-        previousTimeframeText.setText(String.format("You spent a total of %.2f expenses and %.2f incomes " +
-                "the last %d days before %s", previousExpenses, previousIncomes, days, date));
+        previousTimeframeText.setText(String.format("You spent a total of $%.2f in expenses and $%.2f in incomes " +
+                "from %s to %s", previousExpenses, previousIncomes, today.minusDays(days * 2), date));
 
         // Add series to line chart
         lineChart.getData().setAll(incomeSeries, expenseSeries);
@@ -300,8 +301,10 @@ public class StatisticsTab extends Tab {
         // Add tooltips to every slice in the pie chart
         for (PieChart.Data slice : chartData){
             Tooltip tooltip = new Tooltip();
+            tooltip.setStyle("-fx-background-radius: 15px; -fx-border-radius: 15px;");
+
             // Tooltip displays the pie value which is total amount in that category
-            tooltip.setText(String.format("$%.2f", slice.getPieValue()));
+            tooltip.setText(String.format("%s $%.2f", slice.getName(), slice.getPieValue()));
             tooltip.setShowDelay(Duration.millis(150));
             Tooltip.install(slice.getNode(), tooltip);
         }
