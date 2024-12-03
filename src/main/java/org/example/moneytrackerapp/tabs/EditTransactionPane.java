@@ -91,8 +91,9 @@ public class EditTransactionPane extends GridPane {
             transaction.setCat_id(categoryComboBox.getSelectionModel().getSelectedItem().getDBId());
             transactionTable.updateTransaction(transaction);
             DisplayTransactionsTab.getInstance().refreshTable();
-            //TODO uncomment after merge to featureEditTransactions to development
-//            StatisticsTab.getInstance().generateChart();
+
+            // Update charts after updating item
+            StatisticsTab.getInstance().generateCharts(30);
         });
         this.add(update, 1,4);
     }

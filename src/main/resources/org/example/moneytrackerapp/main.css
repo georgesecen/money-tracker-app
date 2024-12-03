@@ -156,7 +156,7 @@
     -fx-border-radius: 7px;
     -fx-background-radius: 7px;
     /* -fx-effect: dropshadow( <blur-type> , <color> , <blur> , <spread> , <offsetx> , <offsety> ) */
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.09), 17px, 0, 3px, 3px);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 17px, 0, 3px, 3px);
 }
 
 /*  LINE CHART CSS */
@@ -197,7 +197,6 @@
     -fx-font-weight: bold;
     -fx-font-size: 1.4em;
     -fx-padding: 10px;
-    -fx-alignment: left;
 }
 .table-row-cell {
     -fx-padding: 5px 10px;

@@ -87,8 +87,9 @@ public class DisplayTransactionsTab extends Tab {
             refreshTable();
             tableView.getItems().clear();;
             tableView.getItems().addAll(transaction.getFancyItems());
-            //TODO implement after charts are merged
-//            StatisticsTab.getInstance().generateChart();
+
+            // Update charts after deleting item
+            StatisticsTab.getInstance().generateCharts(30);
         });
         /**
          * Change listener
