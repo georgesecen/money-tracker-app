@@ -1,7 +1,5 @@
 package org.example.moneytrackerapp.pojo;
 
-import org.example.moneytrackerapp.database.Database;
-
 /**
  * Represents a category that has a unique id, name, and int trans_type
  * @author Wania Sharif

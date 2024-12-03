@@ -1,8 +1,4 @@
 package org.example.moneytrackerapp.database;
-import org.example.moneytrackerapp.pojo.Category;
-import org.example.moneytrackerapp.pojo.TransactionType;
-import org.example.moneytrackerapp.tables.CategoryTable;
-import org.example.moneytrackerapp.tables.TransactionTypeTable;
 
 import java.sql.*;
 

@@ -1,6 +1,5 @@
 package org.example.moneytrackerapp.tabs;
 
-import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
