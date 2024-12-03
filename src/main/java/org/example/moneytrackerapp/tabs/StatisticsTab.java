@@ -163,13 +163,9 @@ public class StatisticsTab extends Tab {
         // Get the starting index of where date should be in the transactions array
         int start = getIndexByTransactionDate(transactions, date);
 
-        // If next index after start is not equal to the exact date which our timeframe begins then add the date
-        // at the exact start of the timeframe so our line chart period is correct
-        // (if first transaction starts 5 days ago in our 30 days timeframe it will look wrong)
-        if (start + 1 < transactions.size() && !transactions.get(start + 1).getDate().toLocalDate().equals(date)){
-            incomeSeries.getData().add(new XYChart.Data<>(date.toString(), 0));
-            expenseSeries.getData().add(new XYChart.Data<>(date.toString(), 0));
-        }
+        // Make sure chart always starts at the beginning of timeframe with a value of 0
+        incomeSeries.getData().add(new XYChart.Data<>(date.toString(), 0));
+        expenseSeries.getData().add(new XYChart.Data<>(date.toString(), 0));
 
         for (int i = start + 1; i < transactions.size(); i++) {
             Transaction transaction = transactions.get(i);

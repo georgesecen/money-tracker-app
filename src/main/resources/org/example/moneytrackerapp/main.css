@@ -14,6 +14,57 @@
     -fx-cursor: hand;
 }
 
+.scroll-bar{
+    -fx-background-color: transparent;
+}
+.scroll-bar .thumb{
+    -fx-background-color: #0de4e4;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+}
+.scroll-bar .track{
+    -fx-background-color: transparent;
+}
+/*  Get rid of the arrow buttons */
+.scroll-bar:vertical .increment-button{
+    -fx-background-color: transparent;
+    -fx-padding: 0 2px 0px 3px;
+}
+.scroll-bar:vertical .decrement-button{
+    -fx-background-color: transparent;
+    -fx-padding: 0 2px 0px 3px;
+}
+.scroll-bar:vertical .increment-arrow{
+    -fx-background-color: transparent;
+    -fx-shape: "";
+    -fx-padding: 0 2px 0px 3px;
+}
+.scroll-bar:vertical .decrement-arrow{
+    -fx-background-color: transparent;
+    -fx-shape: "";
+    -fx-padding: 0 2px 0px 3px;
+}
+
+.scroll-bar:horizontal .increment-button{
+    -fx-background-color: transparent;
+    -fx-padding: 2px 0px 3px 0px;
+}
+.scroll-bar:horizontal .decrement-button{
+    -fx-background-color: transparent;
+    -fx-padding: 2px 0px 3px 0px;
+}
+.scroll-bar:horizontal .increment-arrow{
+    -fx-background-color: transparent;
+    -fx-shape: "";
+    -fx-padding: 2px 0px 3px 0px;
+}
+.scroll-bar:horizontal .decrement-arrow{
+    -fx-background-color: transparent;
+    -fx-shape: "";
+    -fx-padding: 2px 0px 3px 0px;
+}
+
+
 .shadowed-pane{
     -fx-background-color: white;
     -fx-border-radius: 30px;
