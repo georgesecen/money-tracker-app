@@ -27,6 +27,7 @@ import static org.example.moneytrackerapp.HelloApplication.mainScene;
 
 /**
  * Contains sign in/sign up and load/save user credentials functionality.
+ * @author George Secen
  */
 public class LoginPane extends BorderPane {
 
@@ -174,7 +175,6 @@ public class LoginPane extends BorderPane {
                 }
                 // Log user into app
                 mainScene = new MainScene();
-                mainScene.getStylesheets().add(getClass().getResource("main.css").toExternalForm());
                 HelloApplication.sceneSwap(new MainScene());
             }
             else{

@@ -19,8 +19,7 @@ import org.example.moneytrackerapp.database.Database;
 import org.example.moneytrackerapp.tabs.AddTransactionTab;
 import org.example.moneytrackerapp.tabs.ManageCategoriesTab;
 import org.example.moneytrackerapp.tabs.DisplayTransactionsTab;
-import java.io.FileInputStream;
-import java.util.Objects;
+
 
 public class MainPane extends BorderPane {
     public MainPane(){

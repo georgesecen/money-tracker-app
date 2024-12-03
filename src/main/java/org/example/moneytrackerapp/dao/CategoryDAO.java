@@ -1,8 +1,6 @@
 package org.example.moneytrackerapp.dao;
 
-
 import org.example.moneytrackerapp.pojo.Category;
-
 import java.util.ArrayList;
 
 /**

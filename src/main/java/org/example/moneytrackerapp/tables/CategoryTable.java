@@ -1,6 +1,5 @@
 package org.example.moneytrackerapp.tables;
 
-import javafx.scene.chart.PieChart;
 import org.example.moneytrackerapp.dao.CategoryDAO;
 import org.example.moneytrackerapp.database.Database;
 import org.example.moneytrackerapp.pojo.Category;
