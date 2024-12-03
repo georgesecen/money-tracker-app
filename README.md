@@ -1,24 +1,52 @@
 # Money Tracker App
 
-# Description
+## Description
 <img width="1277" alt="Screenshot 2024-11-28 at 12 48 08 PM" src="https://github.com/user-attachments/assets/bdd2f802-359d-4145-8eab-2d7484241f39">
 
 
 
-## Technology
+### Technology
+- JavaFX version 20.0.2 with Gradle
+- CSS
+- MySQL
 
-# Getting Start Guide
+## Getting Start Guide
+1. Make sure to have latest version of Intellij installed
+2. Clone Repository from https://github.com/cmcrae1989/MoneyTrackerApp/tree/development
 
-# Compatibility
+https://github.com/user-attachments/assets/eb195c18-630e-48fa-a6d7-8653e2408106
 
-# Authors
+3. Open terminal(Mac/Linux) or git Bash(Windows)
+
+
+4. Navigate to preferred project location. **user/IdeaProjects recommended**
+  <img width="397" alt="Screenshot 2024-12-03 at 9 10 25 AM" src="https://github.com/user-attachments/assets/cef99f69-30fa-4c72-8215-5804e4da0515">
+
+5. Run command **git clone ht<span>tps://</span>github.com/cmcrae1989/MoneyTrackerApp.git**
+
+<img width="711" alt="Screenshot 2024-12-03 at 9 11 40 AM" src="https://github.com/user-attachments/assets/24e5f42e-71f0-4566-9f1a-689f4ffbc078">
+
+6. Navigate to project directory using command *cd MoneyTrackerApp*
+<img width="701" alt="Screenshot 2024-12-03 at 9 24 17 AM" src="https://github.com/user-attachments/assets/a09990f7-7bcb-438b-b114-4622702b56f3">
+
+7. Run Intellij and open project
+
+
+https://github.com/user-attachments/assets/ac86126d-7566-4fb5-b11c-fc9e51b73a55
+
+
+9. Ensure that you're using Gradle version 20.0.2
+
+## Compatibility
+
+## Authors
 
 |Name|Account|Email|Program|Section|
 |---|---|---|---|---|
 |Cameron McRae|cmcrae1989|w0796224@myscc.ca|MAD|001|
-|Wania Sharif|wania-sharif|   |MAD|001|
+|Wania Sharif|wania-sharif|w0842810@myscc.ca|MAD|001|
 |George Secen|georgesecen|   |MAD|001|
 
-# License
+## License
 
-# Acknowledgement
+## Acknowledgement
