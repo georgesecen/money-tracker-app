@@ -59,8 +59,6 @@ public class LoginPane extends BorderPane {
         loginContainer.setMaxHeight(375);
 
 
-        // TODO: Add input validation and error messages if user logs in with invalid credentials
-
         // Sign up component
         VBox signUpContainer = new VBox();
         signUpContainer.setMaxHeight(375);
@@ -92,12 +90,16 @@ public class LoginPane extends BorderPane {
         signUpPassField.setPromptText("Password");
         signUpPassField.getStyleClass().add("description-text");
         signUpPassField.setMaxWidth(250);
-        VBox.setMargin(signUpPassField, new Insets(0, 0, 20, 0));
+        VBox.setMargin(signUpPassField, new Insets(0, 0, 3, 0));
+
+        Text signUpError = new Text();
+        signUpError.setStyle("-fx-fill: #fc4242");
+        VBox.setMargin(signUpError, new Insets(0, 0, 3, 0));
 
         Button signUpButton = new Button("Sign Up");
         signUpButton.getStyleClass().addAll("button-dimensions", "light-themed-button");
 
-        signUpContainer.getChildren().addAll(signUpTitle, signUpInstructions, signUpUserField, signUpNameField, signUpPassField, signUpButton);
+        signUpContainer.getChildren().addAll(signUpTitle, signUpInstructions, signUpUserField, signUpNameField, signUpPassField, signUpError, signUpButton);
         signUpContainer.setAlignment(Pos.CENTER);
 
         // Setting the sign up nodes focus to false so none of them are focused by default when the scene loads
@@ -124,12 +126,16 @@ public class LoginPane extends BorderPane {
         signInUserField.setPromptText("Username");
         signInUserField.getStyleClass().add("description-text");
         signInUserField.setMaxWidth(250);
-        VBox.setMargin(signInUserField, new Insets(0, 0, 20, 0));
+        VBox.setMargin(signInUserField, new Insets(0, 0, 3, 0));
+
+        Text signInError = new Text();
+        signInError.setStyle("-fx-fill: #fc4242");
+        VBox.setMargin(signInError, new Insets(0, 0, 3, 0));
 
         Button signInButton = new Button("Sign In");
         signInButton.getStyleClass().addAll("button-dimensions", "light-themed-button");
 
-        signInContainer.getChildren().addAll(signInTitle, signInInstructions, signInUserField, signInButton);
+        signInContainer.getChildren().addAll(signInTitle, signInInstructions, signInUserField, signInError, signInButton);
         signInContainer.setAlignment(Pos.CENTER);
 
         // Setting the sign in nodes focus to false so none of them are focused by default when the scene loads
@@ -174,6 +180,9 @@ public class LoginPane extends BorderPane {
             else{
                 // Reset database instance so user can try again
                 Database.resetInstance();
+
+                // Give error message to user
+                signUpError.setText("Error connecting to database!");
             }
         });
 
@@ -198,12 +207,15 @@ public class LoginPane extends BorderPane {
                     // Reset database instance so user can try again
                     Database.resetInstance();
 
+                    // Give error message to user
+                    signInError.setText("Error connecting to database!");
                     System.out.println("Error connecting to db");
-                    // TODO: Give error message to user
+
                 }
             }
             else{
-                // TODO: Give error message to user
+                // Give error message to user
+                signInError.setText("Username not found!");
                 System.out.println("Username does not exist");
             }
         });
@@ -283,6 +295,7 @@ public class LoginPane extends BorderPane {
                     // Translate and vanish the sign up form behind the CTA as it passes by
                     animateTranslateFade(signUpContainer, 1, 250, 1, -163, 50, -1);
                     signUpContainer.setViewOrder(10);
+                    signUpError.setText("");
 
                     // Animate the sign in form so it is now visible to the user
                     animateFadeTranslate(signInContainer,250, 1, 250, 1, 50, 163);
@@ -305,6 +318,7 @@ public class LoginPane extends BorderPane {
                     // Translate and vanish the sign in form behind the CTA as it passes by
                     animateTranslateFade(signInContainer, 1, 250, 1, 163, 50, -1);
                     signInContainer.setViewOrder(10);
+                    signInError.setText("");
 
                     // Animate the sign up form so it is now visible to the user
                     animateFadeTranslate(signUpContainer, 250, 1, 250, 1, 50, -163);

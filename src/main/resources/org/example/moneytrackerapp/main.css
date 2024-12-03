@@ -3,7 +3,6 @@
     -fx-font-family: "sans-serif";
     -fx-font-size:10pt;
     -fx-accent: #d4c3f6;
-    -fx-focus-color: #d4c3f6;
 }
 .button {
     -fx-font-size:12pt;
@@ -204,7 +203,7 @@
     -fx-font-weight: bold;
 }
 .table-row-cell:filled:selected {
-    -fx-background-color: #9966ff;
+    -fx-background-color: #e0d2fc;
     -fx-text-fill: white;
     -fx-table-cell-border-color: transparent;
 }
