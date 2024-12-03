@@ -64,6 +64,7 @@ public class StatisticsTab extends Tab {
         lineChart = new LineChart<>(xAxis, yAxis);
 
         // Style line chart
+        lineChart.setAnimated(false);
         lineChart.getStyleClass().addAll("widget", "linechart");
         lineChart.setMinWidth(600);
         lineChart.setMaxHeight(350);
