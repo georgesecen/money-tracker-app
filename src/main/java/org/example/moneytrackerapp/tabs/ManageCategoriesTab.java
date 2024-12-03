@@ -61,7 +61,12 @@ public class ManageCategoriesTab extends Tab {
 
         Text errorMsg = new Text("Cannot delete a default category!");
         errorMsg.setTranslateY(-12);
-        errorMsg.setVisible(false);
+        errorMsg.setOpacity(0);
+
+        Text deleteSuccessMsg = new Text("Deleted category");
+        deleteSuccessMsg.setTranslateY(-12);
+        deleteSuccessMsg.setTranslateX(-150);
+        deleteSuccessMsg.setOpacity(0);
 
         deleteCat.setOnAction(e -> {
             int id = categories.getSelectionModel().getSelectedItem().getId();
@@ -76,6 +81,9 @@ public class ManageCategoriesTab extends Tab {
 
                 // Refresh combobox on add entry page
                 refreshCategoryBox(categoryTable);
+
+                // Refresh transactions page table
+                DisplayTransactionsTab.getInstance().refreshTable();
             }
             else{
                 // Display error message
@@ -104,6 +112,9 @@ public class ManageCategoriesTab extends Tab {
         HBox typeButtons = new HBox(income, expense);
         typeButtons.setSpacing(50);
         typeButtons.setTranslateY(-12);
+
+        Text addSuccessMsg = new Text("Successfully added category");
+        addSuccessMsg.setOpacity(0);
 
         // Add button action handler
         addCat.setOnAction(e -> {
@@ -141,11 +152,13 @@ public class ManageCategoriesTab extends Tab {
         content.add(categories, 10, 0);
         content.add(deleteCat, 11, 0);
         content.add(errorMsg, 10, 1, 2,1);
+        content.add(deleteSuccessMsg, 11, 1);
 
         content.add(addLabel, 0, 2);
         content.add(catName, 10, 2);
         content.add(addCat, 11, 2);
         content.add(typeButtons, 10, 3,2,1);
+        content.add(addSuccessMsg, 10, 4);
 
 
 
