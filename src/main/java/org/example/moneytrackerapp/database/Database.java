@@ -1,4 +1,5 @@
 package org.example.moneytrackerapp.database;
+
 import java.sql.*;
 
 import static org.example.moneytrackerapp.database.DBConst.*;
@@ -24,6 +25,8 @@ public class Database {
                 createTable(TABLE_TRANSACTION_TYPES, CREATE_TABLE_TRANSACTION_TYPES, connection);
                 createTable(TABLE_CATEGORIES, CREATE_TABLE_CATEGORIES, connection);
                 createTable(TABLE_TRANSACTIONS, CREATE_TABLE_TRANSACTIONS, connection);
+                insertDefaultRecords(INSERT_DEFAULT_TRANS_TYPES, connection);
+                insertDefaultRecords(INSERT_DEFAULT_CATEGORIES, connection);
             } catch(Exception e) {
                 System.out.println("Error connecting or creating database in Database.java");
                 e.printStackTrace();
@@ -40,7 +43,6 @@ public class Database {
      */
     public static Database getInstance(){
         if(instance == null){
-            //TODO Replace constructor values with values read from file
             instance = new Database();
         }
         return instance;
@@ -62,6 +64,23 @@ public class Database {
             createTable = connection.createStatement();
             createTable.execute(tableQuery);
             System.out.println("The " + tableName + " table has been created");
+        }
+    }
+
+    /**
+     * Method to run insert queries
+     * @param query insert query to be executed
+     * @param connection database connection
+     */
+    public void insertDefaultRecords(String query, Connection connection) {
+        try {
+            Statement statement = connection.createStatement();
+            statement.execute(query);
+        }  catch (SQLIntegrityConstraintViolationException ex){
+            System.out.println("Entries already exist");
+
+        }catch(Exception e) {
+            e.printStackTrace();
         }
     }
 

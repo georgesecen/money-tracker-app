@@ -1,17 +1,266 @@
 .root{
-    -fx-background-color: #212121;
-    -fx-font-family: impact;
+    -fx-background-color: #ffffff;
+    -fx-font-family: "sans-serif";
     -fx-font-size:10pt;
+    -fx-accent: #d4c3f6;
 }
 .button {
     -fx-font-size:12pt;
     -fx-background-radius:10;
-    -fx-background-color:rgb(0,0,255);
     -fx-text-fill:#FFFFFF;
     -fx-border-color:#000000;
     -fx-border-radius:10;
     -fx-padding:10px;
+    -fx-cursor: hand;
 }
-.button:hover{
-    -fx-background-color:#558b2f;
+
+.scroll-bar{
+    -fx-background-color: transparent;
+}
+.scroll-bar .thumb{
+    -fx-background-color: #9cbdbd;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+}
+.scroll-bar .track{
+    -fx-background-color: transparent;
+}
+/*  Get rid of the arrow buttons */
+.scroll-bar:vertical .increment-button{
+    -fx-background-color: transparent;
+    -fx-padding: 0 2px 0px 3px;
+}
+.scroll-bar:vertical .decrement-button{
+    -fx-background-color: transparent;
+    -fx-padding: 0 2px 0px 3px;
+}
+.scroll-bar:vertical .increment-arrow{
+    -fx-background-color: transparent;
+    -fx-shape: "";
+    -fx-padding: 0 2px 0px 3px;
+}
+.scroll-bar:vertical .decrement-arrow{
+    -fx-background-color: transparent;
+    -fx-shape: "";
+    -fx-padding: 0 2px 0px 3px;
+}
+
+.scroll-bar:horizontal .increment-button{
+    -fx-background-color: transparent;
+    -fx-padding: 2px 0px 3px 0px;
+}
+.scroll-bar:horizontal .decrement-button{
+    -fx-background-color: transparent;
+    -fx-padding: 2px 0px 3px 0px;
+}
+.scroll-bar:horizontal .increment-arrow{
+    -fx-background-color: transparent;
+    -fx-shape: "";
+    -fx-padding: 2px 0px 3px 0px;
+}
+.scroll-bar:horizontal .decrement-arrow{
+    -fx-background-color: transparent;
+    -fx-shape: "";
+    -fx-padding: 2px 0px 3px 0px;
+}
+
+
+.shadowed-pane{
+    -fx-background-color: white;
+    -fx-border-radius: 30px;
+    -fx-background-radius: 30px;
+    /* -fx-effect: dropshadow( <blur-type> , <color> , <blur> , <spread> , <offsetx> , <offsety> ) */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 17px, 0, 5px, 5px);
+}
+
+.gradient-background{
+    -fx-background-color: linear-gradient(to right top, #91eae4, #86a8e7, #b6b6de);
+}
+
+
+/*  LOGIN PANE CSS */
+.button-dimensions{
+    -fx-font-family: "sans-serif";
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 37px 8px 37px;
+}
+
+.title-text{
+    -fx-font-family: "sans-serif";
+    -fx-font-weight: bold;
+    -fx-font-size: 35px;
+}
+
+.description-text{
+    -fx-font-family: "sans-serif";
+    -fx-font-size: 15px;
+}
+
+.cta-text{
+    -fx-fill: white;
+}
+
+.light-themed-button{
+    -fx-background-color: #9966ff;
+    -fx-color: white;
+    -fx-border-width: 0px;
+    -fx-cursor: hand;
+}
+
+.light-themed-button:hover{
+    -fx-background-color: #af8ff3;
+    -fx-cursor: hand;
+}
+
+.dark-themed-button{
+    -fx-background-color: #9966ff;
+    -fx-color: white;
+    -fx-border-color: white;
+    -fx-border-width: 1px;
+    -fx-border-radius: 7px;
+    -fx-cursor: hand;
+}
+
+.dark-themed-button:hover{
+    -fx-background-color: #844cf3;
+    -fx-cursor: hand;
+}
+
+
+/*  TAB PANE CSS */
+/* Move the tab labels off the screen so the user cannot use the labels to
+    change tabs they must use navbar
+*/
+.tab-pane .tab-header-area {
+    -fx-padding: 0;
+    -fx-translate-x: 9999999;
+}
+
+.nav-button{
+    -fx-background-color: transparent;
+    -fx-border-width: 0px;
+}
+
+.nav-bar{
+    -fx-background-color: #9966ff;
+    -fx-border-radius: 50px;
+    -fx-background-radius: 50px;
+}
+
+.tab-pane-container{
+    -fx-padding: 30px;
+    -fx-background-color: white;
+    -fx-border-radius: 30px;
+    -fx-background-radius: 30px;
+    /* -fx-effect: dropshadow( <blur-type> , <color> , <blur> , <spread> , <offsetx> , <offsety> ) */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 17px, 0, 5px, 5px);
+}
+
+
+/* ADD TRANSAC TAB STYLES */
+.combo-box, .input-box, .date-picker{
+    -fx-background-radius: 12;
+}
+
+.date-picker > .text-field{
+    -fx-background-radius: 12 0 0 12;
+}
+
+.date-picker > .arrow-button {
+    -fx-background-radius: 0 12 12 0;
+}
+
+.date-picker .button {
+    -fx-padding:5;
+    -fx-border-color: none;
+}
+
+.combo-box > .list-cell{
+    -fx-background-color: white;
+    -fx-border-color: #c5c5c5;
+    -fx-border-radius: 12 0 0 12;
+    -fx-cursor: hand;
+}
+
+
+.radio-button:selected .radio .dot {
+    -fx-background-color: #7555b6;
+    -fx-background-insets: 0;
+}
+
+.small-button {
+    -fx-padding: 6 8;
+    -fx-background-color: #b5dcf8;
+    -fx-text-fill: black;
+}
+.small-button:hover{
+    -fx-background-color: #d4e8f6;
+}
+
+/*  ALL STATISTICS ITEMS CSS */
+
+.widget{
+    -fx-padding: 10px;
+    -fx-background-color: white;
+    -fx-border-radius: 7px;
+    -fx-background-radius: 7px;
+    /* -fx-effect: dropshadow( <blur-type> , <color> , <blur> , <spread> , <offsetx> , <offsety> ) */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 17px, 0, 3px, 3px);
+}
+
+/*  LINE CHART CSS */
+.linechart .chart-plot-background {
+    -fx-background-color: transparent;
+}
+
+.linechart .chart-horizontal-grid-lines {
+    -fx-stroke: #ebebeb;
+    -fx-stroke-dash-array: 1;
+}
+
+.linechart .chart-legend{
+    -fx-background-color: transparent;
+}
+
+.y-axis{
+    -fx-border-color: transparent;
+}
+
+/*  PIE CHART CSS */
+.piechart{
+    -fx-padding: 0 -20 -20 -20;
+}
+
+.piechart .chart-title{
+    -fx-padding: 30 0 0 0;
+}
+
+/*DISPLAY TABLE STYLES*/
+.table-view .column-header,
+.table-view .column-header .filler,
+.table-view .column-header-background .filler {
+    -fx-background-color: #9966ff;
+}
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 1.4em;
+    -fx-padding: 10px;
+}
+.table-row-cell {
+    -fx-padding: 5px 10px;
+    -fx-font-size: 1.1em;
+    -fx-font-weight: bold;
+}
+.table-row-cell:filled:selected {
+    -fx-background-color: #e0d2fc;
+    -fx-text-fill: white;
+    -fx-table-cell-border-color: transparent;
+}
+.table-view {
+    -fx-table-cell-border-color: transparent;
+}
+.table-view .table-row-cell {
+    -fx-border-width: 1;
 }

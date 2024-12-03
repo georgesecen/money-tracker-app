@@ -4,7 +4,7 @@ package org.example.moneytrackerapp.pojo;
  * Represents a category that has a unique id, name, and int trans_type
  * @author Wania Sharif
  */
-public class Category {
+public class Category extends DatabaseItem {
 
     private int id;
     private String name;
@@ -13,7 +13,7 @@ public class Category {
     /**
      * No args constructor
      */
-    public Category() {}
+//    public Category() {}
 
     /**
      * Constructor for Category
@@ -22,6 +22,7 @@ public class Category {
      * @param trans_type integer represents type of transaction
      */
     public Category(int id, String name, int trans_type) {
+        super(id);
         this.id = id;
         this.name = name;
         this.trans_type = trans_type;
@@ -32,10 +33,12 @@ public class Category {
      * @param name Category name
      * @param trans_type integer represents type of transaction
      */
-    public Category(String name, int trans_type) {
-        this.name = name;
-        this.trans_type = trans_type;
-    }
+    //TODO do not need this constructor
+//    public Category(String name, int trans_type) {
+////        super(id);
+//        this.name = name;
+//        this.trans_type = trans_type;
+//    }
 
     /**
      * @return unique id of a Category

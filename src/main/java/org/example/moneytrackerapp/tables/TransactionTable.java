@@ -1,25 +1,36 @@
 package org.example.moneytrackerapp.tables;
-
 import org.example.moneytrackerapp.dao.TransactionDAO;
 import org.example.moneytrackerapp.database.Database;
 import org.example.moneytrackerapp.pojo.DisplayItem;
 import org.example.moneytrackerapp.pojo.Transaction;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
 import static org.example.moneytrackerapp.database.DBConst.*;
 
+/**
+ * TransactionTable class represents a table that holds
+ * methods responsible for CRUD operations
+ *
+ * @author Cameron McRae
+ */
 public class TransactionTable implements TransactionDAO {
     private static TransactionTable instance;
+
+    /**
+     * Private constructor that grabs the table instance
+     * from the database
+     */
     private TransactionTable(){
         db = Database.getInstance();
     }
     Database db = Database.getInstance();
     ArrayList<Transaction> transactions;
-
+    /**
+     * Method to get all transactions from database
+     * @return transactions
+     */
     @Override
     public ArrayList<Transaction> getAllTransactions() {
         String query = "SELECT * FROM " + TABLE_TRANSACTIONS;
@@ -41,6 +52,11 @@ public class TransactionTable implements TransactionDAO {
         }
         return transactions;
     }
+    /**
+     * Method to get a single transaction from database
+     * @param transID;
+     * @return transaction
+     */
     @Override
     public Transaction getTransaction(int transID) {
         String query = "SELECT * FROM " + TABLE_TRANSACTIONS + " WHERE " + TRANS_COLUMN_ID + " = " + transID;
@@ -62,21 +78,30 @@ public class TransactionTable implements TransactionDAO {
         }
         return null;
     }
+    /**
+     * Method to update a transaction from database
+     * @param transaction;
+     */
     @Override
     public void updateTransaction(Transaction transaction) {
-        String query = "UPDATE " + TABLE_TRANSACTIONS + " SET " + TRANS_COLUMN_ID + " = " + transaction.getId()
-                + ", " + TRANS_COLUMN_AMOUNT + " = " + transaction.getAmt()
-                + ", " + TRANS_COLUMN_DESC + " = " + transaction.getDesc()
-                + ", " + TRANS_COLUMN_DATE + " = " + transaction.getDate()
-                + ", " + TRANS_COLUMN_CAT + " = " + transaction.getCat_id()
+        String query = "UPDATE " + TABLE_TRANSACTIONS + " SET "
+                + TRANS_COLUMN_AMOUNT + " = " + transaction.getAmt()
+                + ", " + TRANS_COLUMN_DESC + " = '" + transaction.getDesc()
+                + "', " + TRANS_COLUMN_DATE + " = '" + transaction.getDate()
+                + "', " + TRANS_COLUMN_CAT + " = " + transaction.getCat_id()
                 + " WHERE " + TRANS_COLUMN_ID + " = " + transaction.getId();
         try {
             Statement statement = db.getConnection().createStatement();
-            statement.executeQuery(query);
+            statement.executeUpdate(query);
+            System.out.println("Record Updated");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+    /**
+     * Method to delete a transaction from database
+     * @param transID;
+     */
     @Override
     public void deleteTransaction(int transID) {
         String query = "DELETE FROM " + TABLE_TRANSACTIONS + " WHERE " + TRANS_COLUMN_ID + " = " + transID;
@@ -87,6 +112,23 @@ public class TransactionTable implements TransactionDAO {
             e.printStackTrace();
         }
     }
+    /**
+     * Remove all transactions in table with the chosen Category id
+     * @param cat_id Category id
+     */
+    public void deleteTransactionByCategory(int cat_id) {
+        String query = "DELETE FROM " + TABLE_TRANSACTIONS + " WHERE " + TRANS_COLUMN_CAT + " = " + cat_id;
+        try {
+            Statement statement = db.getConnection().createStatement();
+            statement.execute(query);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+    /**
+     * Method to insert a transaction into database
+     * @param transaction;
+     */
     @Override
     public void createTransaction(Transaction transaction) {
         String query = "INSERT INTO " + TABLE_TRANSACTIONS +
@@ -98,14 +140,19 @@ public class TransactionTable implements TransactionDAO {
                 + transaction.getId() + ", "
                 + transaction.getAmt() + ", '"
                 + transaction.getDesc() + "', '"
-                + transaction.getDate() + "', " + transaction.getCat_id() + ");";
-
+                + transaction.getDate() + "', " + transaction.getCat_id() + ")";
+        System.out.println(query);
         try {
             db.getConnection().createStatement().execute(query);
         } catch(Exception e) {
             e.printStackTrace();
         }
     }
+    /**
+     * Method to display all formatted transactions from database
+     * ordered by date
+     * @return items
+     */
     public ArrayList<DisplayItem> getFancyItems(){
         ArrayList<DisplayItem> items = new ArrayList<>();
         String query = "SELECT t.id, " +
@@ -115,7 +162,7 @@ public class TransactionTable implements TransactionDAO {
                 " c.cat_name " +
                 " FROM Transactions as t " +
                 "JOIN Categories as c on t.cat_id = c.id " +
-                "ORDER BY t.id ASC";
+                "ORDER BY t.date ASC";
         try {
             Statement getItems = db.getConnection().createStatement();
             ResultSet data = getItems.executeQuery(query);
@@ -133,7 +180,9 @@ public class TransactionTable implements TransactionDAO {
         }
         return items;
     }
-
+    /**
+     * Method to create a transaction instance from database
+     */
     public static TransactionTable getInstance(){
         if(instance == null){
             instance = new TransactionTable();
