@@ -21,6 +21,7 @@ import java.util.*;
 
 /**
  * Contains functionality to display transaction data and history to the user.
+ * @author George Secen
  */
 public class StatisticsTab extends Tab {
 

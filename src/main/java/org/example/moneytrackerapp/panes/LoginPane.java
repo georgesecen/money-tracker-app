@@ -27,6 +27,7 @@ import static org.example.moneytrackerapp.HelloApplication.mainScene;
 
 /**
  * Contains sign in/sign up and load/save user credentials functionality.
+ * @author George Secen
  */
 public class LoginPane extends BorderPane {
 
