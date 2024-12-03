@@ -45,7 +45,7 @@ https://github.com/user-attachments/assets/ac86126d-7566-4fb5-b11c-fc9e51b73a55
 |---|---|---|---|---|
 |Cameron McRae|cmcrae1989|w0796224@myscc.ca|MAD|001|
 |Wania Sharif|wania-sharif|w0842810@myscc.ca|MAD|001|
-|George Secen|georgesecen|   |MAD|001|
+|George Secen|georgesecen|w0533223@myscc.ca|MAD|001|
 
 ## License
 
