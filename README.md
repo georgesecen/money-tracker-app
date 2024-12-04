@@ -27,7 +27,7 @@ https://github.com/user-attachments/assets/eb195c18-630e-48fa-a6d7-8653e2408106
 
 <img width="711" alt="Screenshot 2024-12-03 at 9 11 40 AM" src="https://github.com/user-attachments/assets/24e5f42e-71f0-4566-9f1a-689f4ffbc078">
 
-6. Navigate to project directory using command *cd MoneyTrackerApp*
+6. Navigate to project directory using command **cd MoneyTrackerApp**
 <img width="701" alt="Screenshot 2024-12-03 at 9 24 17 AM" src="https://github.com/user-attachments/assets/a09990f7-7bcb-438b-b114-4622702b56f3">
 
 7. Run Intellij and open project
