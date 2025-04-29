@@ -35,3 +35,20 @@ https://github.com/user-attachments/assets/19fb1849-9c26-4527-a086-cbe621f9df01
 - **Visual Data Representation:**
     - Visualize financial trends displaying income and expense data across a selected time period.
     - Display the distribution of your earnings and expenses.
+
+
+<!-- Getting started section -->
+## 🚀 Getting Started
+
+### Prerequisites
+- Gradle version 20.0.2
+- MySQL database
+
+
+### Run Locally
+1. Clone the repo:
+   ```sh
+   git clone https://github.com/georgesecen/money-tracker-app.git
+   ```
+2. Start your MySQL server locally on your machine.
+2. Run the app and sign up with your database name, username and password.
