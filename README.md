@@ -1,77 +1,103 @@
-# Money Tracker App
-<img width="1277" alt="Screenshot 2024-11-28 at 12 48 08 PM" src="https://github.com/user-attachments/assets/bdd2f802-359d-4145-8eab-2d7484241f39">
+<!-- About app Section -->
+# 📈 Money Tracker App
 
-## Description
-MoneyTrackerApp is a software program that allows users to track their finances in an effective and visually pleasing manner. Once signed up users can add, update and delete transactions. This program even allows enough flexibility for users to add and delete their own unique categories for future transactions. Follow the **Getting Started Guide** below to get this app up and running!
+A finance dashboard powered by JavaFx and MySQL which allows users to track their expenses and earnings also giving valuable insight regarding spending habits and trends.
+
+<!-- Display app login form (Video url from doing this method https://www.youtube.com/watch?v=y08qhn8pes8) -->
+https://github.com/user-attachments/assets/19fb1849-9c26-4527-a086-cbe621f9df01
 
 
-### Technology
-- JavaFX
-- Gradle Version 20.0.2
-- CSS
+<!-- Table of contents section -->
+## 📚 Table Of Contents
+- [<code>🔨 Built With</code>](#-built-with)
+- [<code>✨ Features</code>](#-features)
+- [<code>🚀 Getting Started</code>](#-getting-started)
+- [<code>💻 My Contributions</code>](#-my-contributions)
+- [<code>🤝 Authors</code>](#-authors)
+- [<code>📝 License</code>](#-license)
+- [<code>📢 Acknowledgments</code>](#-acknowledgements)
+
+
+<!-- Technologies used section -->
+## 🔨 Built With
+
 - MySQL
-
-## Getting Started Guide
-1. Make sure to have latest version of Intellij installed
-2. Clone Repository from https://github.com/cmcrae1989/MoneyTrackerApp/tree/development
-
-https://github.com/user-attachments/assets/eb195c18-630e-48fa-a6d7-8653e2408106
-
-3. Open terminal(Mac/Linux) or git Bash(Windows)
+- JavaFx
+- Java
+- CSS
+- Gradle
 
 
-4. Navigate to preferred project location. **user/IdeaProjects recommended**
-  <img width="397" alt="Screenshot 2024-12-03 at 9 10 25 AM" src="https://github.com/user-attachments/assets/cef99f69-30fa-4c72-8215-5804e4da0515">
+<!-- Features section -->
+## ✨ Features
 
-5. Run command **git clone ht<span>tps://</span>github.com/cmcrae1989/MoneyTrackerApp.git**
+- **User Management:**
+    - Access your personalized financial data with your registered credentials.
+    - Create a new account to manage your finances.
 
-<img width="711" alt="Screenshot 2024-12-03 at 9 11 40 AM" src="https://github.com/user-attachments/assets/24e5f42e-71f0-4566-9f1a-689f4ffbc078">
+- **Transaction Management:**
+    - Record income and expenses, specifying the date, amount, and associated category.
+    - Delete transactions if they were entered incorrectly or are no longer relevant.
 
-6. Navigate to project directory using command **cd MoneyTrackerApp**
-<img width="701" alt="Screenshot 2024-12-03 at 9 24 17 AM" src="https://github.com/user-attachments/assets/a09990f7-7bcb-438b-b114-4622702b56f3">
+- **Categorization:**
+    - Create custom categories to organize your income and expenses (e.g., "Groceries," "Salary," "Rent").
+    - Delete categories that are no longer needed.
 
-7. Run Intellij and open project
+- **Visual Data Representation:**
+    - Visualize financial trends displaying income and expense data across a selected time period.
+    - Display the distribution of your earnings and expenses.
 
 
-https://github.com/user-attachments/assets/ac86126d-7566-4fb5-b11c-fc9e51b73a55
+<!-- Getting started section -->
+## 🚀 Getting Started
+
+### Prerequisites
+- Gradle version 20.0.2
+- MySQL database
 
 
-9. Ensure that you're using Gradle version 20.0.2
+### Run Locally
+1. Clone the repo:
+   ```sh
+   git clone https://github.com/georgesecen/money-tracker-app.git
+   ```
+2. Start your MySQL server locally on your machine.
+2. Run the app and sign up with your database name, username and password.
 
-## Compatibility
-MoneyTrackerApp is compatible with Windows/Mac/Linux operating systems.
 
-## Authors
+<!-- My contributions section -->
+## 💻 My Contributions
+What I personally contributed to this project.
 
-|Name|Account|Email|Program|Section|
-|---|---|---|---|---|
-|Cameron McRae|cmcrae1989|w0796224@myscc.ca|MAD|001|
-|Wania Sharif|wania-sharif|w0842810@myscc.ca|MAD|001|
-|George Secen|georgesecen|w0533223@myscc.ca|MAD|001|
+### Sign In / Sign up + App UI Design
+<!-- Display app login form (Video url from doing this method https://www.youtube.com/watch?v=y08qhn8pes8) -->
+https://github.com/user-attachments/assets/19fb1849-9c26-4527-a086-cbe621f9df01
 
-## License
-Copyright (c) 2014 DefinitelyTyped
+- Sign up which allows the user to register their account so they can track financials.
+- Sign in which allows the user to login using only their database username as their credentials are saved upon sign up.
+- Modern dashboard UI design to keep the user engaged and have a good experience.
 
-Permission is hereby granted, free of charge, to any person
-obtaining a copy of this software and associated documentation
-files (the "Software"), to deal in the Software without
-restriction, including without limitation the rights to use,
-copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the
-Software is furnished to do so, subject to the following
-conditions:
+### Data Visualization
+<img alt=Data src=/images/statistics.png width=925px />
 
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
+- Allow user to view information regarding their financials over a selected time period of 30 days, 90 days, 365 days, or all time.
+- Line chart which displays earnings and expenses over selected time period.
+- Pie charts which display distributions of earnings and expenses over selected time period. (What categories have the most earnings/expenses)
+- Message which informs the user of their earnings and expenses for the previous time period. Thus telling the user if their finances have improved.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-OTHER DEALINGS IN THE SOFTWARE.
 
-## Acknowledgement
-Special thanks to *Câi Filiault* for his lessons, advice and guidance thoughout the last year.
+<!-- Authors section -->
+## 🤝 Authors
+- [Wania Sharif](https://github.com/wania-sharif)
+- [Cameron Mcrae](https://github.com/cmcrae1989)
+- [George Secen](https://github.com/georgesecen)
+
+
+<!-- License section -->
+## 📝 License
+This app is open-sourced software licensed under the [MIT license](LICENSE).
+
+
+<!-- Acknowledgements section -->
+## 📢 Acknowledgements
+Special thanks to Câi Filiault for his lessons, advice and guidance.
