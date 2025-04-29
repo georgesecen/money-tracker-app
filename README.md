@@ -7,6 +7,17 @@ A finance dashboard powered by JavaFx and MySQL which allows users to track thei
 https://github.com/user-attachments/assets/19fb1849-9c26-4527-a086-cbe621f9df01
 
 
+<!-- Table of contents section -->
+## 📚 Table Of Contents
+- [<code>🔨 Built With</code>](#-built-with)
+- [<code>✨ Features</code>](#-features)
+- [<code>🚀 Getting Started</code>](#-getting-started)
+- [<code>💻 My Contributions</code>](#-my-contributions)
+- [<code>🤝 Authors</code>](#-authors)
+- [<code>📝 License</code>](#-license)
+- [<code>📢 Acknowledgments</code>](#-acknowledgements)
+
+
 <!-- Technologies used section -->
 ## 🔨 Built With
 
@@ -67,9 +78,26 @@ https://github.com/user-attachments/assets/19fb1849-9c26-4527-a086-cbe621f9df01
 - Modern dashboard UI design to keep the user engaged and have a good experience.
 
 ### Data Visualization
-<img alt=Data src=/images/statistics.png width=450px />
+<img alt=Data src=/images/statistics.png width=925px />
 
 - Allow user to view information regarding their financials over a selected time period of 30 days, 90 days, 365 days, or all time.
 - Line chart which displays earnings and expenses over selected time period.
 - Pie charts which display distributions of earnings and expenses over selected time period. (What categories have the most earnings/expenses)
 - Message which informs the user of their earnings and expenses for the previous time period. Thus telling the user if their finances have improved.
+
+
+<!-- Authors section -->
+## 🤝 Authors
+- [Wania Sharif](https://github.com/wania-sharif)
+- [Cameron Mcrae](https://github.com/cmcrae1989)
+- [George Secen](https://github.com/georgesecen)
+
+
+<!-- License section -->
+## 📝 License
+This app is open-sourced software licensed under the [MIT license](LICENSE).
+
+
+<!-- Acknowledgements section -->
+## 📢 Acknowledgements
+Special thanks to Câi Filiault for his lessons, advice and guidance.
