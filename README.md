@@ -52,3 +52,24 @@ https://github.com/user-attachments/assets/19fb1849-9c26-4527-a086-cbe621f9df01
    ```
 2. Start your MySQL server locally on your machine.
 2. Run the app and sign up with your database name, username and password.
+
+
+<!-- My contributions section -->
+## 💻 My Contributions
+What I personally contributed to this project.
+
+### Sign In / Sign up + App UI Design
+<!-- Display app login form (Video url from doing this method https://www.youtube.com/watch?v=y08qhn8pes8) -->
+https://github.com/user-attachments/assets/19fb1849-9c26-4527-a086-cbe621f9df01
+
+- Sign up which allows the user to register their account so they can track financials.
+- Sign in which allows the user to login using only their database username as their credentials are saved upon sign up.
+- Modern dashboard UI design to keep the user engaged and have a good experience.
+
+### Data Visualization
+<img alt=Data src=/images/statistics.png width=450px />
+
+- Allow user to view information regarding their financials over a selected time period of 30 days, 90 days, 365 days, or all time.
+- Line chart which displays earnings and expenses over selected time period.
+- Pie charts which display distributions of earnings and expenses over selected time period. (What categories have the most earnings/expenses)
+- Message which informs the user of their earnings and expenses for the previous time period. Thus telling the user if their finances have improved.
